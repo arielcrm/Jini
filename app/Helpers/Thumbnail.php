@@ -42,5 +42,4 @@ class Thumbnail {
 		imagedestroy($thumbnail_gd_image);
 		return true;
 	}
-
 }
