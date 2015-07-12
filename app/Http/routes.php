@@ -125,4 +125,23 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('users/{id}/delete', 'UserController@postDelete');
     Route::get('users/data', 'UserController@data');
 
+    # Object Types
+    Route::get('object-types/', 'ObjectTypesController@index');
+    Route::get('object-types/create', 'ObjectTypesController@getCreate');
+    Route::post('object-types/create', 'ObjectTypesController@postCreate');
+    Route::get('object-types/{id}/edit', 'ObjectTypesController@getEdit');
+    Route::post('object-types/{id}/edit', 'ObjectTypesController@postEdit');
+    Route::get('object-types/{id}/delete', 'ObjectTypesController@getDelete');
+    Route::post('object-types/{id}/delete', 'ObjectTypesController@postDelete');
+    Route::get('object-types/data', 'ObjectTypesController@data');
+
+    # Categories
+    Route::get('categories/', 'CategoryController@index');
+    Route::get('categories/create', 'CategoryController@getCreate');
+    Route::post('categories/create', 'CategoryController@postCreate');
+    Route::get('categories/{id}/edit', 'CategoryController@getEdit');
+    Route::post('categories/{id}/edit', 'CategoryController@postEdit');
+    Route::get('categories/{id}/delete', 'CategoryController@getDelete');
+    Route::post('categories/{id}/delete', 'CategoryController@postDelete');
+    Route::get('categories/data', 'CategoryController@data');    
 });
