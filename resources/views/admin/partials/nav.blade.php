@@ -16,10 +16,22 @@
             <span class="hidden-sm text"> Dashboard</span>
         </a>
     </li>
+    <li class="{{set_active('admin/category')}}">
+        <a href="{{url('admin/categories')}}">
+            <i class="fa fa-dashboard fa-fw"></i>
+            <span class="hidden-sm text"> Categories</span>
+        </a>
+    </li>
     <li class="{{set_active('admin/language*')}}">
         <a href="{{url('admin/language')}}">
             <i class="fa fa-language"></i>
             <span class="hidden-sm text"> Language</span>
+        </a>
+    </li>
+    <li class="{{set_active('admin/object-types*')}}">
+        <a href="{{url('admin/object-types')}}">
+            <i class="fa fa-language"></i>
+            <span class="hidden-sm text"> Object Types</span>
         </a>
     </li>
     <li class="{{set_active('admin/news*')}}">
