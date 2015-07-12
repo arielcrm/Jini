@@ -2,7 +2,7 @@
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NewsRequest extends FormRequest {
+class CategoryRequest extends FormRequest {
 
 	/**
 	 * Get the validation rules that apply to the request.
@@ -12,10 +12,7 @@ class NewsRequest extends FormRequest {
 	public function rules()
 	{
 		return [
-            'title' => 'required|min:3',
-            'language_id' => 'required|integer',
-            'newscategory_id' => 'required|integer',
-            'content' => 'required|min:20'
+            'title' => 'required|min:3'
 		];
 	}
 
