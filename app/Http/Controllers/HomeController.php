@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Article;
+use App\Object;
 use App\Photo;
 use App\VideoAlbum;
 use App\PhotoAlbum;
@@ -68,7 +69,21 @@ class HomeController extends Controller {
 			DB::raw('(select youtube from ' . DB::getTablePrefix() . 'videos WHERE ' . DB::getTablePrefix() . 'videos.video_album_id=' . DB::getTablePrefix() . 'video_albums.id ORDER BY position ASC, id ASC LIMIT 1) AS album_image_first')
 		))->limit(8)->get();
 
-		return view('pages.home', compact('articles', 'sliders', 'videoAlbums', 'photoAlbums'));
+        $categoriesArray = Object::where('type', 'category')
+            ->get();
+
+        $categories = array();
+
+        foreach ($categoriesArray as $category) {
+            $categories[] = array(
+                $category->title
+            );
+        }
+
+        $categories = Object::where('type', 'category')
+            ->get();
+
+		return view('pages.home', compact('articles', 'sliders', 'videoAlbums', 'photoAlbums', 'categories'));
 
 		//return view('pages.welcome');
 	}
