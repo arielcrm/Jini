@@ -38,6 +38,9 @@
     <![endif]-->
 
     <link rel="shortcut icon" href="{{{ asset('assets/site/ico/favicon.ico') }}}">
+
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Varela+Round|Comfortaa:400,700,300">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 @include('partials.nav')
