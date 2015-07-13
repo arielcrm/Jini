@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
 		$this->call('LanguagesTableSeeder');
 		$this->call('ArticleCategoriesTableSeeder');
 		$this->call('ArticlesTableSeeder');
+        $this->call('ObjectTypeSeeder');
 
         Model::reguard();
     }
