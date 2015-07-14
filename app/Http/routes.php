@@ -143,5 +143,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('categories/{id}/edit', 'CategoryController@postEdit');
     Route::get('categories/{id}/delete', 'CategoryController@getDelete');
     Route::post('categories/{id}/delete', 'CategoryController@postDelete');
-    Route::get('categories/data', 'CategoryController@data');    
+    Route::get('categories/data', 'CategoryController@data');
+    Route::get('categories/categories', 'CategoryController@getCategories');
+    Route::get('categories/categories/{id}', 'CategoryController@getCategories');
 });

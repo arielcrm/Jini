@@ -57,9 +57,10 @@ function drawPizzaSectors(t, e) {
 function drawCutSectors(t, e, i) {
     for (var n = 0; nbOfSlices > n; n++) {
         var r = document.createElementNS(svgns, "a");
-        var l = currentMenu[n][2];
+        var m = currentMenu[n];
+        var l = m[2];
 
-        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-index", n), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
+        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
             var imgSrc = currentMenu[itemIndex][1];
@@ -68,9 +69,31 @@ function drawCutSectors(t, e, i) {
         }, true);
         r.addEventListener(clickEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
+            var itemId = this.getAttribute("data-id");
 
-            if (itemIndex == 0) {
-                currentMenu = currentMenu[itemIndex][3];
+            $.ajax({
+                url: '/admin/categories/categories/' + itemId,
+                dataType: 'json',
+                success: function(response) {
+                    var mm = [];
+
+                    for ( i = 0; i < response.length; i++) {
+                        var o = response[i];
+
+                        console.log(o);
+
+                        mi = [];
+                        mi[0] = o.title;
+                        mi[1] = 'uploads/2cfbe23bf91d2da6d84b4953306c0430e353a1b1.jpg';
+                        mi[2] = '#' + o.name;
+                        mi[3] = o.id;
+
+                        mm.push(mi);
+
+                        console.log(mm);
+                    }
+
+                    currentMenu = mm;
 
                 nbOfSlices = currentMenu.length;
 
@@ -81,8 +104,25 @@ function drawCutSectors(t, e, i) {
                 setTimeout(function() {
                     init();
                 }, 1000);
+                }
+            });
 
-            }
+
+
+//            if (itemIndex == 0) {
+//                currentMenu = currentMenu[itemIndex][3];
+//
+//                nbOfSlices = currentMenu.length;
+//
+//                img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
+//
+//                r.removeEventListener(clickEvent);
+//
+//                setTimeout(function() {
+//                    init();
+//                }, 1000);
+//
+//            }
         }, true);
         var s = document.createElementNS(svgns, "path");
         s.setAttribute("fill", "none"), s.setAttribute("stroke", "#111"), s.setAttribute("d", "M" + (t.x + i) + "," + t.y + " l" + (e - i) + ",0 A" + e + "," + e + " 0 0,0 " + pizzaCoordinates.x + "," + pizzaCoordinates.y + " l" + -(pizzaCoordinates.x - pieCoordinates.x) + "," + (-pizzaCoordinates.y + pieCoordinates.y) + " A" + i + "," + i + " 0 0,1 " + (t.x + i) + "," + t.y), s.setAttribute("class", "sector"), r.appendChild(s), itemsContainer.appendChild(document.createTextNode("        ")), itemsContainer.appendChild(r), itemsContainer.appendChild(document.createTextNode("\n"))
@@ -190,6 +230,13 @@ function makeSpinnable(t) {
         }
     })
 }
+
+
+
+
+
+
+
 var _gsScope = "undefined" != typeof module && module.exports && "undefined" != typeof global ? global : this || window;
 (_gsScope._gsQueue || (_gsScope._gsQueue = [])).push(function() {
     "use strict";
@@ -3137,6 +3184,9 @@ var svg = document.getElementById("menu"),
     }, menuRadius = 250,
     menuSmallRadius = 150,
     iconPos;
+
+
+
 iconPos = "pie" == menuStyle ? .75 * menuRadius : .68 * menuRadius;
 var iconWidth = 40,
     iconHeight = 40,
@@ -3163,7 +3213,13 @@ typePicker[0].onclick = function() {
     navigator.msSaveBlob && (t.preventDefault(), navigator.msSaveBlob(new Blob([e], {
         type: "image/svg+xml"
     }), "svg-circular-menu.svg"))
-}), init(), makeSpinnable(), ! function(t) {
+}),
+
+
+
+
+
+    init(), makeSpinnable(), ! function(t) {
     var e, i, n = "0.4.2",
         r = "hasOwnProperty",
         s = /[\.\/]/,
@@ -6171,3 +6227,4 @@ typePicker[0].onclick = function() {
         }
         "undefined" != typeof require ? SyntaxHighlighter = require("shCore").SyntaxHighlighter : null, t.prototype = new SyntaxHighlighter.Highlighter, t.aliases = ["sass", "scss"], SyntaxHighlighter.brushes.Sass = t, "undefined" != typeof exports ? exports.Brush = t : null
     }(), SyntaxHighlighter.all();
+

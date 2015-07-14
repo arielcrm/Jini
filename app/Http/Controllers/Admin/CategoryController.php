@@ -56,7 +56,7 @@ class CategoryController extends AdminController {
         }
         $object->author_id = Auth::user()->id;
         $object->type = 'category';
-        $object->name = preg_replace('[ ]', '-', $request->title);
+        $object->name = preg_replace('[ ]', '-', strtolower( $request->title ));
         $object->title = $request->title;
         $object->content = $request->content;
         $object->excerpt = $request->content;
@@ -108,7 +108,7 @@ class CategoryController extends AdminController {
             $object->parent_id = null;
         }
         $object->author_id = Auth::user()->id;
-        $object->name = preg_replace('[ ]', '-', $request->title);
+        $object->name = preg_replace('[ ]', '-', strtolower( $request->title ));
         $object->title = $request->title;
         $object->content = $request->content;
         $object->excerpt = $request->content;
@@ -222,4 +222,13 @@ class CategoryController extends AdminController {
         return $list;
     }
 
+    public function getCategories($id = null) {
+        //Config::set('laravel-debugbar::config.enabled', false);
+
+        $categories = Object::where('type', 'category')
+            ->where('parent_id', $id)
+            ->get();
+
+        return response()->json( $categories );
+    }
 }

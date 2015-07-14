@@ -186,30 +186,10 @@
         }
 
         var arrMenu1 = [
-            ["תחבורה", "uploads/2cfbe23bf91d2da6d84b4953306c0430e353a1b1.jpg", "#Transportation",
-                [
-                    ["רכב", "logo.png", "#Transportation",
-                        [
-                            ["קנייה", "logo.png", "#Transportation"],
-                            ["ביטוחים, המרת רישיון נהיגה", "img/menu/3.png", "#Culture"],
-                            ["השכרת רכב", "img/menu/2.png", "#Tourism"],
-                            ["שיעורי נהיגה", "img/menu/1.png", "#HealthCare"],
-                            ["car 2 go, קל אוטו", "img/menu/1.png", "#HealthCare"]
-                        ]
-                    ],
-                    ["רכבות", "img/menu/3.png", "#Culture"],
-                    ["טיסות", "img/menu/2.png", "#Tourism"],
-                    ["מוניות/שירות", "img/menu/1.png", "#HealthCare"],
-                    ["אוטובוסים", "img/menu/1.png", "#HealthCare"]
-                ]
-            ],
-            ["תרבות / חיי לילה", "img/menu/3.png", "#Culture"],
-            ["תיירות", "img/menu/2.png", "#Tourism"],
-            ["בריאות", "img/menu/1.png", "#HealthCare"]
+            ["Start", "", ""],
+            ["Start", "", ""],
+            ["Start", "", ""]
         ];
-
-
-
 
         currentMenu = arrMenu1;
 
@@ -220,4 +200,67 @@
     </script>
 
     <script src="js/scripts.js"></script>
+
+    <script>
+        setTimeout(function() {
+            $.ajax({
+                url: '/admin/categories/categories',
+                dataType: 'json',
+                success: function(response) {
+                    var mm = [];
+
+                    for ( i = 0; i < response.length; i++) {
+                        var o = response[i];
+
+                        console.log(o);
+
+                        mi = [];
+                        mi[0] = o.title;
+                        mi[1] = 'uploads/2cfbe23bf91d2da6d84b4953306c0430e353a1b1.jpg';
+                        mi[2] = '#' + o.name;
+                        mi[3] = o.id;
+
+                        mm.push(mi);
+
+                        console.log(mm);
+                    }
+
+                    currentMenu = mm;
+
+                    init();
+                }
+            });
+
+
+
+            var arrMenu1 = [
+                ["asdsa", "uploads/2cfbe23bf91d2da6d84b4953306c0430e353a1b1.jpg", "#Transportation",
+                    [
+                        ["רכב", "logo.png", "#Transportation",
+                            [
+                                ["קנייה", "logo.png", "#Transportation"],
+                                ["ביטוחים, המרת רישיון נהיגה", "img/menu/3.png", "#Culture"],
+                                ["השכרת רכב", "img/menu/2.png", "#Tourism"],
+                                ["שיעורי נהיגה", "img/menu/1.png", "#HealthCare"],
+                                ["car 2 go, קל אוטו", "img/menu/1.png", "#HealthCare"]
+                            ]
+                        ],
+                        ["רכבות", "img/menu/3.png", "#Culture"],
+                        ["טיסות", "img/menu/2.png", "#Tourism"],
+                        ["מוניות/שירות", "img/menu/1.png", "#HealthCare"],
+                        ["אוטובוסים", "img/menu/1.png", "#HealthCare"]
+                    ]
+                ],
+                ["תרבות / חיי לילה", "img/menu/3.png", "#Culture"],
+                ["תיירות", "img/menu/2.png", "#Tourism"],
+                ["בריאות", "img/menu/1.png", "#HealthCare"]
+            ];
+
+            currentMenu = arrMenu1;
+
+            init();
+        }, 500);
+
+    </script>
+
 @stop
