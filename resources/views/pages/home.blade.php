@@ -212,8 +212,6 @@
                     for ( i = 0; i < response.length; i++) {
                         var o = response[i];
 
-                        console.log(o);
-
                         mi = [];
                         mi[0] = o.title;
                         mi[1] = 'uploads/2cfbe23bf91d2da6d84b4953306c0430e353a1b1.jpg';
@@ -221,8 +219,6 @@
                         mi[3] = o.id;
 
                         mm.push(mi);
-
-                        console.log(mm);
                     }
 
                     currentMenu = mm;
