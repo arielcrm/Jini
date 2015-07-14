@@ -10,7 +10,7 @@ composer.phar
 /public/appfiles/*/*/*
 # /public/build
 # /public/css
-/public/fonts
+# /public/fonts
 # /public/img
 # /public/js
 /resources/assets/build
