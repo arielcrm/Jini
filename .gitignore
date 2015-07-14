@@ -8,7 +8,7 @@ composer.phar
 # Builds paths (included to encourage builds)
 /public/appfiles/*/*
 /public/appfiles/*/*/*
-/public/build
+# /public/build
 # /public/css
 /public/fonts
 # /public/img
