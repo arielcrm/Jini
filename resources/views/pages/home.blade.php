@@ -221,10 +221,15 @@
                         mm.push(mi);
                     }
 
-                    console.log(mm);
+
                     currentMenu = mm;
+                    nbOfSlices = currentMenu.length;
+
+                    img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
 
                     init();
+
+
                 }
             });
 

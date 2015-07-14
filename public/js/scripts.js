@@ -46,6 +46,7 @@ function rotateItems(t) {
 }
 
 function drawPizzaSectors(t, e) {
+
     for (var i = 0; nbOfSlices > i; i++) {
         var n = document.createElementNS(svgns, "a");
         n.setAttribute("class", "item"), n.setAttribute("id", "item-" + (i + 1)), n.setAttribute("role", "link"), n.setAttribute("tabindex", "0"), n.setAttributeNS(xlinkns, "xlink:href", ""), n.setAttributeNS(xlinkns, "xlink:title", ""), n.setAttributeNS(xlinkns, "target", "_parent");
@@ -55,6 +56,7 @@ function drawPizzaSectors(t, e) {
 }
 
 function drawCutSectors(t, e, i) {
+
     for (var n = 0; nbOfSlices > n; n++) {
         var r = document.createElementNS(svgns, "a");
         var m = currentMenu[n];
