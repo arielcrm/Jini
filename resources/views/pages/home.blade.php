@@ -221,6 +221,7 @@
                         mm.push(mi);
                     }
 
+                    console.log(mm);
                     currentMenu = mm;
 
                     init();
