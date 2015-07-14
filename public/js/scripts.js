@@ -84,7 +84,7 @@ function drawCutSectors(t, e, i) {
 
                         mi = [];
                         mi[0] = o.title;
-                        mi[1] = 'uploads/2cfbe23bf91d2da6d84b4953306c0430e353a1b1.jpg';
+                        mi[1] = '/logo.png';
                         mi[2] = '#' + o.name;
                         mi[3] = o.id;
 
