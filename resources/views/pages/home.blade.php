@@ -33,7 +33,7 @@
                             transition: all .1s linear;
                             fill: #fff;
                             stroke: #a79157;
-                            opacity: 0.333;
+                            opacity: 0.6;
                         }
 
 
