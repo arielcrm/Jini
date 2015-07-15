@@ -67,9 +67,12 @@ function drawCutSectors(t, e, i) {
         r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
-            var imgSrc = currentMenu[itemIndex][1];
 
-            img.setAttributeNS(xlinkns, "xlink:href", imgSrc);
+            if (currentMenu[itemIndex][1]) {
+                var imgSrc = currentMenu[itemIndex][1];
+
+                img.setAttributeNS(xlinkns, "xlink:href", imgSrc);
+            }
         }, true);
         r.addEventListener(clickEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
