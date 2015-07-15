@@ -20,10 +20,11 @@ class CategoryController extends Controller {
         $response = $categories;
 
         foreach ($categories as $category) {
-            $contentImageId = ObjectMeta::getValue($category->id, '_content_image');
-
-            $contentImageUrl = getImageSrc($contentImageId, 'thumbnail');
-            $category['contentImageUrl'] = '/uploads/' . $contentImageUrl;
+            if ($contentImageId = ObjectMeta::getValue($category->id, '_content_image')) {
+                if ($contentImageUrl = getImageSrc($contentImageId, 'thumbnail')) {
+                    $category['contentImageUrl'] = '/uploads/' . $contentImageUrl;
+                }
+            }
         }
 
 //        $categories = Object::leftJoin('objects as t1', function($join) {
