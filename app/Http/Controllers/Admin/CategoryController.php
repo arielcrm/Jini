@@ -192,7 +192,11 @@ class CategoryController extends AdminController {
 
         $categories = Object::leftJoin('users as author', 'author.id', '=', 'objects.author_id')
             ->leftJoin('objects as parent', 'parent.id', '=', 'objects.parent_id')
-            ->select(array('objects.id', 'objects.title', 'author.name as author', 'parent.name as parent', 'objects.created_at'))
+            ->select('objects.id')
+            ->addSelect('objects.title')
+            ->addSelect('author.name AS author')
+            ->addSelect('parent.name AS parent')
+            ->addSelect('objects.created_at')
             ->where('objects.type', 'category');
 
         return Datatables::of($categories)

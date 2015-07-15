@@ -14,7 +14,7 @@ class CategoryController extends Controller {
 
         $categories = Object::where('objects.type', 'category')
             ->where('parent_id', $id)
-            ->select(array('objects.title', 'objects.name'))
+            ->select(array('objects.id, objects.title', 'objects.name'))
             ->get();
 
 
