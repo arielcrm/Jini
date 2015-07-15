@@ -128,8 +128,10 @@ function drawCutSectors(t, e, i) {
                     success: function(response) {
                         if (response) {
                             $('#sideBar1 .content').html(response);
-                            $('#sideBar1 .content').removeClass('preloader');
                         }
+                    },
+                    complete: function(response) {
+                        $('#sideBar1 .content').removeClass('preloader');
                     }
                 });
 
