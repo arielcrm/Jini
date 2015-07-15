@@ -5,9 +5,26 @@
     <div id="wrapper">
     <div class="container" id="container">
         <div id="sideBar1" class="side-bar side-bar-1">
-            <div class="info-pane">
+            <div class="logo-1"></div>
+            <nav>
+                <ul>
+                    <li class="recommended">
+                        <a href="#">&nbsp;</a>
+                    </li>
+                    <li class="info">
+                        <a href="#">&nbsp;</a>
+                    </li>
+                    <li class="contact">
+                        <a href="#">&nbsp;</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="info-pane pane">
                 <img class="top-image" src="" alt="" title="" />
-                <div class="content"></div>
+                <div class="info-content">
+                    <h2 class="title"><i>About Us</i></h2>
+                    <div class="content"></div>
+                </div>
             </div>
         </div>
 

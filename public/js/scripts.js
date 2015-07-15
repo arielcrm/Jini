@@ -61,10 +61,11 @@ function drawCutSectors(t, e, i) {
         var r = document.createElementNS(svgns, "a");
         var m = currentMenu[n];
         var l = m[2];
-        var z = m[4];
+        var z = m[1];
+        var tt = m[0];
 
 
-        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
+        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
 
@@ -78,9 +79,18 @@ function drawCutSectors(t, e, i) {
             var itemIndex = this.getAttribute("data-index");
             var itemId = this.getAttribute("data-id");
             var itemContentImage = this.getAttribute("data-content-image");
+            var itemTitle = this.getAttribute("data-title");
 
             if (t.button == 0) {
                 //img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
+
+                $('#sideBar1 .info-pane').show().animate({'width': '400'});
+
+                if (itemTitle) {
+                    $('#sideBar1 .info-pane .title').html('<i>' + itemTitle + '</i>');
+                } else {
+                    $('#sideBar1 .info-pane .title').html('');
+                }
 
                 if (itemContentImage) {
                     $('#sideBar1 .top-image').attr('src', itemContentImage);
@@ -121,7 +131,7 @@ function drawCutSectors(t, e, i) {
                         }
                 });
 
-                $('#sideBar1 .content').addClass('preloader');
+                $('#sideBar1 .info-pane').addClass('preloader');
                 $.ajax({
                     url: '/categories/' + itemId + '/content',
                     dataType: 'html',
@@ -133,7 +143,7 @@ function drawCutSectors(t, e, i) {
                         }
                     },
                     complete: function(response) {
-                        $('#sideBar1 .content').removeClass('preloader');
+                        $('#sideBar1 .info-pane').removeClass('preloader');
                     }
                 });
 
