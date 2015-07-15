@@ -128,6 +128,8 @@ function drawCutSectors(t, e, i) {
                     success: function(response) {
                         if (response) {
                             $('#sideBar1 .content').html(response);
+                        } else {
+                            $('#sideBar1 .content').html('');
                         }
                     },
                     complete: function(response) {
