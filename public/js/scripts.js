@@ -68,7 +68,7 @@ function drawCutSectors(t, e, i) {
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
 
-            if (currentMenu[itemIndex][1]) {
+            if (currentMenu[itemIndex] && currentMenu[itemIndex][1]) {
                 var imgSrc = currentMenu[itemIndex][1];
 
                 img.setAttributeNS(xlinkns, "xlink:href", imgSrc);
