@@ -61,8 +61,10 @@ function drawCutSectors(t, e, i) {
         var r = document.createElementNS(svgns, "a");
         var m = currentMenu[n];
         var l = m[2];
+        var z = m[4];
 
-        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
+
+        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
             var imgSrc = currentMenu[itemIndex][1];
@@ -72,38 +74,63 @@ function drawCutSectors(t, e, i) {
         r.addEventListener(clickEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
             var itemId = this.getAttribute("data-id");
+            var itemContentImage = this.getAttribute("data-content-image");
 
-            $.ajax({
-                url: '/admin/categories/categories/' + itemId,
-                dataType: 'json',
-                success: function(response) {
-                    var mm = [];
+            if (t.button == 0) {
+                //img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
 
-                    for ( i = 0; i < response.length; i++) {
-                        var o = response[i];
-
-                        mi = [];
-                        mi[0] = o.title;
-                        mi[1] = '/logo.png';
-                        mi[2] = '#' + o.name;
-                        mi[3] = o.id;
-
-                        mm.push(mi);
-                    }
-
-                    currentMenu = mm;
-
-                nbOfSlices = currentMenu.length;
-
-                img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
-
-                r.removeEventListener(clickEvent);
-
-                setTimeout(function() {
-                    init();
-                }, 1000);
+                if (itemContentImage) {
+                    $('#sideBar1 .top-image').attr('src', itemContentImage);
                 }
-            });
+
+                $.ajax({
+                    url: '/categories/' + itemId,
+                    dataType: 'json',
+                    success: function(response) {
+                            var mm = [];
+
+                        console.log(response);
+
+                            for ( i = 0; i < response.length; i++) {
+                                var o = response[i];
+
+                                mi = [];
+                                mi[0] = o.title;
+                                mi[1] = '/logo.png';
+                                mi[2] = '#' + o.name;
+                                mi[3] = o.id;
+                                mi[4] = o.contentImageUrl;
+
+                                mm.push(mi);
+                            }
+
+                            currentMenu = mm;
+
+                            nbOfSlices = currentMenu.length;
+
+
+
+                            r.removeEventListener(clickEvent);
+
+                            setTimeout(function() {
+                                init();
+                            }, 1000);
+                        }
+                });
+
+                $('#sideBar1 .content').addClass('preloader');
+                $.ajax({
+                    url: '/categories/' + itemId + '/content',
+                    dataType: 'html',
+                    success: function(response) {
+                        if (response) {
+                            $('#sideBar1 .content').html(response);
+                            $('#sideBar1 .content').removeClass('preloader');
+                        }
+                    }
+                });
+
+            }
 
 
 
@@ -212,7 +239,9 @@ function addIcons() {
 }
 
 function init() {
-    clearCanvas(), iconPosControl.setAttribute("max", .85 * menuRadius), iconPosControl.setAttribute("value", .68 * menuRadius), gaps ? (enableGapControl(), gapControl.setAttribute("max", angle), gapControl.setAttribute("min", nbOfSlices - 1)) : gaps || disableGapControl(), getAngle(nbOfSlices), getPizzaCoordinates(angle, menuRadius, menuCenter), "pizza" == menuStyle ? (drawPizzaSectors(menuCenter, menuRadius), disableRadiusControl()) : "pie" == menuStyle && (getCutCoordinates(angle, menuSmallRadius, menuCenter), drawCutSectors(menuCenter, menuRadius, menuSmallRadius), enableRadiusControl()), rotateItems(menuCenter), addIcons(), generateCode(), generateFile()
+    if (nbOfSlices > 0) {
+        clearCanvas(), iconPosControl.setAttribute("max", .85 * menuRadius), iconPosControl.setAttribute("value", .68 * menuRadius), gaps ? (enableGapControl(), gapControl.setAttribute("max", angle), gapControl.setAttribute("min", nbOfSlices - 1)) : gaps || disableGapControl(), getAngle(nbOfSlices), getPizzaCoordinates(angle, menuRadius, menuCenter), "pizza" == menuStyle ? (drawPizzaSectors(menuCenter, menuRadius), disableRadiusControl()) : "pie" == menuStyle && (getCutCoordinates(angle, menuSmallRadius, menuCenter), drawCutSectors(menuCenter, menuRadius, menuSmallRadius), enableRadiusControl()), rotateItems(menuCenter), addIcons(), generateCode(), generateFile()
+    }
 }
 
 function makeSpinnable(t) {

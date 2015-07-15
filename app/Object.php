@@ -29,4 +29,8 @@ class Object extends Model
     {
         return $this->belongsTo('App\User', 'author_id');
     }
+
+    public function scopeParent($query) {
+        return $query->whereNull('parent_id');
+    }
 }

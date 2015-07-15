@@ -47,7 +47,7 @@
                                 <option value="{{$item->id}}"
                                 @if(!empty($parent_id))
                                 @if($item->id==$parent_id)
-                                selected="selected" @endif @endif >{{$item->name}}</option>
+                                selected="selected" @endif @endif >{{$item->title}}</option>
                                 @endforeach
                             </select>
                         </div>

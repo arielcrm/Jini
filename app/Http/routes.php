@@ -16,6 +16,11 @@ Route::get('home', 'HomeController@index');
 Route::get('about', 'PagesController@about');
 Route::get('contact', 'PagesController@contact');
 
+Route::get('categories/', 'CategoryController@getCategories');
+Route::get('categories/{id}', 'CategoryController@getCategories');
+Route::get('categories/{id}/content', 'CategoryController@getCategoryContent');
+
+
 Route::pattern('id', '[0-9]+');
 Route::get('news/{id}', 'ArticlesController@show');
 Route::get('video/{id}', 'VideoController@show');
@@ -144,6 +149,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('categories/{id}/delete', 'CategoryController@getDelete');
     Route::post('categories/{id}/delete', 'CategoryController@postDelete');
     Route::get('categories/data', 'CategoryController@data');
-    Route::get('categories/categories', 'CategoryController@getCategories');
-    Route::get('categories/categories/{id}', 'CategoryController@getCategories');
 });

@@ -4,6 +4,11 @@
 
     <div id="wrapper">
     <div class="container" id="container">
+        <div id="sideBar1" class="side-bar-1">
+            <img class="top-image" src="" alt="" title="" />
+            <div class="content"></div>
+        </div>
+
         <div class="demo-wrapper">
             <div id="demo">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2 -2 504 504" id="menu">
@@ -204,7 +209,7 @@
     <script>
         setTimeout(function() {
             $.ajax({
-                url: '/admin/categories/categories',
+                url: '/categories',
                 dataType: 'json',
                 success: function(response) {
                     var mm = [];
@@ -217,6 +222,7 @@
                         mi[1] = '/logo.png';
                         mi[2] = '#' + o.name;
                         mi[3] = o.id;
+                        mi[4] = o.contentImageUrl;
 
                         mm.push(mi);
                     }
@@ -225,7 +231,7 @@
                     currentMenu = mm;
                     nbOfSlices = currentMenu.length;
 
-                    img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
+                    //img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
 
                     init();
 

@@ -9,9 +9,11 @@ body {
 a {
     color: inherit;
     outline: 0;
+    text-decoration: none;
 }
 a:hover, a:focus {
     outline: 0;
+    text-decoration: none;
 }
 .checkbox {
     background: url(../checkbox-unchecked.svg) no-repeat left 10px;
@@ -433,7 +435,7 @@ blockquote {
     }
     .demo-wrapper {
         width: 60%;
-        float: left
+        float: right;
     }
     fieldset {
         font-size: .8em
@@ -660,4 +662,24 @@ blockquote {
 .syntaxhighlighter .value {
     color: RGB(27, 107, 240)
 }
-//blue .syntaxhighlighter .functions{color:#ff1493}.syntaxhighlighter .constants{color:#06c}.syntaxhighlighter .script{font-weight:700;color:#3498DB;background-color:none}.syntaxhighlighter .color1,.syntaxhighlighter .color1 a{color:#333}.syntaxhighlighter .color2,.syntaxhighlighter .color2 a{color:#ff1493}.syntaxhighlighter .color3,.syntaxhighlighter .color3 a{color:red}.syntaxhighlighter{display:block;border-top:1px solid #ddd;border-bottom:1px solid #ddd;font-size:.9em;padding:1em 0;background-color:#fff;margin:2em 0!important;max-height:500px;overflow-y:auto}.syntaxhighlighter code{background:0 0;background-color:transparent;padding:0!important}.toolbar_item{display:none}
+.syntaxhighlighter .functions{color:#ff1493}.syntaxhighlighter .constants{color:#06c}.syntaxhighlighter .script{font-weight:700;color:#3498DB;background-color:none}.syntaxhighlighter .color1,.syntaxhighlighter .color1 a{color:#333}.syntaxhighlighter .color2,.syntaxhighlighter .color2 a{color:#ff1493}.syntaxhighlighter .color3,.syntaxhighlighter .color3 a{color:red}.syntaxhighlighter{display:block;border-top:1px solid #ddd;border-bottom:1px solid #ddd;font-size:.9em;padding:1em 0;background-color:#fff;margin:2em 0!important;max-height:500px;overflow-y:auto}.syntaxhighlighter code{background:0 0;background-color:transparent;padding:0!important}.toolbar_item{display:none}
+
+
+.side-bar-1 {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 350px;
+    height: 700px;
+
+    background: #fff;
+    border-right: 5px solid blue;
+}
+.side-bar-1 .content.preloader {
+    width: 100%;
+    height: 300px;
+    background: url('../img/preloader.gif') no-repeat 0 0;
+}
+
+
+
