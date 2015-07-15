@@ -4,9 +4,11 @@
 
     <div id="wrapper">
     <div class="container" id="container">
-        <div id="sideBar1" class="side-bar-1">
-            <img class="top-image" src="" alt="" title="" />
-            <div class="content"></div>
+        <div id="sideBar1" class="side-bar side-bar-1">
+            <div class="info-pane">
+                <img class="top-image" src="" alt="" title="" />
+                <div class="content"></div>
+            </div>
         </div>
 
         <div class="demo-wrapper">
@@ -45,7 +47,7 @@
                         .menu-trigger {
                             fill: #fff;
                             stroke: #a79157;
-                            opacity: 0.4;
+                            opacity: 0.8;
                             pointer-events: auto; /* KEEP THIS to make sure it stays clickable even when SVG's pointer events is disabled */
                         }
 
@@ -258,7 +260,7 @@
 
                         mi = [];
                         mi[0] = o.title;
-                        mi[1] = '/logo.png';
+                        mi[1] = o.featuredImageUrl;
                         mi[2] = '#' + o.name;
                         mi[3] = o.id;
                         mi[4] = o.contentImageUrl;

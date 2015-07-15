@@ -99,7 +99,7 @@ function drawCutSectors(t, e, i) {
 
                                 mi = [];
                                 mi[0] = o.title;
-                                mi[1] = '/logo.png';
+                                mi[1] = o.featuredImageUrl;
                                 mi[2] = '#' + o.name;
                                 mi[3] = o.id;
                                 mi[4] = o.contentImageUrl;

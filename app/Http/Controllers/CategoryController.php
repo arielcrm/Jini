@@ -26,7 +26,15 @@ class CategoryController extends Controller {
                     $category['contentImageUrl'] = '/uploads/' . $contentImageUrl;
                 }
             }
+
+            if ($featuredImageId = ObjectMeta::getValue($category->id, '_featured_image')) {
+                if ($featuredImageUrl = getImageSrc($featuredImageId, 'thumbnail')) {
+                    $category['featuredImageUrl'] = '/uploads/' . $featuredImageUrl;
+                }
+            }
         }
+        
+        
 
 //        $categories = Object::leftJoin('objects as t1', function($join) {
 //            $join->on('objects.id', '=', 't1.parent_id');

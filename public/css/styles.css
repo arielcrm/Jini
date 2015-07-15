@@ -772,10 +772,12 @@ blockquote {
 
 .side-bar-1 {
     position: fixed;
-    top: 70px;
+    top: 0;
     left: 0;
-    width: 350px;
-    height: 700px;
+    bottom: 0;
+    width: 90px;
+    background: #fff;
+    height: 100%;
 
     background: #fff;
     border-right: 5px solid #f1f1f1;
