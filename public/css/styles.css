@@ -673,7 +673,7 @@ blockquote {
     height: 700px;
 
     background: #fff;
-    border-right: 5px solid blue;
+    border-right: 5px solid #f1f1f1;
 }
 .side-bar-1 .content.preloader {
     width: 100%;
