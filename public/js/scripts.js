@@ -246,6 +246,7 @@ function addIcons() {
 }
 
 function init() {
+    gap = 100;
     if (nbOfSlices > 0) {
         clearCanvas(), iconPosControl.setAttribute("max", .85 * menuRadius), iconPosControl.setAttribute("value", .68 * menuRadius), gaps ? (enableGapControl(), gapControl.setAttribute("max", angle), gapControl.setAttribute("min", nbOfSlices - 1)) : gaps || disableGapControl(), getAngle(nbOfSlices), getPizzaCoordinates(angle, menuRadius, menuCenter), "pizza" == menuStyle ? (drawPizzaSectors(menuCenter, menuRadius), disableRadiusControl()) : "pie" == menuStyle && (getCutCoordinates(angle, menuSmallRadius, menuCenter), drawCutSectors(menuCenter, menuRadius, menuSmallRadius), enableRadiusControl()), rotateItems(menuCenter), addIcons(), generateCode(), generateFile()
     }
@@ -3207,10 +3208,12 @@ var svg = document.getElementById("menu"),
     gapOption = document.getElementById("gaps"),
     //nbOfSlices = parseInt(nb.value),
     nbOfSlices = currentMenu.length,
+    gap = 100,
     menuLevel = 0,
     typeOfCircle = document.querySelector('input[name="type"]:checked').value,
     menuStyle = document.querySelector('input[name="style"]:checked').value,
-    gaps = document.getElementById("gaps").checked,
+    //gaps = document.getElementById("gaps").checked,
+    gaps = true,
     img = document.createElementNS(svgns, "image"),
     menuCenter = {
         x: 250,
@@ -3224,7 +3227,7 @@ var svg = document.getElementById("menu"),
 iconPos = "pie" == menuStyle ? .75 * menuRadius : .68 * menuRadius;
 var iconWidth = 40,
     iconHeight = 40,
-    angle, pizzaCoordinates = {}, pieCoordinates = {}, gap = 10;
+    angle, pizzaCoordinates = {}, pieCoordinates = {}, gap = 100;
 typePicker[0].onclick = function() {
     typeOfCircle = this.value, init()
 }, typePicker[1].onclick = function() {

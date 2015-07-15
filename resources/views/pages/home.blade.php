@@ -10,6 +10,7 @@
         </div>
 
         <div class="demo-wrapper">
+            <a href="#" id="homeLink" class="home-button">Home</a>
             <div id="demo">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2 -2 504 504" id="menu">
                     <style>
@@ -22,6 +23,8 @@
                         a {
                             cursor: pointer; /* SVG &lt;a&gt; elements don't get this by default, so you need to explicitly set it */
                             outline: none;
+                            font-weight: bold;
+                            font-size: 17px;
                         }
 
                         /* You can change these default styles any way you want */
@@ -30,7 +33,7 @@
                             transition: all .1s linear;
                             fill: #fff;
                             stroke: #a79157;
-                            opacity: 0.4;
+                            opacity: 0.333;
                         }
 
 
@@ -207,6 +210,42 @@
     <script src="js/scripts.js"></script>
 
     <script>
+        $('#homeLink').on('click', function(e) {
+
+            $.ajax({
+                url: '/categories',
+                dataType: 'json',
+                success: function(response) {
+                    var mm = [];
+
+                    console.log(response);
+
+                    for ( i = 0; i < response.length; i++) {
+                        var o = response[i];
+
+                        mi = [];
+                        mi[0] = o.title;
+                        mi[1] = '/logo.png';
+                        mi[2] = '#' + o.name;
+                        mi[3] = o.id;
+                        mi[4] = o.contentImageUrl;
+
+                        mm.push(mi);
+                    }
+
+                    currentMenu = mm;
+
+                    nbOfSlices = currentMenu.length;
+
+                    setTimeout(function() {
+                        init();
+                    }, 1000);
+                }
+            });
+
+
+        });
+
         setTimeout(function() {
             $.ajax({
                 url: '/categories',
