@@ -832,23 +832,32 @@ blockquote {
 }
 .side-bar-1 .pane {
 }
+.side-bar-1 .back-button {
+    display: block;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 53px;
+    height: 53px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .side-bar-1 .back-button:before {
     position: relative;
-    top: 19px;
+    top: 8px;
     font-family: 'Glyphicons Halflings';
     font-style: normal;
     font-weight: 400;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content: "\e259";
+    content: "\e257";
     position: absolute;
     z-index: 9002;
     right: 0;
-    font-size: 20px;
+    font-size: 40px;
     width: 100%;
-    color: #cbaec4;
-    text-align: center
+    color: #ccc;
+    text-align: center;
 }
 .side-bar-1 .pane.preloader {
     background-image: url('../img/preloader.gif');

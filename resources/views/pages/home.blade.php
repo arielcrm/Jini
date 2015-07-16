@@ -232,6 +232,15 @@
     <script src="js/scripts.js"></script>
 
     <script>
+        $('.info-pane-wrapper .back-button').on("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            $(this).parent().animate({'width': '0'}, function() {
+                $(this).hide();
+            });
+        });
+
         $('#homeLink').on('click', function(e) {
 
             $.ajax({
