@@ -19,17 +19,20 @@
                     </li>
                 </ul>
             </nav>
-            <div class="info-pane pane">
-                <img class="top-image" src="" alt="" title="" />
-                <div class="info-content">
-                    <h2 class="title"><i>About Us</i></h2>
-                    <div class="content"></div>
+            <div class="info-pane-wrapper pane-wrapper">
+                <div class="info-pane pane">
+                    <img class="top-image" src="" alt="" title="" />
+                    <div class="info-content">
+                        <h2 class="title"><i>About Us</i></h2>
+                        <div class="content"></div>
+                    </div>
                 </div>
+                <a href="#" class="back-button">&nbsp;</a>
             </div>
         </div>
 
         <div class="demo-wrapper">
-            <a href="#" id="homeLink" class="home-button">Home</a>
+            <a href="#" id="homeLink" class="home-button">&nbsp;</a>
             <div id="demo">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2 -2 504 504" id="menu">
                     <style>
@@ -57,8 +60,8 @@
 
 
                         .item:hover .sector, .item:focus .sector {
-                            fill: #a79157;
-                            opacity: 1;
+                            fill: #fff;
+                            opacity: 0.8;
                         }
 
                         .menu-trigger {
@@ -244,7 +247,7 @@
 
                         mi = [];
                         mi[0] = o.title;
-                        mi[1] = '/logo.png';
+                        mi[1] = '';
                         mi[2] = '#' + o.name;
                         mi[3] = o.id;
                         mi[4] = o.contentImageUrl;

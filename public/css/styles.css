@@ -831,8 +831,24 @@ blockquote {
     background-image: url('../img/icons/phone.png');
 }
 .side-bar-1 .pane {
-    width: 0;
-    display: none;
+}
+.side-bar-1 .back-button:before {
+    position: relative;
+    top: 19px;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\e259";
+    position: absolute;
+    z-index: 9002;
+    right: 0;
+    font-size: 20px;
+    width: 100%;
+    color: #cbaec4;
+    text-align: center
 }
 .side-bar-1 .pane.preloader {
     background-image: url('../img/preloader.gif');
@@ -841,13 +857,23 @@ blockquote {
     font-size: 72px;
     font-style: italic;
 }
-.side-bar-1 .info-pane {
+.side-bar-1 .pane-wrapper {
+    display: none;
+}
+.side-bar-1 .info-pane-wrapper {
     position: absolute;
     top: 0;
     left: 91px;
     bottom: 0;
     /*width: 652px;*/
     width: 0;
+    height: 100%;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.side-bar-1 .info-pane {
+    width: 400px;
     height: 100%;
     background-color: #fff;
     background-repeat: no-repeat;
@@ -862,3 +888,17 @@ blockquote {
 }
 
 
+/* Buttons */
+.home-button {
+    display: block;
+    width: 98px;
+    height: 98px;
+    background-color: #fff;
+    background-image: url('../img/icons/home.png');
+    background-repeat: no-repeat;
+    background-position: center;
+
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}

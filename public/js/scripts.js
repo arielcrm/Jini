@@ -72,9 +72,56 @@ function drawCutSectors(t, e, i) {
             if (currentMenu[itemIndex] && currentMenu[itemIndex][1]) {
                 var imgSrc = currentMenu[itemIndex][1];
 
-                img.setAttributeNS(xlinkns, "xlink:href", imgSrc);
+                if (imgSrc && imgSrc != 'undefined') {
+                    img.setAttributeNS(xlinkns, "xlink:href", imgSrc);
+                } else {
+                    img.setAttributeNS(xlinkns, "xlink:href", 'img/no_selector.png');
+                }
+            } else {
+                img.setAttributeNS(xlinkns, "xlink:href", 'img/no_selector.png');
             }
         }, true);
+        r.addEventListener('dblclick', function(t) {
+            var itemIndex = this.getAttribute("data-index");
+            var itemId = this.getAttribute("data-id");
+            var itemContentImage = this.getAttribute("data-content-image");
+            var itemTitle = this.getAttribute("data-title");
+
+            $.ajax({
+                url: '/categories/' + itemId,
+                dataType: 'json',
+                success: function(response) {
+                    var mm = [];
+
+                    console.log(response);
+
+                    for ( i = 0; i < response.length; i++) {
+                        var o = response[i];
+
+                        mi = [];
+                        mi[0] = o.title;
+                        mi[1] = o.featuredImageUrl;
+                        mi[2] = '#' + o.name;
+                        mi[3] = o.id;
+                        mi[4] = o.contentImageUrl;
+
+                        mm.push(mi);
+                    }
+
+                    currentMenu = mm;
+
+                    nbOfSlices = currentMenu.length;
+
+
+
+                    r.removeEventListener(clickEvent);
+
+                    setTimeout(function() {
+                        init();
+                    }, 1000);
+                }
+            });
+        });
         r.addEventListener(clickEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
             var itemId = this.getAttribute("data-id");
@@ -84,7 +131,7 @@ function drawCutSectors(t, e, i) {
             if (t.button == 0) {
                 //img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
 
-                $('#sideBar1 .info-pane').show().animate({'width': '400'});
+                $('#sideBar1 .info-pane-wrapper').show().animate({'width': '400'});
 
                 if (itemTitle) {
                     $('#sideBar1 .info-pane .title').html('<i>' + itemTitle + '</i>');
@@ -92,44 +139,14 @@ function drawCutSectors(t, e, i) {
                     $('#sideBar1 .info-pane .title').html('');
                 }
 
-                if (itemContentImage) {
+                if (itemContentImage && itemContentImage != 'undefined') {
                     $('#sideBar1 .top-image').attr('src', itemContentImage);
+                    $('#sideBar1 .top-image').show();
+                } else {
+                    $('#sideBar1 .top-image').hide();
                 }
 
-                $.ajax({
-                    url: '/categories/' + itemId,
-                    dataType: 'json',
-                    success: function(response) {
-                            var mm = [];
 
-                        console.log(response);
-
-                            for ( i = 0; i < response.length; i++) {
-                                var o = response[i];
-
-                                mi = [];
-                                mi[0] = o.title;
-                                mi[1] = o.featuredImageUrl;
-                                mi[2] = '#' + o.name;
-                                mi[3] = o.id;
-                                mi[4] = o.contentImageUrl;
-
-                                mm.push(mi);
-                            }
-
-                            currentMenu = mm;
-
-                            nbOfSlices = currentMenu.length;
-
-
-
-                            r.removeEventListener(clickEvent);
-
-                            setTimeout(function() {
-                                init();
-                            }, 1000);
-                        }
-                });
 
                 $('#sideBar1 .info-pane').addClass('preloader');
                 $.ajax({
@@ -243,7 +260,7 @@ function addIcons() {
         var c = document.createElementNS(svgns, "symbol");
         c.setAttribute("class", "icon icon-"), c.setAttribute("id", "icon-" + (n + 1)), c.setAttribute("viewBox", "0 0 " + iconWidth + " " + iconHeight);
 
-        img.setAttribute("width", "200"), img.setAttribute("height", "200"), img.setAttribute("x", "150"),img.setAttribute("y", "150"), img.setAttributeNS(xlinkns, "xlink:href", "logo.png");
+        img.setAttribute("width", "200"), img.setAttribute("height", "200"), img.setAttribute("x", "150"),img.setAttribute("y", "150"), img.setAttributeNS(xlinkns, "xlink:href", "img/no_selector.png");
         svg.appendChild(img);
 
         //var f = document.createElementNS(svgns, "rect");
@@ -3229,7 +3246,7 @@ var svg = document.getElementById("menu"),
         x: 250,
         y: 250
     }, menuRadius = 250,
-    menuSmallRadius = 150,
+    menuSmallRadius = 145,
     iconPos;
 
 
