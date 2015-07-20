@@ -840,6 +840,7 @@ blockquote {
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 9001;
 }
 .side-bar-1 .back-button:before {
     position: relative;

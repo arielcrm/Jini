@@ -236,6 +236,7 @@
             e.preventDefault();
             e.stopPropagation();
 
+
             $(this).parent().animate({'width': '0'}, function() {
                 $(this).hide();
             });
