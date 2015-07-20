@@ -863,8 +863,6 @@ blockquote {
     background-image: url('../img/preloader.gif');
 }
 .side-bar-1 .pane.preloader h2 {
-    font-size: 72px;
-    font-style: italic;
 }
 .side-bar-1 .pane-wrapper {
     display: none;

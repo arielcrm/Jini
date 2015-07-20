@@ -64,125 +64,98 @@ function drawCutSectors(t, e, i) {
         var z = m[1];
         var tt = m[0];
 
+        console.log(m);
 
-        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
+
+        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-featured-image", m[1]), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
+            var itemId = this.getAttribute("data-id");
+            var itemFeaturedImageSrc = this.getAttribute("data-featured-image");
+            var itemContentImageSrc = this.getAttribute("data-content-image");
+            var itemTitle = this.getAttribute("data-title");
 
-            if (currentMenu[itemIndex] && currentMenu[itemIndex][1]) {
-                var imgSrc = currentMenu[itemIndex][1];
+            console.log(itemFeaturedImageSrc);
 
-                if (imgSrc && imgSrc != 'undefined') {
-                    img.setAttributeNS(xlinkns, "xlink:href", imgSrc);
-                } else {
-                    img.setAttributeNS(xlinkns, "xlink:href", 'img/no_selector.png');
-                }
+
+            if (itemFeaturedImageSrc && itemFeaturedImageSrc != 'undefined') {
+                img.setAttributeNS(xlinkns, "xlink:href", itemFeaturedImageSrc);
             } else {
                 img.setAttributeNS(xlinkns, "xlink:href", 'img/no_selector.png');
             }
-        }, true);
-        r.addEventListener('dblclick', function(t) {
-            var itemIndex = this.getAttribute("data-index");
-            var itemId = this.getAttribute("data-id");
-            var itemContentImage = this.getAttribute("data-content-image");
-            var itemTitle = this.getAttribute("data-title");
 
+
+            $('#sideBar1 .info-pane-wrapper').show().animate({'width': '400'});
+
+            if (itemTitle) {
+                $('#sideBar1 .info-pane .title').html(itemTitle);
+            } else {
+                $('#sideBar1 .info-pane .title').html('');
+            }
+
+            if (itemContentImageSrc && itemContentImageSrc != 'undefined') {
+                $('#sideBar1 .top-image').attr('src', itemContentImageSrc);
+                $('#sideBar1 .top-image').show();
+            } else {
+                $('#sideBar1 .top-image').hide();
+            }
+
+
+
+            $('#sideBar1 .info-pane').addClass('preloader');
             $.ajax({
-                url: '/categories/' + itemId,
-                dataType: 'json',
+                url: '/categories/' + itemId + '/content',
+                dataType: 'html',
                 success: function(response) {
-                    var mm = [];
-
-                    console.log(response);
-
-                    for ( i = 0; i < response.length; i++) {
-                        var o = response[i];
-
-                        mi = [];
-                        mi[0] = o.title;
-                        mi[1] = o.featuredImageUrl;
-                        mi[2] = '#' + o.name;
-                        mi[3] = o.id;
-                        mi[4] = o.contentImageUrl;
-
-                        mm.push(mi);
+                    if (response) {
+                        $('#sideBar1 .content').html(response);
+                    } else {
+                        $('#sideBar1 .content').html('');
                     }
-
-                    currentMenu = mm;
-
-                    nbOfSlices = currentMenu.length;
-
-
-
-                    r.removeEventListener(clickEvent);
-
-                    setTimeout(function() {
-                        init();
-                    }, 1000);
+                },
+                complete: function(response) {
+                    $('#sideBar1 .info-pane').removeClass('preloader');
                 }
             });
-        });
+        }, true);
+
         r.addEventListener(clickEvent, function(t) {
-            var itemIndex = this.getAttribute("data-index");
-            var itemId = this.getAttribute("data-id");
-            var itemContentImage = this.getAttribute("data-content-image");
-            var itemTitle = this.getAttribute("data-title");
-
             if (t.button == 0) {
-                //img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
+                var itemId = this.getAttribute("data-id");
 
-                $('#sideBar1 .info-pane-wrapper').show().animate({'width': '400'});
-
-                if (itemTitle) {
-                    $('#sideBar1 .info-pane .title').html('<i>' + itemTitle + '</i>');
-                } else {
-                    $('#sideBar1 .info-pane .title').html('');
-                }
-
-                if (itemContentImage && itemContentImage != 'undefined') {
-                    $('#sideBar1 .top-image').attr('src', itemContentImage);
-                    $('#sideBar1 .top-image').show();
-                } else {
-                    $('#sideBar1 .top-image').hide();
-                }
-
-
-
-                $('#sideBar1 .info-pane').addClass('preloader');
                 $.ajax({
-                    url: '/categories/' + itemId + '/content',
-                    dataType: 'html',
+                    url: '/categories/' + itemId,
+                    dataType: 'json',
                     success: function(response) {
-                        if (response) {
-                            $('#sideBar1 .content').html(response);
-                        } else {
-                            $('#sideBar1 .content').html('');
+                        var mm = [];
+
+                        console.log(response);
+
+                        for ( i = 0; i < response.length; i++) {
+                            var o = response[i];
+
+                            mi = [];
+                            mi[0] = o.title;
+                            mi[1] = o.featuredImageUrl;
+                            mi[2] = '#' + o.name;
+                            mi[3] = o.id;
+                            mi[4] = o.contentImageUrl;
+
+                            mm.push(mi);
                         }
-                    },
-                    complete: function(response) {
-                        $('#sideBar1 .info-pane').removeClass('preloader');
+
+                        currentMenu = mm;
+
+                        nbOfSlices = currentMenu.length;
+
+                        init();
                     }
                 });
 
             }
-
-
-
-//            if (itemIndex == 0) {
-//                currentMenu = currentMenu[itemIndex][3];
-//
-//                nbOfSlices = currentMenu.length;
-//
-//                img.setAttributeNS(xlinkns, "xlink:href", "img/preloader.gif");
-//
-//                r.removeEventListener(clickEvent);
-//
-//                setTimeout(function() {
-//                    init();
-//                }, 1000);
-//
-//            }
         }, true);
+
+
         var s = document.createElementNS(svgns, "path");
         s.setAttribute("fill", "none"), s.setAttribute("stroke", "#111"), s.setAttribute("d", "M" + (t.x + i) + "," + t.y + " l" + (e - i) + ",0 A" + e + "," + e + " 0 0,0 " + pizzaCoordinates.x + "," + pizzaCoordinates.y + " l" + -(pizzaCoordinates.x - pieCoordinates.x) + "," + (-pizzaCoordinates.y + pieCoordinates.y) + " A" + i + "," + i + " 0 0,1 " + (t.x + i) + "," + t.y), s.setAttribute("class", "sector"), r.appendChild(s), itemsContainer.appendChild(document.createTextNode("        ")), itemsContainer.appendChild(r), itemsContainer.appendChild(document.createTextNode("\n"))
     }

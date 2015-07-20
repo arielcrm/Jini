@@ -23,7 +23,7 @@
                 <div class="info-pane pane">
                     <img class="top-image" src="" alt="" title="" />
                     <div class="info-content">
-                        <h2 class="title"><i>About Us</i></h2>
+                        <h2 class="title">About Us</h2>
                         <div class="content"></div>
                     </div>
                 </div>
@@ -242,39 +242,35 @@
         });
 
         $('#homeLink').on('click', function(e) {
+            if (e.button == 0) {
+                $.ajax({
+                    url: '/categories',
+                    dataType: 'json',
+                    success: function(response) {
+                        var mm = [];
 
-            $.ajax({
-                url: '/categories',
-                dataType: 'json',
-                success: function(response) {
-                    var mm = [];
+                        for ( i = 0; i < response.length; i++) {
+                            var o = response[i];
 
-                    console.log(response);
+                            mi = [];
+                            mi[0] = o.title;
+                            mi[1] = o.featuredImageUrl;
+                            mi[2] = '#' + o.name;
+                            mi[3] = o.id;
+                            mi[4] = o.contentImageUrl;
 
-                    for ( i = 0; i < response.length; i++) {
-                        var o = response[i];
+                            mm.push(mi);
+                        }
 
-                        mi = [];
-                        mi[0] = o.title;
-                        mi[1] = '';
-                        mi[2] = '#' + o.name;
-                        mi[3] = o.id;
-                        mi[4] = o.contentImageUrl;
+                        currentMenu = mm;
 
-                        mm.push(mi);
-                    }
+                        nbOfSlices = currentMenu.length;
 
-                    currentMenu = mm;
-
-                    nbOfSlices = currentMenu.length;
-
-                    setTimeout(function() {
                         init();
-                    }, 1000);
-                }
-            });
+                    }
+                });
 
-
+            }
         });
 
         setTimeout(function() {
