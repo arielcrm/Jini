@@ -33,4 +33,12 @@ class Object extends Model
     public function scopeParent($query) {
         return $query->whereNull('parent_id');
     }
+
+    public function getValue($key) {
+        return ObjectMeta::getValue($this->id, $key);
+    }
+
+    public function setValue($key, $value) {
+        return ObjectMeta::setValue($this->id, $key, $value);
+    }
 }

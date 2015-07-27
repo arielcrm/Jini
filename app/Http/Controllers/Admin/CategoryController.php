@@ -56,7 +56,7 @@ class CategoryController extends AdminController {
         }
         $object->author_id = Auth::user()->id;
         $object->type = 'category';
-        $object->name = preg_replace('[ ]', '-', strtolower( $request->title ));
+        $object->name = preg_replace('[ ]', '-', strtolower( $request->name ));
         $object->title = $request->title;
         $object->content = $request->content;
         $object->excerpt = $request->content;
@@ -80,16 +80,17 @@ class CategoryController extends AdminController {
             ->where('id', '!=', $id)
             ->get();
 
-        if ($imageObjectId = ObjectMeta::getValue($id, '_featured_image')) {
+        if ($imageObjectId = $object->getValue('_featured_image')) {
             $featuredImage = getImageSrc($imageObjectId, 'thumbnail');
         }
 
-        if ($imageObjectId = ObjectMeta::getValue($id, '_content_image')) {
+        if ($imageObjectId = $object->getValue('_content_image')) {
             $contentImage = getImageSrc($imageObjectId, 'thumbnail');
         }
 
+        $toolTip = $object->getValue('_tooltip');
 
-        return view('admin.category.create_edit', compact('object', 'parent_id', 'categories', 'featuredImage', 'contentImage'));
+        return view('admin.category.create_edit', compact('object', 'parent_id', 'categories', 'featuredImage', 'contentImage', 'toolTip'));
     }
 
     /**
@@ -108,10 +109,10 @@ class CategoryController extends AdminController {
             $object->parent_id = null;
         }
         $object->author_id = Auth::user()->id;
-        $object->name = preg_replace('[ ]', '-', strtolower( $request->title ));
+        $object->name = preg_replace('[ ]', '-', strtolower( $request->name ));
         $object->title = $request->title;
         $object->content = $request->content;
-        $object->excerpt = $request->content;
+        $object->excerpt = $request->excerpt;
 
         if($request->hasFile('featuredImage'))
         {
@@ -147,8 +148,9 @@ class CategoryController extends AdminController {
             }
         }
 
-
         $object->save();
+
+        $object->setValue('_tooltip', $request->toolTip);
 
         return redirect('admin/categories')->with('message', 'Object saved successfully');
     }

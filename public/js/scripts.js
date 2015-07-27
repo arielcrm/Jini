@@ -3035,7 +3035,7 @@ var _gsScope = "undefined" != typeof module && module.exports && "undefined" != 
                         if (g ? t = D(t, !0) : !K || t.touches && t.touches.length > x + 1 || (t.preventDefault(), t.preventManipulation && t.preventManipulation()), t.changedTouches ? (t = oe = t.changedTouches[0], le = t.identifier) : t.pointerId ? le = t.pointerId : oe = null, x++, P(ze), G = E.pointerY = t.pageY, J = E.pointerX = t.pageX, Xe(), Ae && (i = J * Ae[0] + G * Ae[2] + Ae[4], G = J * Ae[1] + G * Ae[3] + Ae[5], J = i), E.tween && E.tween.kill(), e.killTweensOf(K || o, !0, F), K && e.killTweensOf(o, !0, {
                             scrollTo: 1
                         }), E.tween = E.lockedAxis = null, (h.zIndexBoost || !y && !K && h.zIndexBoost !== !1) && (o.style.zIndex = Pe.zIndex++), E.isPressed = !0, te = !(!h.onDrag && !E._listeners.drag), !y)
-                            for (n = B.length; --n > -1;) H(B[n], "cursor", h.cursor || "move");
+                            for (n = B.length; --n > -1;) H(B[n], "cursor", h.cursor || "pointer");
                         q(E, "press", "onPress")
                     }, qe = function(t) {
                         if (Y && !w && E.isPressed) {
@@ -3066,7 +3066,7 @@ var _gsScope = "undefined" != typeof module && module.exports && "undefined" != 
                                 r, s, a;
                             if (Ce ? (ve(Ce, "touchend", Ke), ve(Ce, "touchmove", qe), ve(Ce, "touchcancel", Ke), ve(l, "touchstart", xe)) : ve(l, "mousemove", qe), ve(l, "mouseup", Ke), t && ve(t.target, "mouseup", Ke), fe = !1, Se) return t && ve(t.target, "change", Ke), Te(B, !1), q(E, "release", "onRelease"), q(E, "click", "onClick"), void(Se = !1);
                             if (A(ze), !y)
-                                for (s = B.length; --s > -1;) H(B[s], "cursor", h.cursor || "move");
+                                for (s = B.length; --s > -1;) H(B[s], "cursor", h.cursor || "pointer");
                             if (n && (X = T = d(), E.isDragging = !1), x--, t) {
                                 if (g && (t = D(t, !1)), r = t.changedTouches, r && (t = r[0], t !== oe && t.identifier !== le)) {
                                     for (s = r.length; --s > -1 && (t = r[s]).identifier !== le;);
@@ -3109,7 +3109,7 @@ var _gsScope = "undefined" != typeof module && module.exports && "undefined" != 
                 }, this.enable = function(t) {
                     var i, n, r;
                     if ("soft" !== t) {
-                        for (n = B.length; --n > -1;) r = B[n], _e(r, "mousedown", Ve), _e(r, "touchstart", Ve), _e(r, "click", Ge), y || H(r, "cursor", h.cursor || "move"), H(r, "touchCallout", "none"), H(r, "touchAction", "none");
+                        for (n = B.length; --n > -1;) r = B[n], _e(r, "mousedown", Ve), _e(r, "touchstart", Ve), _e(r, "click", Ge), y || H(r, "cursor", h.cursor || "pointer"), H(r, "touchCallout", "none"), H(r, "touchAction", "none");
                         Te(B, !1)
                     }
                     return L(E.target, Je), Y = !0, C && "soft" !== t && C.track(K || o, m ? "x,y" : y ? "rotation" : "top,left"), K && K.enable(), o._gsDragID = i = "d" + v++, _[i] = this, K && (K.element._gsDragID = i), e.set(o, {

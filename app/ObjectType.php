@@ -9,7 +9,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ObjectType extends Model
+class ObjectType extends Object
 {
     /**
      * The attributes that are mass assignable.
@@ -17,4 +17,8 @@ class ObjectType extends Model
      * @var array
      */
     protected $fillable = ['name', 'display_name', 'description'];
+
+    public static function get() {
+        //Object::where('')
+    }
 }

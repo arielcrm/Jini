@@ -28,6 +28,16 @@
             <div class="tab-pane active" id="tab-general">
                 <div class="col-md-8">
                     <div
+                        class="form-group {{{ $errors->has('name') ? 'has-error' : '' }}}">
+                        <div class="col-md-12">
+                            <label class="control-label" for="name"> {{
+                                trans("admin/admin.name") }}</label> <input
+                                class="form-control" type="text" name="name" id="name"
+                                value="{{{ Input::old('name', isset($object) ? $object->name : null) }}}" />
+                            {!!$errors->first('name', '<label class="control-label">:message</label>')!!}
+                        </div>
+                    </div>                    
+                    <div
                         class="form-group {{{ $errors->has('title') ? 'has-error' : '' }}}">
                         <div class="col-md-12">
                             <label class="control-label" for="title"> {{
@@ -52,6 +62,16 @@
                             </select>
                         </div>
                     </div>
+                    <div
+                        class="form-group {{{ $errors->has('tooltip') ? 'has-error' : '' }}}">
+                        <div class="col-md-12">
+                            <label class="control-label" for="tooltip"> {{
+                                trans("admin/admin.tooltip") }}</label> <input
+                                class="form-control" type="text" name="toolTip" id="toolTip"
+                                value="{{{ Input::old('tooltip', isset($object) ? $toolTip : null) }}}" />
+                            {!!$errors->first('tooltip', '<label class="control-label">:message</label>')!!}
+                        </div>
+                    </div>                    
 
                     <div class="form-group">
                         <div class="col-md-12">
@@ -61,6 +81,15 @@
                                       name="content" rows="10">{{{ Input::old('content', isset($object) ? $object->content : null) }}}</textarea>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <label class="control-label" for="excerpt">{{
+                                trans("admin/admin.excerpt") }}</label>
+                            <textarea class="form-control full-width wysihtml5"
+                                      name="excerpt" rows="10">{{{ Input::old('excerpt', isset($object) ? $object->excerpt : null) }}}</textarea>
+                        </div>
+                    </div>                    
                 </div>
                     <!-- ./ general tab -->
                 <div class="col-md-4">
