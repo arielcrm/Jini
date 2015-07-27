@@ -8,7 +8,7 @@
 @section('main')
 <div class="page-header">
     <h3>
-        {{{ trans("admin/objecttype.objecttypes") }}} @if (isset($objecttype)) - {{ $objecttype->display_name }} @endif
+        {{{ trans("admin/objecttype.objecttypes") }}} @if (isset($objecttype)) - {{ $objecttype->title }} @endif
         <div class="pull-right">
             <div class="pull-right">
                 <a href="{{{ URL::to('admin/object-types/create') }}}"
@@ -44,16 +44,16 @@
 					<div class="col-md-12">
 						<label class="control-label" for="name"> {{
 							trans("admin/admin.name") }}</label> <input
-							class="form-control" type="text" name="name" id="name"
+							class="form-control" type="text" name="name" id="name" disabled
 							value="{{{ Input::old('name', isset($objecttype) ? $objecttype->name : null) }}}" />
 						{!!$errors->first('name', '<span class="help-block">:message </span>')!!}
 					</div>
                     <div class="col-md-12">
-                        <label class="control-label" for="name"> {{
-                            trans("admin/admin.display_name") }}</label> <input
-                            class="form-control" type="text" name="display_name" id="display_name"
-                            value="{{{ Input::old('display_name', isset($objecttype) ? $objecttype->display_name : null) }}}" />
-                        {!!$errors->first('display_name', '<span class="help-block">:message </span>')!!}
+                        <label class="control-label" for="title"> {{
+                            trans("admin/admin.title") }}</label> <input
+                            class="form-control" type="text" name="title" id="title"
+                            value="{{{ Input::old('title', isset($objecttype) ? $objecttype->title : null) }}}" />
+                        {!!$errors->first('title', '<span class="help-block">:message </span>')!!}
                     </div>
                     <div class="col-md-12">
                         <label class="control-label" for="description"> {{
@@ -66,18 +66,125 @@
 			</div>
 			<!-- ./ general tab -->
 		</div>
-        <!-- General tab -->
-        <div class="tab-pane active" id="tab-fields">
-            <div class="tab-pane active" id="tab-fields">
-                <div class="form-group {{{ $errors->has('name') ? 'has-error' : '' }}}">
+        <!-- Fields tab -->
+        <div class="tab-pane" id="tab-fields">
+            <table id="table" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{{{ trans("admin/admin.meta_key") }}}</th>
+                    <th>{{{ trans("admin/admin.created_at") }}}</th>
+                    <th>{{{ trans("admin/admin.action") }}}</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
 
+            {{-- Scripts --}}
+            @section('scripts')
+            @parent
+            <script type="text/javascript">
+                var oTable;
+                $(document).ready(function () {
+                    oTable = $('#table').DataTable({
+                        "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+                        "sPaginationType": "bootstrap",
+
+                        "processing": true,
+                        "serverSide": true,
+                        "ajax": "{{ URL::to('admin/object-types/'.$objecttype->id.'/fields') }}",
+                        "fnDrawCallback": function (oSettings) {
+                            $(".iframe").colorbox({
+                                iframe: true,
+                                width: "80%",
+                                height: "80%",
+                                onClosed: function () {
+                                    window.location.reload();
+                                }
+                            });
+                        }
+                    });
+                    var startPosition;
+                    var endPosition;
+                    $("#table tbody").sortable({
+                        cursor: "move",
+                        start: function (event, ui) {
+                            startPosition = ui.item.prevAll().length + 1;
+                        },
+                        update: function (event, ui) {
+                            endPosition = ui.item.prevAll().length + 1;
+                            var navigationList = "";
+                            $('#table #row').each(function (i) {
+                                navigationList = navigationList + ',' + $(this).val();
+                            });
+                            $.getJSON("{{ URL::to('admin/object-types/reorder') }}", {
+                                list: navigationList
+                            }, function (data) {
+                            });
+                        }
+                    });
+                });
+            </script>
+            @stop
+
+
+
+            <div class="form-group {{{ $errors->has('name') ? 'has-error' : '' }}}">
+                <div class="col-md-12">
+                    <label class="control-label" for="field_label"> {{
+                        trans("admin/admin.label") }}</label> <input
+                        class="form-control" type="text" name="field_label" id="field_label"
+                        value="" />
+                    {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
                 </div>
-
+                <div class="col-md-12">
+                    <label class="control-label" for="name"> {{
+                        trans("admin/admin.name") }}</label> <input
+                        class="form-control" type="text" name="field_name" id="field_name"
+                        value="" />
+                    {!!$errors->first('name', '<span class="help-block">:message </span>')!!}
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label" for="field_type">{{
+                        trans("admin/admin.type") }}</label>
+                    <select
+                        style="width: 100%" name="field_type" id="parent_id"
+                        class="form-control">
+                        <optgroup label="Basic">
+                            <option value="text">Text</option>
+                            <option value="textarea">Text Area</option>
+                            <option value="number">Number</option>
+                            <option value="email">Email</option>
+                            <option value="password">Password</option>
+                        </optgroup>
+                        <optgroup label="Content">
+                            <option value="wysiwyg">Wysiwig</option>
+                            <option value="image">Image</option>
+                            <option value="file">File</option>
+                        </optgroup>
+                        <optgroup label="Choice">
+                            <option value="select">Select</option>
+                            <option value="checkbox">Checkbox</option>
+                            <option value="radio">Radio</option>
+                            <option value="true_false">True/False</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label" for="field_instructions"> {{
+                        trans("admin/admin.instructions") }}</label> <textarea
+                        class="form-control" name="field_instructions" id="field_instructions"></textarea>
+                    {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
+                </div>
+                <div class="col-md-12">
+                    <label class="control-label" for="field_required"> {{
+                        trans("admin/admin.required") }}</label> <input
+                        class="form-control" type="checkbox" name="field_required" id="field_required"></textarea>
+                    {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
+                </div>
             </div>
-            <!-- ./ general tab -->
-        </div>
 
-		<!-- ./ tabs content -->
+
+        </div>
     </div>
 		<!-- Form Actions -->
 
@@ -104,4 +211,6 @@
 		<!-- ./ form actions -->
 
 </form>
+
+
 @stop

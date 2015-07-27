@@ -3,6 +3,7 @@
 use App\Object;
 use App\ObjectMeta;
 use App\Helpers\Thumbnail;
+use App\Helpers\Hash;
 
 use App\Language;
 use App\Http\Controllers\AdminController;

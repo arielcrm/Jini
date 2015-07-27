@@ -12,8 +12,7 @@ class ObjectTypeRequest extends FormRequest {
 	public function rules()
 	{
 		return [
-            'name' => 'required|min:3',
-            'display_name' => 'required|min:3'
+            'title' => 'required|min:3'
 		];
 	}
 

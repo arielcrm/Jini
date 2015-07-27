@@ -1,12 +1,15 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Object;
 use App\ObjectType;
+use App\Helpers\Hash;
 use App\Language;
 use App\Http\Controllers\AdminController;
 use App\Http\Requests\Admin\ObjectTypeRequest;
 use App\Http\Requests\Admin\DeleteRequest;
 use App\Http\Requests\Admin\ReorderRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Datatables;
 
 class ObjectTypesController extends AdminController {
@@ -42,10 +45,13 @@ class ObjectTypesController extends AdminController {
      */
     public function postCreate(ObjectTypeRequest $request)
     {
-        $objecttype = new ObjectType();
-        $objecttype -> name = $request->name;
-        $objecttype -> display_name = $request->display_name;
-        $objecttype -> description = $request->description;
+        $objecttype = new Object();
+        $objecttype -> author_id = Auth::user()->id;
+        $objecttype -> type = 'object_type';
+        $objecttype -> name = "_object_type_$request->name";
+        $objecttype -> title = "Object Type: $request->title";
+        $objecttype -> status = 'published';
+        $objecttype -> guid = Hash::getUniqueId();
         $objecttype -> save();
 
         return redirect('admin/object-types')->with('message', 'Type saved successfully');
@@ -58,7 +64,11 @@ class ObjectTypesController extends AdminController {
      */
     public function getEdit($id)
     {
-        $objecttype = ObjectType::find($id);
+        $objecttype = Object::find($id);
+
+        if ($objecttype) {
+            $objecttype->title = str_replace('Object Type: ', '', $objecttype->title);
+        }
 
         return view('admin.objecttype.create_edit', compact('objecttype'));
     }
@@ -71,11 +81,29 @@ class ObjectTypesController extends AdminController {
      */
     public function postEdit(ObjectTypeRequest $request, $id)
     {
-        $objecttype = ObjectType::find($id);
-        $objecttype -> name = $request->name;
-        $objecttype -> display_name = $request->display_name;
-        $objecttype -> description = $request->description;
+        $objecttype = Object::find($id);
+        //$objecttype -> name = $request->name;
+        //$objecttype -> display_name = $request->display_name;
+        //$objecttype -> description = $request->description;
         $objecttype -> save();
+
+        //print_r($request);
+        $fieldLabel = $request->field_label;
+        $fieldName = $request->field_name;
+        $fieldType = $request->field_type;
+        $fieldRequired = empty($request->field_required) ? 0 : $request->field_required;
+        $fieldInstructions = $request->field_instructions;
+
+        if ($fieldLabel && $fieldName && $fieldType) {
+
+            $fieldInfo['label'] = $fieldLabel;
+            $fieldInfo['name'] = $fieldName;
+            $fieldInfo['type'] = $fieldType;
+            $fieldInfo['instructions'] = $fieldInstructions;
+            $fieldInfo['required'] = $fieldRequired;
+
+            $objecttype->setValue("_field_$fieldName", serialize($fieldInfo));
+        }
 
         return redirect('admin/object-types')->with('message', 'Type saved successfully');
     }
@@ -115,9 +143,51 @@ class ObjectTypesController extends AdminController {
      */
     public function data()
     {
-        $objecttypes = ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+        $objecttypes = Object::getTypes()->select(array('id', DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'created_at' ));// ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
 
         return Datatables::of($objecttypes)
+            ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
+                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
+                @endif')
+            ->remove_column('id')
+
+            ->make();
+
+
+//        $objecttypes = ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+//
+//        return Datatables::of($objecttypes)
+//            ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
+//                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
+//                @endif')
+//            ->remove_column('id')
+//
+//            ->make();
+    }
+
+    public function getFields($id)
+    {
+
+        //$objectType = Object::find($id);
+        $fields = Object::getFields($id)->select(array( 'id', 'meta_key', 'meta_value', 'created_at' ));// ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+
+        $output = array();
+
+        foreach ($fields as $field) {
+            $fieldInfo = unserialize($field['meta_value']);
+
+            $output[] = array(
+               'label' => $fieldInfo['label']
+            );
+        }
+
+        $table = Datatable::table()
+            ->addColumn('Name', 'Last Login', 'View')
+            ->setUrl(route('api.users'))
+            ->noScript();
+
+
+        return Datatables::of($table)
             ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
                     <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 @endif')

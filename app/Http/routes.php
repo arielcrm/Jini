@@ -140,6 +140,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('object-types/{id}/delete', 'ObjectTypesController@postDelete');
     Route::get('object-types/data', 'ObjectTypesController@data');
 
+    Route::get('object-types/{id}/fields', 'ObjectTypesController@getFields');
+
     # Categories
     Route::get('categories/', 'CategoryController@index');
     Route::get('categories/create', 'CategoryController@getCreate');

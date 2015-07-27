@@ -41,4 +41,17 @@ class Object extends Model
     public function setValue($key, $value) {
         return ObjectMeta::setValue($this->id, $key, $value);
     }
+
+    public static function getTypes() {
+        return Object::where('name', 'LIKE', '_object_type_%');
+    }
+
+    public static function getType($name) {
+        return Object::where('name', '=', "_object_type_$name");
+    }
+
+    public static function getFields($id) {
+        return ObjectMeta::where('object_id', $id)
+            ->where('meta_key', 'LIKE', '_field_%');
+    }
 }
