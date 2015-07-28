@@ -1,18 +1,19 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Object;
-use App\ObjectType;
 use App\Helpers\Hash;
 use App\Language;
 use App\Http\Controllers\AdminController;
-use App\Http\Requests\Admin\ObjectTypeRequest;
+use App\Http\Requests\Admin\ObjectRequest;
 use App\Http\Requests\Admin\DeleteRequest;
 use App\Http\Requests\Admin\ReorderRequest;
+use DoctrineTest\InstantiatorTestAsset\UnserializeExceptionArrayObjectAsset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Datatables;
 
-class ObjectTypesController extends AdminController {
+class ObjectController extends AdminController {
 
 	/**
 	 * Display a listing of the resource.
@@ -22,7 +23,7 @@ class ObjectTypesController extends AdminController {
 	public function index()
 	{
         // Show the page
-        return view('admin.objecttype.index');
+        return view('admin.object.index');
 	}
 
     /**
@@ -32,10 +33,17 @@ class ObjectTypesController extends AdminController {
      */
     public function getCreate()
     {
-        $languages = Language::all();
-        $language = "";
-        // Show the page
-        return view('admin.objecttype.create_edit', compact('languages','language'));
+        if ($typeName = Input::get('type')) {
+            if ($type = Object::getType($typeName)->first()) {
+                $fieldsRows = Object::getFields($type->id)->get();
+
+                $fields = array();
+                foreach ($fieldsRows as $fieldRow) {
+                    $fields[] = unserialize($fieldRow['meta_value']);
+                }
+            }
+        }
+        return view('admin.object.create_edit', compact('fields'));
     }
 
     /**
@@ -43,16 +51,16 @@ class ObjectTypesController extends AdminController {
      *
      * @return Response
      */
-    public function postCreate(ObjectTypeRequest $request)
+    public function postCreate(ObjectRequest $request)
     {
-        $objecttype = new Object();
-        $objecttype -> author_id = Auth::user()->id;
-        $objecttype -> type = 'object_type';
-        $objecttype -> name = "_object_type_$request->name";
-        $objecttype -> title = "Object Type: $request->title";
-        $objecttype -> status = 'published';
-        $objecttype -> guid = Hash::getUniqueId();
-        $objecttype -> save();
+        $object = new Object();
+        $object -> author_id = Auth::user()->id;
+        $object -> type = 'object_type';
+        $object -> name = "_object_type_$request->name";
+        $object -> title = "Object Type: $request->title";
+        $object -> status = 'published';
+        $object -> guid = Hash::getUniqueId();
+        $object -> save();
 
         return redirect('admin/object-types')->with('message', 'Type saved successfully');
     }
@@ -64,13 +72,13 @@ class ObjectTypesController extends AdminController {
      */
     public function getEdit($id)
     {
-        $objecttype = Object::find($id);
+        $object = Object::find($id);
 
-        if ($objecttype) {
-            $objecttype->title = str_replace('Object Type: ', '', $objecttype->title);
+        if ($object) {
+            $object->title = str_replace('Object Type: ', '', $object->title);
         }
 
-        return view('admin.objecttype.create_edit', compact('objecttype'));
+        return view('admin.object.create_edit', compact('object'));
     }
 
     /**
@@ -79,13 +87,13 @@ class ObjectTypesController extends AdminController {
      * @param  int  $id
      * @return Response
      */
-    public function postEdit(ObjectTypeRequest $request, $id)
+    public function postEdit(ObjectRequest $request, $id)
     {
-        $objecttype = Object::find($id);
-        //$objecttype -> name = $request->name;
-        //$objecttype -> display_name = $request->display_name;
-        //$objecttype -> description = $request->description;
-        $objecttype -> save();
+        $object = Object::find($id);
+        //$object -> name = $request->name;
+        //$object -> display_name = $request->display_name;
+        //$object -> description = $request->description;
+        $object -> save();
 
         //print_r($request);
         $fieldLabel = $request->field_label;
@@ -102,7 +110,7 @@ class ObjectTypesController extends AdminController {
             $fieldInfo['instructions'] = $fieldInstructions;
             $fieldInfo['required'] = $fieldRequired;
 
-            $objecttype->setValue("_field_$fieldName", serialize($fieldInfo));
+            $object->setValue("_field_$fieldName", serialize($fieldInfo));
         }
 
         return redirect('admin/object-types')->with('message', 'Type saved successfully');
@@ -117,9 +125,9 @@ class ObjectTypesController extends AdminController {
 
     public function getDelete($id)
     {
-        $objecttype = ObjectType::find($id);
+        $object = object::find($id);
         // Show the page
-        return view('admin.objecttype.delete', compact('objecttype'));
+        return view('admin.object.delete', compact('object'));
     }
 
     /**
@@ -130,8 +138,8 @@ class ObjectTypesController extends AdminController {
      */
     public function postDelete(DeleteRequest $request,$id)
     {
-        $ObjectType = ObjectType::find($id);
-        $ObjectType->delete();
+        $object = object::find($id);
+        $object->delete();
 
         return redirect('admin/object-types')->with('message', 'Type deleted successfully');
     }
@@ -143,9 +151,13 @@ class ObjectTypesController extends AdminController {
      */
     public function data()
     {
-        $objecttypes = Object::getTypes()->select(array('id', DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'created_at' ));// ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+        $objects = Object::where('type', '<>', 'object_type')
+            ->where('type', '<>', 'image')
+            ->where('type', '<>', 'category')
+            ->select(array('id','title', 'created_at' ));
+            //;// object::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
 
-        return Datatables::of($objecttypes)
+        return Datatables::of($objects)
             ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
                     <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 @endif')
@@ -154,9 +166,9 @@ class ObjectTypesController extends AdminController {
             ->make();
 
 
-//        $objecttypes = ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+//        $objects = object::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
 //
-//        return Datatables::of($objecttypes)
+//        return Datatables::of($objects)
 //            ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
 //                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
 //                @endif')
@@ -168,8 +180,8 @@ class ObjectTypesController extends AdminController {
     public function getFields($id)
     {
 
-        //$objectType = Object::find($id);
-        $fields = Object::getFields($id)->select(array( 'id', 'meta_key', 'meta_value', 'created_at' ));// ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+        //$object = Object::find($id);
+        $fields = Object::getFields($id)->select(array( 'id', 'meta_key', 'meta_value', 'created_at' ));// object::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
 
 //        $output = array();
 //
@@ -208,7 +220,7 @@ class ObjectTypesController extends AdminController {
         $order = 1;
         foreach ($items as $value) {
             if ($value != '') {
-                ObjectType::where('id', '=', $value) -> update(array('position' => $order));
+                object::where('id', '=', $value) -> update(array('position' => $order));
                 $order++;
             }
         }

@@ -1,17 +1,17 @@
 @extends('admin.layouts.default')
 
 {{-- Web site Title --}}
-@section('title') {{{ trans("admin/objecttype.objecttypes") }}}
+@section('title') {{{ trans("admin/object.objects") }}}
 :: @parent @stop
 
 {{-- Content --}}
 @section('main')
     <div class="page-header">
         <h3>
-            {{{ trans("admin/objecttype.objecttypes") }}}
+            {{{ trans("admin/object.objects") }}}
             <div class="pull-right">
                 <div class="pull-right">
-                    <a href="{{{ URL::to('admin/object-types/create') }}}"
+                    <a href="{{{ URL::to('admin/objects/create') }}}"
                        class="btn btn-sm  btn-primary"><span
                                 class="glyphicon glyphicon-plus-sign"></span> {{ trans("admin/modal.new") }}</a>
                 </div>
@@ -22,8 +22,7 @@
     <table id="table" class="table table-striped table-hover">
         <thead>
         <tr>
-            <th>{{{ trans("admin/admin.name") }}}</th>
-            <th>{{{ trans("admin/admin.display_name") }}}</th>
+            <th>{{{ trans("admin/admin.title") }}}</th>
             <th>{{{ trans("admin/admin.created_at") }}}</th>
             <th>{{{ trans("admin/admin.action") }}}</th>
         </tr>
@@ -44,7 +43,7 @@
 
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/object-types/data/') }}",
+                "ajax": "{{ URL::to('admin/objects/data/') }}",
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({
                         iframe: true,

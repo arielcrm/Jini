@@ -66,6 +66,8 @@
 			</div>
 			<!-- ./ general tab -->
 		</div>
+
+@if(isset($objecttype)) :
         <!-- Fields tab -->
         <div class="tab-pane" id="tab-fields">
             <table id="table" class="table table-striped table-hover">
@@ -185,6 +187,8 @@
 
 
         </div>
+
+@endif
     </div>
 		<!-- Form Actions -->
 

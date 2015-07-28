@@ -34,6 +34,12 @@
             <span class="hidden-sm text"> Object Types</span>
         </a>
     </li>
+    <li class="{{set_active('admin/objects*')}}">
+        <a href="{{url('admin/objects')}}">
+            <i class="fa fa-language"></i>
+            <span class="hidden-sm text"> Objects</span>
+        </a>
+    </li>
     <li class="{{set_active('admin/news*')}}">
         <a href="#">
             <i class="glyphicon glyphicon-bullhorn"></i> News items
