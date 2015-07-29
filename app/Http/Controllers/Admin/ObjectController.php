@@ -43,7 +43,11 @@ class ObjectController extends AdminController {
                 }
             }
         }
-        return view('admin.object.create_edit', compact('fields'));
+
+
+        $types = Object::getTypes()->select(array('id', DB::raw("REPLACE(name, '_object_type_', '') as name"), DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'created_at' ))->get();
+
+        return view('admin.object.create_edit', compact('fields', 'types'));
     }
 
     /**
@@ -62,6 +66,12 @@ class ObjectController extends AdminController {
         $object -> guid = Hash::getUniqueId();
         $object -> save();
 
+        foreach ( array_keys($_POST) as $key ) {
+            if ( substr($key, 0, 7) == '_field_' ) {
+                $object->setValue($key, $request->input($key));
+            }
+        }
+
         return redirect('admin/object-types')->with('message', 'Type saved successfully');
     }
     /**
@@ -79,13 +89,17 @@ class ObjectController extends AdminController {
                 $fieldsRows = Object::getFields($type->id)->get();
 
                 $fields = array();
+                $values = array();
                 foreach ($fieldsRows as $fieldRow) {
-                    $fields[] = unserialize($fieldRow['meta_value']);
+                    $field = unserialize($fieldRow['meta_value']);
+                    $fields[] = $field;
+
+                    $values[$field['id']] = $object->getValue($field['id']);
                 }
             }
         }
 
-        return view('admin.object.create_edit', compact('object', 'fields'));
+        return view('admin.object.create_edit', compact('object', 'fields', 'values'));
     }
 
     /**
@@ -153,7 +167,7 @@ class ObjectController extends AdminController {
         $object = object::find($id);
         $object->delete();
 
-        return redirect('admin/object-types')->with('message', 'Type deleted successfully');
+        return redirect('admin/objects')->with('message', 'Type deleted successfully');
     }
 
     /**

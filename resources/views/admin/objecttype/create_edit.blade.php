@@ -73,7 +73,8 @@
             <table id="table" class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>{{{ trans("admin/admin.meta_key") }}}</th>
+                    <th>{{{ trans("admin/admin.name") }}}</th>
+                    <th>{{{ trans("admin/admin.value") }}}</th>
                     <th>{{{ trans("admin/admin.created_at") }}}</th>
                     <th>{{{ trans("admin/admin.action") }}}</th>
                 </tr>
@@ -90,9 +91,21 @@
                     oTable = $('#table').DataTable({
                         "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
                         "sPaginationType": "bootstrap",
-
                         "processing": true,
                         "serverSide": true,
+//                        "columnDefs": [ {
+//                            "targets": -1,
+//                            "data": null,
+//                            "defaultContent": "<button>Click!</button>"
+//                        } ],
+                        "createdRow": function ( row, data, index ) {
+                            console.log(row);
+                            console.log(data);
+                            //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
+                            var href = $('td a.btn-danger', row).attr('href');
+                            //$('td a.btn-danger', row).attr('href', href + '/' + data[0].replace('_field_', ''));
+                            //}
+                        },
                         "ajax": "{{ URL::to('admin/object-types/'.$objecttype->id.'/fields') }}",
                         "fnDrawCallback": function (oSettings) {
                             $(".iframe").colorbox({
@@ -167,7 +180,7 @@
                             <option value="select">Select</option>
                             <option value="checkbox">Checkbox</option>
                             <option value="radio">Radio</option>
-                            <option value="true_false">True/False</option>
+                            <option value="boolean">True/False</option>
                         </optgroup>
                     </select>
                 </div>

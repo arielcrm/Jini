@@ -141,6 +141,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('object-types/data', 'ObjectTypesController@data');
 
     Route::get('object-types/{id}/fields', 'ObjectTypesController@getFields');
+    Route::get('object-types/fields/{id}/delete', 'ObjectTypesController@deleteField');
 
 
     # Objects

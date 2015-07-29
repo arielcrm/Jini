@@ -54,4 +54,9 @@ class Object extends Model
         return ObjectMeta::where('object_id', $id)
             ->where('meta_key', 'LIKE', '_field_%');
     }
+
+    public static function getField($id, $name) {
+        return ObjectMeta::where('object_id', $id);
+            //->where('meta_key', '=', '_field_'. $name);
+    }
 }

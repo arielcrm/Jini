@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Object;
+use App\ObjectMeta;
 use App\ObjectType;
 use App\Helpers\Hash;
 use App\Language;
@@ -166,6 +167,12 @@ class ObjectTypesController extends AdminController {
 //            ->make();
     }
 
+    public function deleteField($id) {
+        if ($field = ObjectMeta::find($id)) {
+            $field->delete();
+        }
+    }
+
     public function getFields($id)
     {
 
@@ -190,7 +197,7 @@ class ObjectTypesController extends AdminController {
 
         return Datatables::of($fields)
             ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
-                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
+                    <a href="{{{ URL::to(\'admin/object-types/fields/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 @endif')
             ->remove_column('id')
 

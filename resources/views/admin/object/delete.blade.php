@@ -11,7 +11,7 @@
         {{{ trans("admin/objecttype.objecttypes") }}}
         <div class="pull-right">
             <div class="pull-right">
-                <a href="{{{ URL::to('admin/object-types/create') }}}"
+                <a href="{{{ URL::to('admin/objects/create') }}}"
                    class="btn btn-sm  btn-primary"><span
                         class="glyphicon glyphicon-plus-sign"></span> {{ trans("admin/modal.new") }}</a>
             </div>
@@ -26,12 +26,12 @@
 <!-- ./ tabs -->
 {{-- Delete Post Form --}}
 <form id="deleteForm" class="form-horizontal" method="post"
-	action="@if (isset($objecttype)){{ URL::to('admin/object-types/' . $objecttype->id . '/delete') }}@endif"
+	action="@if (isset($object)){{ URL::to('admin/objects/' . $object->id . '/delete') }}@endif"
 	autocomplete="off">
 
 	<!-- CSRF Token -->
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" /> <input
-		type="hidden" name="id" value="{{ $objecttype->id }}" />
+		type="hidden" name="id" value="{{ $object->id }}" />
 	<!-- <input type="hidden" name="_method" value="DELETE" /> -->
 	<!-- ./ csrf token -->
 

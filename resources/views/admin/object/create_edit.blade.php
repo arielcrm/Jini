@@ -40,6 +40,21 @@
 		<div class="tab-pane active" id="tab-general">
 			<div class="tab-pane active" id="tab-general">
 				<div class="form-group {{{ $errors->has('name') ? 'has-error' : '' }}}">
+                    <div class="col-md-12">
+                        <label class="control-label" for="type">{{
+                            trans("admin/admin.type") }}</label>
+                        <select
+                            style="width: 100%" name="type" id="type"
+                            class="form-control" onchange="location.search = 'type=' + this.value;"> <option value="" text=""></option>
+                            @foreach($types as $type)
+                            <option value="{{{ $type->name }}}"
+                            @if(!empty($_GET['type']) && $type->name==$_GET['type'])
+                            selected="selected" @endif
+
+                                >{{$type->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
 					<div class="col-md-12">
 						<label class="control-label" for="name"> {{
 							trans("admin/admin.name") }}</label> <input
@@ -64,11 +79,19 @@
                     @if (!empty($fields)) :
                     @foreach($fields as $field)
                     <div class="col-md-12">
-                        <label class="control-label" for="label"> {{
-                            trans("admin/admin.". $field['label']) }}</label> <input
-                            class="form-control" type="text" name="label" id="{{{ $field['id'] }}}"
-                            value="{{{ Input::old('title', isset($field) ? '' : null) }}}" />
+                        <label class="control-label" for="label"> {{ $field['label'] }}</label>
+                        @if ($field['type'] == 'text') :
+                        <input
+                            class="form-control" type="text" name="{{{ $field['id'] }}}" id="{{{ $field['id'] }}}"
+                            value="{{{ isset( $values[$field['id']] ) ? $values[$field['id']] : null }}}" />
                         {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
+                        @endif
+                        @if ($field['type'] == 'wysiwyg') :
+                        <textarea
+                            class="form-control" type="text" name="{{{ $field['id'] }}}" id="{{{ $field['id'] }}}"
+                            >{{{ isset( $values[$field['id']] ) ? $values[$field['id']] : null }}}</textarea>
+                        {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
+                        @endif
                     </div>
                     @endforeach
                     @endif
