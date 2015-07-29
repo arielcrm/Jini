@@ -148,7 +148,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('objects/create', 'ObjectController@getCreate');
     Route::post('objects/create', 'ObjectController@postCreate');
     Route::get('objects/{id}/edit', 'ObjectController@getEdit');
-    Route::post('object/{id}/edit', 'ObjectController@postEdit');
+    Route::post('objects/{id}/edit', 'ObjectController@postEdit');
     Route::get('objects/{id}/delete', 'ObjectController@getDelete');
     Route::post('objects/{id}/delete', 'ObjectController@postDelete');
     Route::get('objects/data', 'ObjectController@data');

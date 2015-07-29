@@ -68,7 +68,7 @@
                     $('#table #row').each(function (i) {
                         navigationList = navigationList + ',' + $(this).val();
                     });
-                    $.getJSON("{{ URL::to('admin/object-types/reorder') }}", {
+                    $.getJSON("{{ URL::to('admin/objects/reorder') }}", {
                         list: navigationList
                     }, function (data) {
                     });

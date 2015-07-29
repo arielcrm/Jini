@@ -48,7 +48,7 @@ class ObjectTypesController extends AdminController {
         $objecttype = new Object();
         $objecttype -> author_id = Auth::user()->id;
         $objecttype -> type = 'object_type';
-        $objecttype -> name = "_object_type_$request->name";
+        $objecttype -> name = "_object_type_" . str_replace(' ', '-', $request->title);
         $objecttype -> title = "Object Type: $request->title";
         $objecttype -> status = 'published';
         $objecttype -> guid = Hash::getUniqueId();
@@ -90,19 +90,20 @@ class ObjectTypesController extends AdminController {
         //print_r($request);
         $fieldLabel = $request->field_label;
         $fieldName = $request->field_name;
+        $fieldId = "_field_$fieldName";
         $fieldType = $request->field_type;
         $fieldRequired = empty($request->field_required) ? 0 : $request->field_required;
         $fieldInstructions = $request->field_instructions;
 
         if ($fieldLabel && $fieldName && $fieldType) {
-
-            $fieldInfo['label'] = $fieldLabel;
+            $fieldInfo['id'] = $fieldId;
             $fieldInfo['name'] = $fieldName;
+            $fieldInfo['label'] = $fieldLabel;
             $fieldInfo['type'] = $fieldType;
             $fieldInfo['instructions'] = $fieldInstructions;
             $fieldInfo['required'] = $fieldRequired;
 
-            $objecttype->setValue("_field_$fieldName", serialize($fieldInfo));
+            $objecttype->setValue($fieldId, serialize($fieldInfo));
         }
 
         return redirect('admin/object-types')->with('message', 'Type saved successfully');

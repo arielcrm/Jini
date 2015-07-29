@@ -27,11 +27,12 @@
 {{-- Edit Blog Form --}}
 <form class="form-horizontal" enctype="multipart/form-data"
 	method="post"
-	action="@if(isset($object)){{ URL::to('admin/object-types/'.$object->id.'/edit') }}
-	        @else{{ URL::to('admin/object-types/create') }}@endif"
+	action="@if(isset($object)){{ URL::to('admin/objects/'.$object->id.'/edit') }}
+	        @else{{ URL::to('admin/objects/create') }}@endif"
 	autocomplete="off">
 	<!-- CSRF Token -->
 	<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+    <input type="hidden" name="_object_type" value="{{{ Input::get('type') }}}" />
 	<!-- ./ csrf token -->
 	<!-- Tabs Content -->
 	<div class="tab-content">
@@ -65,7 +66,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="label"> {{
                             trans("admin/admin.". $field['label']) }}</label> <input
-                            class="form-control" type="text" name="label" id="label"
+                            class="form-control" type="text" name="label" id="{{{ $field['id'] }}}"
                             value="{{{ Input::old('title', isset($field) ? '' : null) }}}" />
                         {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
                     </div>

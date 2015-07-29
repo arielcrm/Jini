@@ -55,9 +55,9 @@ class ObjectController extends AdminController {
     {
         $object = new Object();
         $object -> author_id = Auth::user()->id;
-        $object -> type = 'object_type';
-        $object -> name = "_object_type_$request->name";
-        $object -> title = "Object Type: $request->title";
+        $object -> type = $request->_object_type;
+        $object -> name = str_replace(' ', '-', $request->title);
+        $object -> title = $request->title;
         $object -> status = 'published';
         $object -> guid = Hash::getUniqueId();
         $object -> save();
@@ -74,11 +74,18 @@ class ObjectController extends AdminController {
     {
         $object = Object::find($id);
 
-        if ($object) {
-            $object->title = str_replace('Object Type: ', '', $object->title);
+        if ($typeName = $object->type) {
+            if ($type = Object::getType($typeName)->first()) {
+                $fieldsRows = Object::getFields($type->id)->get();
+
+                $fields = array();
+                foreach ($fieldsRows as $fieldRow) {
+                    $fields[] = unserialize($fieldRow['meta_value']);
+                }
+            }
         }
 
-        return view('admin.object.create_edit', compact('object'));
+        return view('admin.object.create_edit', compact('object', 'fields'));
     }
 
     /**
@@ -90,30 +97,35 @@ class ObjectController extends AdminController {
     public function postEdit(ObjectRequest $request, $id)
     {
         $object = Object::find($id);
-        //$object -> name = $request->name;
-        //$object -> display_name = $request->display_name;
-        //$object -> description = $request->description;
-        $object -> save();
+        $object->name = $request->name;
+        $object->title = $request->title;
+        $object->content = $request->content;
+        $object->save();
+
+
+
+
 
         //print_r($request);
-        $fieldLabel = $request->field_label;
-        $fieldName = $request->field_name;
-        $fieldType = $request->field_type;
-        $fieldRequired = empty($request->field_required) ? 0 : $request->field_required;
-        $fieldInstructions = $request->field_instructions;
+//        $fieldLabel = $request->field_label;
+//        $fieldName = $request->field_name;
+//        $fieldId = "_field_$fieldName";
+//        $fieldType = $request->field_type;
+//        $fieldRequired = empty($request->field_required) ? 0 : $request->field_required;
+//        $fieldInstructions = $request->field_instructions;
+//
+//        if ($fieldLabel && $fieldName && $fieldType) {
+//            $fieldInfo['id'] = $fieldId;
+//            $fieldInfo['name'] = $fieldName;
+//            $fieldInfo['label'] = $fieldLabel;
+//            $fieldInfo['type'] = $fieldType;
+//            $fieldInfo['instructions'] = $fieldInstructions;
+//            $fieldInfo['required'] = $fieldRequired;
+//
+//            $object->setValue($fieldId, serialize($fieldInfo));
+//        }
 
-        if ($fieldLabel && $fieldName && $fieldType) {
-
-            $fieldInfo['label'] = $fieldLabel;
-            $fieldInfo['name'] = $fieldName;
-            $fieldInfo['type'] = $fieldType;
-            $fieldInfo['instructions'] = $fieldInstructions;
-            $fieldInfo['required'] = $fieldRequired;
-
-            $object->setValue("_field_$fieldName", serialize($fieldInfo));
-        }
-
-        return redirect('admin/object-types')->with('message', 'Type saved successfully');
+        return redirect('admin/objects')->with('message', 'Type saved successfully');
     }
 
     /**
@@ -158,8 +170,8 @@ class ObjectController extends AdminController {
             //;// object::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
 
         return Datatables::of($objects)
-            ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
-                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
+            ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/objects/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
+                    <a href="{{{ URL::to(\'admin/objects/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
                 @endif')
             ->remove_column('id')
 
