@@ -43,6 +43,8 @@
                     <div class="col-md-12">
                         <label class="control-label" for="type">{{
                             trans("admin/admin.type") }}</label>
+
+                        @if(!isset($object)) :
                         <select
                             style="width: 100%" name="type" id="type"
                             class="form-control" onchange="location.search = 'type=' + this.value;"> <option value="" text=""></option>
@@ -54,6 +56,9 @@
                                 >{{$type->title}}</option>
                             @endforeach
                         </select>
+                        @else
+                            {{ $object->type }}
+                        @endif
                     </div>
 					<div class="col-md-12">
 						<label class="control-label" for="name"> {{
@@ -76,22 +81,27 @@
                         {!!$errors->first('content', '<span class="help-block">:message </span>')!!}
                     </div>
 
+                    @foreach($fieldControls as $fieldControl)
+                    {{{ $fieldControl }}}
+                    @endforeach
+
                     @if (!empty($fields)) :
                     @foreach($fields as $field)
                     <div class="col-md-12">
                         <label class="control-label" for="label"> {{ $field['label'] }}</label>
-                        @if ($field['type'] == 'text') :
-                        <input
-                            class="form-control" type="text" name="{{{ $field['id'] }}}" id="{{{ $field['id'] }}}"
-                            value="{{{ isset( $values[$field['id']] ) ? $values[$field['id']] : null }}}" />
-                        {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
-                        @endif
-                        @if ($field['type'] == 'wysiwyg') :
-                        <textarea
-                            class="form-control" type="text" name="{{{ $field['id'] }}}" id="{{{ $field['id'] }}}"
-                            >{{{ isset( $values[$field['id']] ) ? $values[$field['id']] : null }}}</textarea>
-                        {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
-                        @endif
+
+<!--                        @if ($field['type'] == 'text') :-->
+<!--                        <input-->
+<!--                            class="form-control" type="text" name="{{{ $field['id'] }}}" id="{{{ $field['id'] }}}"-->
+<!--                            value="{{{ isset( $values[$field['id']] ) ? $values[$field['id']] : null }}}" />-->
+<!--                        {!!$errors->first('label', '<span class="help-block">:message </span>')!!}-->
+<!--                        @endif-->
+<!--                        @if ($field['type'] == 'wysiwyg') :-->
+<!--                        <textarea-->
+<!--                            class="form-control" type="text" name="{{{ $field['id'] }}}" id="{{{ $field['id'] }}}"-->
+<!--                            >{{{ isset( $values[$field['id']] ) ? $values[$field['id']] : null }}}</textarea>-->
+<!--                        {!!$errors->first('label', '<span class="help-block">:message </span>')!!}-->
+<!--                        @endif-->
                     </div>
                     @endforeach
                     @endif

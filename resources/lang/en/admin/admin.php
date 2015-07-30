@@ -40,5 +40,6 @@ return [
     'featured_image' => 'Featured Image',
     'content' => 'Content',
     'object' => 'Object',
-    'objects' => 'Objects'
+    'objects' => 'Objects',
+    'type' => 'Type'
 	];

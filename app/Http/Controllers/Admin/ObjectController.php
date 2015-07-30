@@ -11,6 +11,8 @@ use DoctrineTest\InstantiatorTestAsset\UnserializeExceptionArrayObjectAsset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\View\Factory;
+use Illuminate\View\View;
 use Datatables;
 
 class ObjectController extends AdminController {
@@ -90,16 +92,19 @@ class ObjectController extends AdminController {
 
                 $fields = array();
                 $values = array();
+                $fieldControls = array();
                 foreach ($fieldsRows as $fieldRow) {
                     $field = unserialize($fieldRow['meta_value']);
                     $fields[] = $field;
 
                     $values[$field['id']] = $object->getValue($field['id']);
+
+                   $fieldControls[] = view('admin.partials.form.text', compact( 'field') );
                 }
             }
         }
 
-        return view('admin.object.create_edit', compact('object', 'fields', 'values'));
+        return view('admin.object.create_edit', compact('object', 'fields', 'values', 'fieldControls'));
     }
 
     /**
