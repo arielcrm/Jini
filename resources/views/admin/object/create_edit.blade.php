@@ -80,34 +80,11 @@
                             class="form-control" name="content" id="content">{{{ Input::old('content', isset($object) ? $object->content : null) }}}</textarea>
                         {!!$errors->first('content', '<span class="help-block">:message </span>')!!}
                     </div>
-
+                    @if ( !empty( $fieldControls ) ) :
                     @foreach($fieldControls as $fieldControl)
-                    {{{ $fieldControl }}}
-                    @endforeach
-
-                    @if (!empty($fields)) :
-                    @foreach($fields as $field)
-                    <div class="col-md-12">
-                        <label class="control-label" for="label"> {{ $field['label'] }}</label>
-
-<!--                        @if ($field['type'] == 'text') :-->
-<!--                        <input-->
-<!--                            class="form-control" type="text" name="{{{ $field['id'] }}}" id="{{{ $field['id'] }}}"-->
-<!--                            value="{{{ isset( $values[$field['id']] ) ? $values[$field['id']] : null }}}" />-->
-<!--                        {!!$errors->first('label', '<span class="help-block">:message </span>')!!}-->
-<!--                        @endif-->
-<!--                        @if ($field['type'] == 'wysiwyg') :-->
-<!--                        <textarea-->
-<!--                            class="form-control" type="text" name="{{{ $field['id'] }}}" id="{{{ $field['id'] }}}"-->
-<!--                            >{{{ isset( $values[$field['id']] ) ? $values[$field['id']] : null }}}</textarea>-->
-<!--                        {!!$errors->first('label', '<span class="help-block">:message </span>')!!}-->
-<!--                        @endif-->
-                    </div>
+                        {!! $fieldControl !!}
                     @endforeach
                     @endif
-
-
-
 				</div>
 
 			</div>

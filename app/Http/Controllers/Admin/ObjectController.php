@@ -97,9 +97,20 @@ class ObjectController extends AdminController {
                     $field = unserialize($fieldRow['meta_value']);
                     $fields[] = $field;
 
-                    $values[$field['id']] = $object->getValue($field['id']);
+                    $field['value'] = $object->getValue($field['id']);
 
-                   $fieldControls[] = view('admin.partials.form.text', compact( 'field') );
+                    switch ($field['type']) {
+                        case 'text':
+                            $fieldControls[] = view('admin.partials.form.text', compact( 'field') );
+                            break;
+                        case 'wysiwyg':
+                            $fieldControls[] = view('admin.partials.form.wysiwyg', compact( 'field') );
+                            break;
+                        case 'map':
+                            $fieldControls[] = view('admin.partials.form.map', compact( 'field') );
+                            break;
+                    }
+
                 }
             }
         }
@@ -116,12 +127,18 @@ class ObjectController extends AdminController {
     public function postEdit(ObjectRequest $request, $id)
     {
         $object = Object::find($id);
-        $object->name = $request->name;
+        //$object->name = $request->name;
         $object->title = $request->title;
         $object->content = $request->content;
         $object->save();
 
 
+
+        foreach ( array_keys($_POST) as $key ) {
+            if ( substr($key, 0, 7) == '_field_' ) {
+                $object->setValue($key, $request->input($key));
+            }
+        }
 
 
 
