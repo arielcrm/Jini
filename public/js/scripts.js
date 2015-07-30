@@ -229,7 +229,7 @@ function addIcons() {
             h = document.createElementNS(svgns, "circle");
         h.setAttribute("cx", l.x), h.setAttribute("cy", l.y), h.setAttribute("r", "5");
         var u = document.createElementNS(svgns, "use");
-        u.setAttributeNS(xlinkns, "xlink:href", "#icon-" + (n + 1)), u.setAttribute("width", iconWidth), u.setAttribute("height", iconHeight), u.setAttribute("x", l.x - u.getAttribute("width") / 2), u.setAttribute("y", l.y - u.getAttribute("height") / 2), u.setAttribute("transform", "rotate(" + (90 - angle + angle / 2) + " " + l.x + " " + l.y + ")"), r.appendChild(u);
+        u.setAttributeNS(xlinkns, "xlink:href", "#icon-" + (n + 1)), u.setAttribute("width", iconWidth), u.setAttribute("height", iconHeight), u.setAttribute("x", l.x - u.getAttribute("width") / 2), u.setAttribute("y", l.y - u.getAttribute("height") / 2), u.setAttribute("transform", "rotate(" + 160 + " " + l.x + " " + l.y + ")"), r.appendChild(u);
         var c = document.createElementNS(svgns, "symbol");
         c.setAttribute("class", "icon icon-"), c.setAttribute("id", "icon-" + (n + 1)), c.setAttribute("viewBox", "0 0 " + iconWidth + " " + iconHeight);
 
