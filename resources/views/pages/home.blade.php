@@ -336,6 +336,13 @@
             init();
         }, 500);
 
+        $('#demo svg').on('mouseleave', function(e) {
+            $('#sideBar1 .info-pane-wrapper').show().animate({'width': '1px'}, function() {
+                $(this).hide();
+            });
+        });
+
+
     </script>
 
 @stop
