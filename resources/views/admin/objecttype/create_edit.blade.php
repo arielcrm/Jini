@@ -182,6 +182,9 @@
                             <option value="radio">Radio</option>
                             <option value="boolean">True/False</option>
                         </optgroup>
+                        <optgroup label="Other">
+                            <option value="map">Map</option>
+                        </optgroup>
                     </select>
                 </div>
                 <div class="col-md-12">
