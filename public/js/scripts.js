@@ -135,7 +135,7 @@ function drawCutSectors(t, e, i) {
                             var o = response[i];
 
                             mi = [];
-                            mi[0] = o.title.replace(' / ', '<br />').replace(' ', '<br />');
+                            mi[0] = o.title.replace(' / ', '<br/>').replace(' ', '<br/>');
                             mi[1] = o.featuredImageUrl;
                             mi[2] = '#' + o.name;
                             mi[3] = o.id;
