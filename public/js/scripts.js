@@ -135,7 +135,7 @@ function drawCutSectors(t, e, i) {
                             var o = response[i];
 
                             mi = [];
-                            mi[0] = o.title.replace(' / ', '<br/>').replace(' ', '<br/>');
+                            mi[0] = o.title;
                             mi[1] = o.featuredImageUrl;
                             mi[2] = '#' + o.name;
                             mi[3] = o.id;
@@ -157,7 +157,7 @@ function drawCutSectors(t, e, i) {
 
 
         var s = document.createElementNS(svgns, "path");
-        s.setAttribute("fill", "none"), s.setAttribute("stroke", "#111"), s.setAttribute("d", "M" + (t.x + i) + "," + t.y + " l" + (e - i) + ",0 A" + e + "," + e + " 0 0,0 " + pizzaCoordinates.x + "," + pizzaCoordinates.y + " l" + -(pizzaCoordinates.x - pieCoordinates.x) + "," + (-pizzaCoordinates.y + pieCoordinates.y) + " A" + i + "," + i + " 0 0,1 " + (t.x + i) + "," + t.y), s.setAttribute("class", "sector"), r.appendChild(s), itemsContainer.appendChild(document.createTextNode("        ")), itemsContainer.appendChild(r), itemsContainer.appendChild(document.createTextNode("\n"))
+        s.setAttribute("fill", "none"), s.setAttribute("stroke", "#111"), s.setAttribute("d", "M" + (t.x + i) + "," + t.y + " l" + (e - i) + ",0 A" + e + "," + e + " 0 0,0 " + pizzaCoordinates.x + "," + pizzaCoordinates.y + " l" + -(pizzaCoordinates.x - pieCoordinates.x) + "," + (-pizzaCoordinates.y + pieCoordinates.y) + " A" + i + "," + i + " 0 0,1 " + (t.x + i) + "," + t.y), s.setAttribute("class", "sector"), r.appendChild(s), itemsContainer.appendChild(document.createTextNode("")), itemsContainer.appendChild(r), itemsContainer.appendChild(document.createTextNode("\n"))
     }
 }
 
@@ -229,7 +229,7 @@ function addIcons() {
             h = document.createElementNS(svgns, "circle");
         h.setAttribute("cx", l.x), h.setAttribute("cy", l.y), h.setAttribute("r", "5");
         var u = document.createElementNS(svgns, "use");
-        u.setAttributeNS(xlinkns, "xlink:href", "#icon-" + (n + 1)), u.setAttribute("width", iconWidth), u.setAttribute("height", iconHeight), u.setAttribute("x", l.x - u.getAttribute("width") / 2), u.setAttribute("y", l.y - u.getAttribute("height") / 2), u.setAttribute("transform", "rotate(" + 160 + " " + l.x + " " + l.y + ")"), r.appendChild(u);
+        u.setAttributeNS(xlinkns, "xlink:href", "#icon-" + (n + 1)), u.setAttribute("width", iconWidth), u.setAttribute("height", iconHeight), u.setAttribute("x", l.x - u.getAttribute("width") / 2), u.setAttribute("y", l.y - u.getAttribute("height") / 2), u.setAttribute("transform", "rotate(" + 120 + " " + l.x + " " + l.y + ")"), r.appendChild(u);
         var c = document.createElementNS(svgns, "symbol");
         c.setAttribute("class", "icon icon-"), c.setAttribute("id", "icon-" + (n + 1)), c.setAttribute("viewBox", "0 0 " + iconWidth + " " + iconHeight);
 
@@ -239,7 +239,7 @@ function addIcons() {
         //var f = document.createElementNS(svgns, "rect");
         //f.setAttribute("fill", "none"), f.setAttribute("stroke", "#111"), f.setAttribute("stroke-width", "1"), f.setAttribute("width", "100%"), f.setAttribute("height", "100%");
         var p = document.createElementNS(svgns, "text");
-        p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"), p.setAttribute("y", "10%"), p.setAttribute("dy", ".3em"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", "1.2em"), p.textContent = currentMenu[n][0];//n + 1;
+        p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"), p.setAttribute("y", "10%"), p.setAttribute("dy", ".3em"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", "1.2em"), p.textContent = currentMenu[n][0].replace(' / ', '<br/>'. replace(' ', '<br>'));//n + 1;
         var d = document.createComment("Replace the contents of this symbol with the content of your icon");
         c.appendChild(d), c.appendChild(p), symbolsContainer.appendChild(document.createTextNode("    ")), symbolsContainer.appendChild(c), symbolsContainer.appendChild(document.createTextNode("\n\n"))
     }
