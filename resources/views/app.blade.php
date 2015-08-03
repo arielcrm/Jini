@@ -99,7 +99,20 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
+    <!-- Scripts -->
+    <script src="{{ elixir('js/site.js') }}"></script>
 
+    {{-- TODO: Incorporate into elixir workflow. --}}
+    {{--<script src="{{asset('assets/site/js/jquery.justifiedGallery.min.js')}}"></script>--}}
+    {{--<script src="{{asset('assets/site/js/lightbox.min.js')}}"></script>--}}
+
+    <script>
+        $('#flash-overlay-modal').modal();
+        $('div.alert').not('.alert-danger').delay(3000).slideUp(300);
+    </script>
+
+    @yield('scripts')
+    <script src="/js/typeahead.bundle.js"></script>
 
 
 </head>
@@ -112,19 +125,7 @@
 </div>
 @include('partials.footer')
 
-<!-- Scripts -->
-<script src="{{ elixir('js/site.js') }}"></script>
 
-{{-- TODO: Incorporate into elixir workflow. --}}
-{{--<script src="{{asset('assets/site/js/jquery.justifiedGallery.min.js')}}"></script>--}}
-{{--<script src="{{asset('assets/site/js/lightbox.min.js')}}"></script>--}}
-
-<script>
-    $('#flash-overlay-modal').modal();
-    $('div.alert').not('.alert-danger').delay(3000).slideUp(300);
-</script>
-
-@yield('scripts')
 
 </body>
 </html>

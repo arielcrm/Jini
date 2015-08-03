@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Object;
+use App\ObjectMeta;
 use App\Helpers\Hash;
 use App\Language;
 use App\Http\Controllers\AdminController;
@@ -91,23 +92,40 @@ class ObjectController extends AdminController {
                 $fieldsRows = Object::getFields($type->id)->get();
 
                 $fields = array();
-                $values = array();
                 $fieldControls = array();
                 foreach ($fieldsRows as $fieldRow) {
                     $field = unserialize($fieldRow['meta_value']);
                     $fields[] = $field;
 
-                    $field['value'] = $object->getValue($field['id']);
+                    //$field['value'] = $object->getValue($field['id']);
+                    $values = array();
+                    $valuesMeta = ObjectMeta::where('object_id', $id)
+                        ->where('meta_key', 'LIKE', $field['id'].'%')
+                        ->get();
+
+                    foreach ( $valuesMeta as $valueMeta ) {
+                        $valueMetaKey = str_replace( $field['id'], '', $valueMeta['meta_key']);
+
+                        if ( substr( $valueMetaKey, 0, 1 ) == '-' ) {
+                            $valueMetaKey = substr( $valueMetaKey, 1);
+                        }
+
+                        if ($valueMetaKey) {
+                            $values[$valueMetaKey] = $valueMeta['meta_value'];
+                        } else {
+                            $values[] = $valueMeta['meta_value'];
+                        }
+                    }
 
                     switch ($field['type']) {
                         case 'text':
-                            $fieldControls[] = view('admin.partials.form.text', compact( 'field') );
+                            $fieldControls[] = view('admin.partials.form.text', compact( 'field', 'values' ) );
                             break;
                         case 'wysiwyg':
-                            $fieldControls[] = view('admin.partials.form.wysiwyg', compact( 'field') );
+                            $fieldControls[] = view('admin.partials.form.wysiwyg', compact( 'field', 'values' ) );
                             break;
                         case 'map':
-                            $fieldControls[] = view('admin.partials.form.map', compact( 'field') );
+                            $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'values' ) );
                             break;
                     }
 

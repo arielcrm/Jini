@@ -24,6 +24,9 @@
 			trans("admin/modal.general") }}</a></li>
     <li><a href="#tab-fields" data-toggle="tab"> {{
             trans("admin/admin.fields") }}</a></li>
+    <li>
+        <a href="#tab-categories" data-toggle="tab"> {{ trans("admin/admin.categories") }}</a>
+    </li>
 </ul>
 <!-- ./ tabs -->
 {{-- Edit Blog Form --}}
@@ -67,7 +70,7 @@
 			<!-- ./ general tab -->
 		</div>
 
-@if(isset($objecttype)) :
+@if(isset($objecttype))
         <!-- Fields tab -->
         <div class="tab-pane" id="tab-fields">
             <table id="table" class="table table-striped table-hover">
@@ -205,6 +208,121 @@
         </div>
 
 @endif
+
+        @if(isset($objecttype))
+        <!-- Fields tab -->
+        <div class="tab-pane" id="tab-categories">
+            <input type="hidden" name="mode" value="users">
+
+            <input class="typeahead" type="text" />
+
+            <script>
+                var countries = new Bloodhound({
+                  datumTokenizer: function(countries) {
+                      return Bloodhound.tokenizers.whitespace(countries.value);
+                  },
+                  queryTokenizer: Bloodhound.tokenizers.whitespace,
+                  prefetch: {
+                    url: "http://vocab.nic.in/rest.php/country/json",
+                    filter: function(response) {
+                      return response.countries;
+                    }
+                  }
+                });
+
+                countries.initialize();
+
+                // instantiate the typeahead UI
+                $('.typeahead').typeahead(
+                  { hint: true,
+                    highlight: true,
+                    minLength: 1
+                  },
+                  {
+                  name: 'countries',
+                  displayKey: function(countries) {
+                      alert("asdfsdasd");
+                    return countries.country.country_name;
+                  },
+                  source: countries.ttAdapter()
+                });
+            </script>
+
+
+            <table id="table-categories" class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>{{{ trans("admin/admin.name") }}}</th>
+                    <th>{{{ trans("admin/admin.value") }}}</th>
+                    <th>{{{ trans("admin/admin.created_at") }}}</th>
+                    <th>{{{ trans("admin/admin.action") }}}</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            {{-- Scripts --}}
+            @section('scripts')
+            @parent
+            <script type="text/javascript">
+                var oTable;
+                $(document).ready(function () {
+                    oTable = $('#table-categories').DataTable({
+                        "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
+                        "sPaginationType": "bootstrap",
+                        "processing": true,
+                        "serverSide": true,
+//                        "columnDefs": [ {
+//                            "targets": -1,
+//                            "data": null,
+//                            "defaultContent": "<button>Click!</button>"
+//                        } ],
+                        "createdRow": function ( row, data, index ) {
+                            console.log(row);
+                            console.log(data);
+                            //if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
+                            var href = $('td a.btn-danger', row).attr('href');
+                            //$('td a.btn-danger', row).attr('href', href + '/' + data[0].replace('_field_', ''));
+                            //}
+                        },
+                        "ajax": "{{ URL::to('admin/object-types/'.$objecttype->id.'/fields') }}",
+                        "fnDrawCallback": function (oSettings) {
+                            $(".iframe").colorbox({
+                                iframe: true,
+                                width: "80%",
+                                height: "80%",
+                                onClosed: function () {
+                                    window.location.reload();
+                                }
+                            });
+                        }
+                    });
+                    var startPosition;
+                    var endPosition;
+                    $("#table tbody").sortable({
+                        cursor: "move",
+                        start: function (event, ui) {
+                            startPosition = ui.item.prevAll().length + 1;
+                        },
+                        update: function (event, ui) {
+                            endPosition = ui.item.prevAll().length + 1;
+                            var navigationList = "";
+                            $('#table #row').each(function (i) {
+                                navigationList = navigationList + ',' + $(this).val();
+                            });
+                            $.getJSON("{{ URL::to('admin/object-types/reorder') }}", {
+                                list: navigationList
+                            }, function (data) {
+                            });
+                        }
+                    });
+                });
+            </script>
+            @stop
+
+        </div>
+
+        @endif
     </div>
 		<!-- Form Actions -->
 

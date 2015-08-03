@@ -1,10 +1,15 @@
 <div class="col-md-12">
-    <label class="control-label" for="label"> {{ $field['label'] }}</label>
+    <label class="control-label" for="label"> {{ $field['label'] }} - {{{ isset( $values['address'] ) ? $values['address'] : null }}}
+        {{{ isset( $values['city'] ) ? $values['city'] : null }}} {{{ isset( $values['country'] ) ? ', ' . $values['country'] : null }}}
+        ({{{ isset( $values['location-g'] ) ? $values['location-g'] : null }}}, {{{ isset( $values['location-k'] ) ? $values['location-k'] : null }}})
+    </label>
     {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
 
     <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-location-g" id="{{{ $field['id'] }}}-location-g" />
     <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-location-k" id="{{{ $field['id'] }}}-location-k" />
-
+    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-address" id="{{{ $field['id'] }}}-address" />
+    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-city" id="{{{ $field['id'] }}}-city" />
+    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-country" id="{{{ $field['id'] }}}-country" />
 
 
     <input id="pac-input" class="controls" type="text"
@@ -55,8 +60,11 @@
 
         // Set here
 
-        //var myLatLng = new google.maps.LatLng(-25.363882, 131.044922);
-        //map.setCenter(myLatLng);
+        @if ( isset( $values['location-g'] ) && isset( $values['location-k'] ) )
+            var myLatLng = new google.maps.LatLng({{ $values['location-g'] }}, {{ $values['location-k'] }});
+            map.setCenter(myLatLng);
+            map.setZoom(17);
+        @endif
 
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
@@ -69,10 +77,27 @@
                 return;
             }
 
-            console.log(place);
-
             $('#{{{ $field['id'] }}}-location-g').val(place.geometry.location.G);
             $('#{{{ $field['id'] }}}-location-k').val(place.geometry.location.K);
+
+            if ( place.adr_address ) {
+                var addressElement = $('<div/>').append( place.adr_address );
+
+                var addressAddress = $( addressElement).children('.street-address');
+                var addressCity = $( addressElement).children('.locality');
+                var addressCountry = $( addressElement).children('.country-name');
+
+                if ($(addressAddress).length > 0) {
+                    $('#{{{ $field['id'] }}}-address').val($(addressAddress).html());
+                }
+                if ($(addressCity).length > 0) {
+                    $('#{{{ $field['id'] }}}-city').val($(addressCity).html());
+                }
+                if ($(addressCountry).length > 0) {
+                    $('#{{{ $field['id'] }}}-country').val($(addressCountry).html());
+                }
+            }
+
 
             // If the place has a geometry, then present it on a map.
             if (place.geometry.viewport) {
