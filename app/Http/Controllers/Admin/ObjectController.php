@@ -220,7 +220,7 @@ class ObjectController extends AdminController {
         $objects = Object::where('type', '<>', 'object_type')
             ->where('type', '<>', 'image')
             ->where('type', '<>', 'category')
-            ->select(array('id','title', 'created_at' ));
+            ->select(array('id','title','status', 'created_at' ));
             //;// object::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
 
         return Datatables::of($objects)

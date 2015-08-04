@@ -145,7 +145,8 @@ class ObjectTypesController extends AdminController {
      */
     public function data()
     {
-        $objecttypes = Object::getTypes()->select(array('id', DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'created_at' ));// ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+        $objecttypes = Object::getTypes()
+            ->select(array('id', DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'status', 'created_at' ));// ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
 
         return Datatables::of($objecttypes)
             ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>

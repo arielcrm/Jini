@@ -41,5 +41,6 @@ return [
     'content' => 'Content',
     'object' => 'Object',
     'objects' => 'Objects',
-    'type' => 'Type'
+    'type' => 'Type',
+    'status' => 'Status'
 	];
