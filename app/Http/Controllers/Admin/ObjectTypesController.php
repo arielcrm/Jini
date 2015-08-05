@@ -217,6 +217,12 @@ class ObjectTypesController extends AdminController {
                 $fields[] = 'name';
                 $fields[] = 'title';
                 $fields[] = 'content';
+                $fields[] = 'occupation';
+                $fields[] = 'address';
+                $fields[] = 'french_speakers';
+                $fields[] = 'phone';
+                $fields[] = 'email';
+
 
                 foreach ($data as $field) {
                     $fieldInfo = unserialize($field->meta_value);

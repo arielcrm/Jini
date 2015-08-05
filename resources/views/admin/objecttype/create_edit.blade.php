@@ -171,6 +171,7 @@
                             <option value="text">Text</option>
                             <option value="textarea">Text Area</option>
                             <option value="number">Number</option>
+                            <option value="tel">Phone</option>
                             <option value="email">Email</option>
                             <option value="password">Password</option>
                         </optgroup>
@@ -212,39 +213,25 @@
         @if(isset($objecttype))
         <!-- Fields tab -->
         <div class="tab-pane" id="tab-categories">
-            <input type="hidden" name="mode" value="users">
+            <div id="prefetch">
 
-            <input class="typeahead" type="text" />
+                <input class="typeahead" type="text" placeholder="Countries">
+            </div>
 
             <script>
                 var countries = new Bloodhound({
-                  datumTokenizer: function(countries) {
-                      return Bloodhound.tokenizers.whitespace(countries.value);
-                  },
-                  queryTokenizer: Bloodhound.tokenizers.whitespace,
-                  prefetch: {
-                    url: "http://vocab.nic.in/rest.php/country/json",
-                    filter: function(response) {
-                      return response.countries;
-                    }
-                  }
+                    datumTokenizer: Bloodhound.tokenizers.whitespace,
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    // url points to a json file that contains an array of country names, see
+                    // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+                    prefetch: '../data/countries.json'
                 });
 
-                countries.initialize();
-
-                // instantiate the typeahead UI
-                $('.typeahead').typeahead(
-                  { hint: true,
-                    highlight: true,
-                    minLength: 1
-                  },
-                  {
-                  name: 'countries',
-                  displayKey: function(countries) {
-                      alert("asdfsdasd");
-                    return countries.country.country_name;
-                  },
-                  source: countries.ttAdapter()
+                // passing in `null` for the `options` arguments will result in the default
+                // options being used
+                $('#prefetch .typeahead').typeahead(null, {
+                    name: 'countries',
+                    source: countries
                 });
             </script>
 

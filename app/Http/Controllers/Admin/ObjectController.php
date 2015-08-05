@@ -60,6 +60,9 @@ class ObjectController extends AdminController {
 
 
     public function postImport(ObjectImportRequest $request) {
+        print_r($_FILES);
+        abort(500, $request->hasFile('importFile'));
+
         if($request->hasFile('importFile')) {
             $file = $request->file('importFile');
             $filename = $file->getClientOriginalName();
@@ -130,6 +133,29 @@ class ObjectController extends AdminController {
         return redirect('admin/object-types')->with('message', 'Type saved successfully');
     }
 
+    public function getFieldValues($id, $field) {
+        $values = array();
+        $valuesMeta = ObjectMeta::where('object_id', $id)
+            ->where('meta_key', 'LIKE', $field['id'].'%')
+            ->get();
+
+        foreach ( $valuesMeta as $valueMeta ) {
+            $valueMetaKey = str_replace( $field['id'], '', $valueMeta['meta_key']);
+
+            if ( substr( $valueMetaKey, 0, 1 ) == '-' ) {
+                $valueMetaKey = substr( $valueMetaKey, 1);
+            }
+
+            if ($valueMetaKey) {
+                $values[$valueMetaKey] = $valueMeta['meta_value'];
+            } else {
+                $values[] = $valueMeta['meta_value'];
+            }
+        }
+
+        return $values;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -148,6 +174,75 @@ class ObjectController extends AdminController {
 
                 $fields = array();
                 $fieldControls = array();
+
+                // Occupation
+                $field = array();
+                $field['id'] = '_field_occupation';
+                $field['name'] = 'occupation';
+                $field['label'] = 'Occupation';
+                $field['type'] = 'text';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $values = $this->getFieldValues($id, $field);
+
+                $fieldControls[] = view('admin.partials.form.text', compact( 'field', 'values' ) );
+
+                // Address
+                $field = array();
+                $field['id'] = '_field_address';
+                $field['name'] = 'address';
+                $field['label'] = 'Address';
+                $field['type'] = 'map';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $values = $this->getFieldValues($id, $field);
+
+                $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'values' ) );
+
+                // French
+                $field = array();
+                $field['id'] = '_field_french_speakers';
+                $field['name'] = 'french_speakers';
+                $field['label'] = 'French Speakers';
+                $field['type'] = 'boolean';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $values = $this->getFieldValues($id, $field);
+
+                $fieldControls[] = view('admin.partials.form.boolean', compact( 'field', 'values' ) );
+
+                // Address
+                $field = array();
+                $field['id'] = '_field_phone';
+                $field['name'] = 'phone';
+                $field['label'] = 'Phone';
+                $field['type'] = 'tel';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $values = $this->getFieldValues($id, $field);
+
+                $fieldControls[] = view('admin.partials.form.tel', compact( 'field', 'values' ) );
+
+                // Email
+                $field = array();
+                $field['id'] = '_field_email';
+                $field['name'] = 'email';
+                $field['label'] = 'Email';
+                $field['type'] = 'email';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $values = $this->getFieldValues($id, $field);
+
+                $fieldControls[] = view('admin.partials.form.email', compact( 'field', 'values' ) );
+
+
+
+
                 foreach ($fieldsRows as $fieldRow) {
                     $field = unserialize($fieldRow['meta_value']);
                     $fields[] = $field;
@@ -181,6 +276,12 @@ class ObjectController extends AdminController {
                             break;
                         case 'map':
                             $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'values' ) );
+                            break;
+                        case 'tel':
+                            $fieldControls[] = view('admin.partials.form.tel', compact( 'field', 'values' ) );
+                            break;
+                        case 'boolean':
+                            $fieldControls[] = view('admin.partials.form.boolean', compact( 'field', 'values' ) );
                             break;
                     }
 

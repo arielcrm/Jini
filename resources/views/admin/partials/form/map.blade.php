@@ -60,7 +60,7 @@
 
         // Set here
 
-        @if ( isset( $values['location-g'] ) && isset( $values['location-k'] ) )
+        @if ( !empty( $values['location-g'] ) && !empty( $values['location-k'] ) )
             var myLatLng = new google.maps.LatLng({{ $values['location-g'] }}, {{ $values['location-k'] }});
             map.setCenter(myLatLng);
             map.setZoom(17);
@@ -76,6 +76,8 @@
                 window.alert("Autocomplete's returned place contains no geometry");
                 return;
             }
+
+            console.log(place);
 
             $('#{{{ $field['id'] }}}-location-g').val(place.geometry.location.G);
             $('#{{{ $field['id'] }}}-location-k').val(place.geometry.location.K);

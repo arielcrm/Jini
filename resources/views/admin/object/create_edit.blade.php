@@ -17,10 +17,10 @@
                 @if (isset($type))
                 <form class="form-horizontal" enctype="multipart/form-data"
                       method="post"
-                      action="{{ URL::to('admin/objects/import/') }}"
+                      action="{{ URL::to('admin/objects/import') }}"
                       autocomplete="off">
                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                    <input name="importFile" type="file" class="uploader" id="importFile" value="Upload" />
+                    <input name="importFile" type="file" class="uploader" id="importFile" value="Upload" style="display: none;" />
                     <button type="submit" class="btn btn-sm btn-primary">
                         <span class="glyphicon glyphicon-import"></span>
                         {{ trans("admin/admin.import") }}
