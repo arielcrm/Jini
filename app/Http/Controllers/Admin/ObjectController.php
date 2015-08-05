@@ -7,14 +7,19 @@ use App\Language;
 use App\Http\Controllers\AdminController;
 use App\Http\Requests\Admin\ObjectRequest;
 use App\Http\Requests\Admin\DeleteRequest;
+use App\Http\Requests\Admin\ObjectImportRequest;
 use App\Http\Requests\Admin\ReorderRequest;
 use DoctrineTest\InstantiatorTestAsset\UnserializeExceptionArrayObjectAsset;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\View\Factory;
 use Illuminate\View\View;
 use Datatables;
+
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ObjectController extends AdminController {
 
@@ -50,7 +55,54 @@ class ObjectController extends AdminController {
 
         $types = Object::getTypes()->select(array('id', DB::raw("REPLACE(name, '_object_type_', '') as name"), DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'created_at' ))->get();
 
-        return view('admin.object.create_edit', compact('fields', 'types'));
+        return view('admin.object.create_edit', compact('fields', 'types', 'type'));
+    }
+
+
+    public function postImport(ObjectImportRequest $request) {
+        if($request->hasFile('importFile')) {
+            $file = $request->file('importFile');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $mimeType = $file->getMimeType();
+
+            $destinationPath = public_path() . '/temp/';
+
+            $request->file('importFile')->move($destinationPath, 'temp.txt');
+
+            return;
+
+
+            if ( $type = Input::get('type') )  {
+                if ( $format = Input::get('format') )  {
+                    switch ($format) {
+                        case 'excel':
+                            Excel::load(public_path() . '\temp\import.xls', function($reader) use ($type) {
+                                if ( $rows = $reader->all() ) {
+                                    foreach ( $rows as $row ) {
+                                        $data = $row->toArray();
+
+                                        $name = $data['name'];
+                                        if (!$name) {
+                                            $name = str_replace(' ', '-', $data['title']);
+                                        }
+
+                                        $object = new Object();
+                                        $object->author_id = Auth::user()->id;
+                                        $object->type = $type;
+                                        $object->name = $name;
+                                        $object->title = $data['title'];
+                                        $object->content = $data['content'];
+                                        $object->status = 'published';
+                                        $object->guid = Hash::getUniqueId();
+                                        $object->save();
+                                    }
+                                }
+                            });
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -77,6 +129,7 @@ class ObjectController extends AdminController {
 
         return redirect('admin/object-types')->with('message', 'Type saved successfully');
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -85,6 +138,8 @@ class ObjectController extends AdminController {
      */
     public function getEdit($id)
     {
+        $data = Object::get();
+
         $object = Object::find($id);
 
         if ($typeName = $object->type) {

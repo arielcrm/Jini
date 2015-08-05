@@ -139,6 +139,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('object-types/{id}/delete', 'ObjectTypesController@getDelete');
     Route::post('object-types/{id}/delete', 'ObjectTypesController@postDelete');
     Route::get('object-types/data', 'ObjectTypesController@data');
+    Route::get('object-types/{id}/export', 'ObjectTypesController@getExport');
 
     Route::get('object-types/{id}/fields', 'ObjectTypesController@getFields');
     Route::get('object-types/fields/{id}/delete', 'ObjectTypesController@deleteField');
@@ -153,8 +154,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('objects/{id}/delete', 'ObjectController@getDelete');
     Route::post('objects/{id}/delete', 'ObjectController@postDelete');
     Route::get('objects/data', 'ObjectController@data');
+    Route::post('objects/import', 'ObjectController@postImport');
 
-    Route::get('object-s/{id}/fields', 'ObjectsController@getFields');    
+    Route::get('objects/{id}/fields', 'ObjectsController@getFields');
     
     # Categories
     Route::get('categories/', 'CategoryController@index');

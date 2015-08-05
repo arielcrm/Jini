@@ -11,7 +11,10 @@ use App\Http\Requests\Admin\DeleteRequest;
 use App\Http\Requests\Admin\ReorderRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Datatables;
+
+use Maatwebsite\Excel\Facades\Excel;
 
 class ObjectTypesController extends AdminController {
 
@@ -151,6 +154,7 @@ class ObjectTypesController extends AdminController {
         return Datatables::of($objecttypes)
             ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
                     <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
+                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/export?format=excel\' ) }}}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-export"></span> {{ trans("admin/admin.export") }}</a>
                 @endif')
             ->remove_column('id')
 
@@ -204,6 +208,42 @@ class ObjectTypesController extends AdminController {
 
             ->make();
     }
+
+    public function getExport($id) {
+        if ( $objectType = Object::find($id) ) {
+            if ( $data = ObjectType::getFields($id)->get() ) {
+                $fields = array();
+
+                $fields[] = 'name';
+                $fields[] = 'title';
+                $fields[] = 'content';
+
+                foreach ($data as $field) {
+                    $fieldInfo = unserialize($field->meta_value);
+                    $fields[] = $fieldInfo['name'];
+                }
+
+                if ( $format = Input::get('format') )  {
+                    switch ($format) {
+                        case 'excel':
+                            Excel::create( str_replace('Object Type: ', '', $objectType['title'] ), function($excel) use($objectType, $fields) {
+
+                                $excel->sheet(str_replace('Object Type: ', '', $objectType['title'] ), function($sheet) use($fields) {
+
+                                    $sheet->setOrientation('landscape');
+
+                                    $sheet->fromArray($fields);
+
+                                });
+
+                            })->export('xls');
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
 
     /**
      * Reorder items

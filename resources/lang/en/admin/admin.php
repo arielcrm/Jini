@@ -42,5 +42,7 @@ return [
     'object' => 'Object',
     'objects' => 'Objects',
     'type' => 'Type',
-    'status' => 'Status'
+    'status' => 'Status',
+    'export' => 'Export',
+    'import' => 'Import',
 	];

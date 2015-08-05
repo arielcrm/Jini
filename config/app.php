@@ -152,6 +152,7 @@ return [
 		Laracasts\Flash\FlashServiceProvider::class,
 		Barryvdh\Debugbar\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class
 
     ],
 
