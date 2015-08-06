@@ -132,10 +132,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
 
     # Object Types
     Route::get('object-types/', 'ObjectTypesController@index');
+    Route::post('object-types/', 'ObjectTypesController@index');
     Route::get('object-types/create', 'ObjectTypesController@getCreate');
     Route::post('object-types/create', 'ObjectTypesController@postCreate');
     Route::get('object-types/{id}/edit', 'ObjectTypesController@getEdit');
     Route::post('object-types/{id}/edit', 'ObjectTypesController@postEdit');
+    Route::post('object-types/{id}/categories', 'ObjectTypesController@postCategory');
     Route::get('object-types/{id}/delete', 'ObjectTypesController@getDelete');
     Route::post('object-types/{id}/delete', 'ObjectTypesController@postDelete');
     Route::get('object-types/data', 'ObjectTypesController@data');
@@ -144,9 +146,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('object-types/{id}/fields', 'ObjectTypesController@getFields');
     Route::get('object-types/fields/{id}/delete', 'ObjectTypesController@deleteField');
 
+    Route::get('object-types/{id}/categories', 'ObjectTypesController@getCategories');
 
     # Objects
     Route::get('objects/', 'ObjectController@index');
+    Route::post('objects/', 'ObjectController@index');
     Route::get('objects/create', 'ObjectController@getCreate');
     Route::post('objects/create', 'ObjectController@postCreate');
     Route::get('objects/{id}/edit', 'ObjectController@getEdit');
@@ -167,4 +171,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('categories/{id}/delete', 'CategoryController@getDelete');
     Route::post('categories/{id}/delete', 'CategoryController@postDelete');
     Route::get('categories/data', 'CategoryController@data');
+    Route::get('categories/search', 'CategoryController@getSearch');
 });

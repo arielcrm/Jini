@@ -12,7 +12,7 @@
     <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-country" id="{{{ $field['id'] }}}-country" />
 
 
-    <input id="pac-input" class="controls" type="text"
+    <input id="pac-input_{{{ $uniqueId }}}" class="controls pac-input" type="text"
            placeholder="Enter a location">
     <div id="type-selector" class="controls">
         <input type="radio" name="type" id="changetype-all" checked="checked">
@@ -27,22 +27,21 @@
         <input type="radio" name="type" id="changetype-geocode">
         <label for="changetype-geocode">Geocodes</label>
     </div>
-    <div id="map-canvas"></div>
+    <div id="map-canvas_{{{ $uniqueId }}}" class="map-canvas"></div>
 
 
 </div>
 
 <script>
-    function initialize() {
+    google.maps.event.addDomListener(window, 'load', function() {
         var mapOptions = {
             center: new google.maps.LatLng(-33.8688, 151.2195),
             zoom: 13
         };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
+        var map = new google.maps.Map(document.getElementById('map-canvas_{{{ $uniqueId }}}'), mapOptions);
 
         var input = /** @type {HTMLInputElement} */(
-            document.getElementById('pac-input'));
+            document.getElementById('pac-input_{{{ $uniqueId }}}'));
 
         var types = document.getElementById('type-selector');
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -144,8 +143,5 @@
         setupClickListener('changetype-address', ['address']);
         setupClickListener('changetype-establishment', ['establishment']);
         setupClickListener('changetype-geocode', ['geocode']);
-    }
-
-    google.maps.event.addDomListener(window, 'load', initialize);
-
+    });
 </script>

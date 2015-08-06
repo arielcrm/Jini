@@ -34,6 +34,23 @@ class ObjectController extends AdminController {
         return view('admin.object.index');
 	}
 
+    public function postIndex(ObjectImportRequest $request) {
+        echo 'sadfsda';
+        print_r($_FILES);
+        if($request->hasFile('dd')) {
+            $file = $request->file('dd');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $mimeType = $file->getMimeType();
+
+            $destinationPath = public_path() . '/temp/';
+
+            $request->file('importFile')->move($destinationPath, 'temp.txt');
+
+            return;
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -189,6 +206,8 @@ class ObjectController extends AdminController {
                 $fieldControls[] = view('admin.partials.form.text', compact( 'field', 'values' ) );
 
                 // Address
+                $uniqueId = Hash::getUniqueId();
+
                 $field = array();
                 $field['id'] = '_field_address';
                 $field['name'] = 'address';
@@ -199,7 +218,7 @@ class ObjectController extends AdminController {
 
                 $values = $this->getFieldValues($id, $field);
 
-                $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'values' ) );
+                $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'values', 'uniqueId' ) );
 
                 // French
                 $field = array();
@@ -267,21 +286,23 @@ class ObjectController extends AdminController {
                         }
                     }
 
+                    $uniqueId = Hash::getUniqueId();
+
                     switch ($field['type']) {
                         case 'text':
-                            $fieldControls[] = view('admin.partials.form.text', compact( 'field', 'values' ) );
+                            $fieldControls[] = view('admin.partials.form.text', compact( 'field', 'values', 'uniqueId' ) );
                             break;
                         case 'wysiwyg':
-                            $fieldControls[] = view('admin.partials.form.wysiwyg', compact( 'field', 'values' ) );
+                            $fieldControls[] = view('admin.partials.form.wysiwyg', compact( 'field', 'values', 'uniqueId' ) );
                             break;
                         case 'map':
-                            $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'values' ) );
+                            $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'values', 'uniqueId' ) );
                             break;
                         case 'tel':
-                            $fieldControls[] = view('admin.partials.form.tel', compact( 'field', 'values' ) );
+                            $fieldControls[] = view('admin.partials.form.tel', compact( 'field', 'values', 'uniqueId' ) );
                             break;
                         case 'boolean':
-                            $fieldControls[] = view('admin.partials.form.boolean', compact( 'field', 'values' ) );
+                            $fieldControls[] = view('admin.partials.form.boolean', compact( 'field', 'values', 'uniqueId' ) );
                             break;
                     }
 

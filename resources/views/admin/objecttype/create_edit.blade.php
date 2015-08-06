@@ -214,24 +214,70 @@
         <!-- Fields tab -->
         <div class="tab-pane" id="tab-categories">
             <div id="prefetch">
-
-                <input class="typeahead" type="text" placeholder="Countries">
+                <input id="arr" class="typeahead" type="text" placeholder="Countries">
             </div>
 
             <script>
-                var countries = new Bloodhound({
+                var categories = new Bloodhound({
                     datumTokenizer: Bloodhound.tokenizers.whitespace,
                     queryTokenizer: Bloodhound.tokenizers.whitespace,
-                    // url points to a json file that contains an array of country names, see
-                    // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-                    prefetch: '../data/countries.json'
+                    remote: {
+                        url: '/admin/categories/search?query=%QUERY' + '&t=' + Date.now(),
+                        wildcard: '%QUERY',
+                        ajax:{
+                            type:"POST",
+                            cache:false,
+                            data:{
+                                limit:5
+                            },
+                            beforeSend:function(jqXHR,settings){
+                                settings.data+="&q="+$('#arr').typeahead('val');
+                            },
+                            complete:function(jqXHR,textStatus){
+                                meslekler.clearRemoteCache();
+                            }
+                        }
+//                        filter: function (results) {
+//                            return $.map(results, function (result) {
+//                                return {
+//                                    text: result.title,
+//                                    value: result.id
+//                                };
+//                            });
+//                        }
+                    }
                 });
 
-                // passing in `null` for the `options` arguments will result in the default
-                // options being used
                 $('#prefetch .typeahead').typeahead(null, {
-                    name: 'countries',
-                    source: countries
+                    name: 'categories',
+                    source: categories,
+                    display: 'title',
+                    templates: {
+                        empty: [
+                            '<div class="empty-message">',
+                            'unable to find any Best Picture winners that match the current query',
+                            '</div>'
+                        ].join('\n')
+                    }
+                });
+                $('.typeahead').bind('typeahead:select', function(ev, suggestion) {
+                    alert(suggestion.id);
+                    $.ajax({
+                        url: 'categories',
+                        method: "POST",
+                        data: {
+                            id  : suggestion.id,
+                            _token : '{{{ csrf_token() }}}'
+                        },
+                        cache: false,
+                        success: function(response) {
+                            if (response) {
+                            }
+                        },
+                        complete: function(response) {
+
+                        }
+                    });
                 });
             </script>
 
@@ -272,7 +318,7 @@
                             //$('td a.btn-danger', row).attr('href', href + '/' + data[0].replace('_field_', ''));
                             //}
                         },
-                        "ajax": "{{ URL::to('admin/object-types/'.$objecttype->id.'/fields') }}",
+                        "ajax": "{{ URL::to('admin/object-types/'.$objecttype->id.'/categories') }}",
                         "fnDrawCallback": function (oSettings) {
                             $(".iframe").colorbox({
                                 iframe: true,

@@ -14,19 +14,6 @@
                 <a href="{{{ URL::to('admin/object-types/create') }}}"
                    class="btn btn-sm  btn-primary"><span
                         class="glyphicon glyphicon-plus-sign"></span> {{ trans("admin/modal.new") }}</a>
-                @if (isset($type))
-                <form class="form-horizontal" enctype="multipart/form-data"
-                      method="post"
-                      action="{{ URL::to('admin/objects/import') }}"
-                      autocomplete="off">
-                    <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                    <input name="importFile" type="file" class="uploader" id="importFile" value="Upload" style="display: none;" />
-                    <button type="submit" class="btn btn-sm btn-primary">
-                        <span class="glyphicon glyphicon-import"></span>
-                        {{ trans("admin/admin.import") }}
-                    </button>
-                </form>
-                    @endif
             </div>
         </div>
     </h3>

@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\CategoryRequest;
 use App\Http\Requests\Admin\DeleteRequest;
 use App\Http\Requests\Admin\ReorderRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Datatables;
 
 
@@ -93,6 +94,26 @@ class CategoryController extends AdminController {
 
         return view('admin.category.create_edit', compact('object', 'parent_id', 'categories', 'featuredImage', 'contentImage', 'toolTip'));
     }
+
+    public function getSearch() {
+        if ( $criteria = Input::get('query') ) {
+            $categories = Object::where('type', 'category')
+                ->where(function( $query ) use ( $criteria ) {
+                $query->where('title', 'LIKE', '%' . $criteria . '%')
+                    ->orWhere('name', 'LIKE', '%' . $criteria . '%');
+                })
+                ->select('id', 'title')
+                ->get();
+
+            return response( $categories );
+        }
+
+
+
+        //return response(array('afdfs', 'asdfsdfs'));//->header('Content-Type', 'application/json');
+
+    }
+
 
     /**
      * Update the specified resource in storage.

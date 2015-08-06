@@ -172,9 +172,59 @@ class ObjectTypesController extends AdminController {
 //            ->make();
     }
 
+    public function getCategories($id)
+    {
+        if ( $objectType = Object::find($id) ) {
+            $categories = ObjectMeta::where('object_id', $id)
+                ->where('meta_key', '_category_id')
+                ->select( array( 'id', 'meta_value' ))
+                ->get();
+
+            $c = array();
+            foreach ($categories as $categoryId) {
+                $c[] = $categoryId->meta_value;
+            }
+
+            $categories = Object::where('type', 'category')
+                ->whereIn('id', $c)
+                ->select('id', 'name', 'title')
+                ->get();
+
+            return Datatables::of($categories)
+                ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
+                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
+                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/export?format=excel\' ) }}}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-export"></span> {{ trans("admin/admin.export") }}</a>
+                @endif')
+                ->remove_column('id')
+
+                ->make();
+
+        }
+
+
+//        $objecttypes = ObjectType::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+//
+//        return Datatables::of($objecttypes)
+//            ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
+//                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
+//                @endif')
+//            ->remove_column('id')
+//
+//            ->make();
+    }
+
+
     public function deleteField($id) {
         if ($field = ObjectMeta::find($id)) {
             $field->delete();
+        }
+    }
+
+    public function postCategory($id) {
+        if ( $objectType = Object::find($id) ) {
+            if ( $categoryId = Input::get('id') ) {
+                $objectType->setValue('_category_id', $categoryId);
+            }
         }
     }
 
