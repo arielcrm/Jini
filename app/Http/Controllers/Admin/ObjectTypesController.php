@@ -179,7 +179,7 @@ class ObjectTypesController extends AdminController {
                 ->where('meta_key', '_category_id')
                 ->select( array( 'id', 'meta_value' ))
                 ->get();
-
+            //$cc
             $c = array();
             foreach ($categories as $categoryId) {
                 $c[] = $categoryId->meta_value;
