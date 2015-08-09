@@ -106,7 +106,6 @@
         .tt-query,
         .tt-hint {
             width: 396px;
-            height: 30px;
             padding: 8px 12px;
             font-size: 24px;
             line-height: 30px;

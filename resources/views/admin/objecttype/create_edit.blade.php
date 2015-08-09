@@ -214,7 +214,7 @@
         <!-- Fields tab -->
         <div class="tab-pane" id="tab-categories">
             <div id="prefetch">
-                <input id="arr" class="typeahead" type="text" placeholder="Countries">
+                <input id="arr" class="typeahead" type="text" placeholder="Categories">
             </div>
 
             <script>
@@ -261,7 +261,6 @@
                     }
                 });
                 $('.typeahead').bind('typeahead:select', function(ev, suggestion) {
-                    alert(suggestion.id);
                     $.ajax({
                         url: 'categories',
                         method: "POST",
@@ -271,10 +270,12 @@
                         },
                         cache: false,
                         success: function(response) {
+                            console.log(response);
                             if (response) {
                             }
                         },
                         complete: function(response) {
+                            console.log(response);
 
                         }
                     });
@@ -285,9 +286,7 @@
             <table id="table-categories" class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>{{{ trans("admin/admin.name") }}}</th>
-                    <th>{{{ trans("admin/admin.value") }}}</th>
-                    <th>{{{ trans("admin/admin.created_at") }}}</th>
+                    <th>{{{ trans("admin/admin.title") }}}</th>
                     <th>{{{ trans("admin/admin.action") }}}</th>
                 </tr>
                 </thead>

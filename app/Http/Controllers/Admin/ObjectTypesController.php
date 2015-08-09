@@ -187,16 +187,12 @@ class ObjectTypesController extends AdminController {
 
             $categories = Object::where('type', 'category')
                 ->whereIn('id', $c)
-                ->select('id', 'name', 'title')
+                ->select('id', 'title')
                 ->get();
 
             return Datatables::of($categories)
-                ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
-                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>
-                    <a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/export?format=excel\' ) }}}" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-export"></span> {{ trans("admin/admin.export") }}</a>
-                @endif')
+                ->add_column('actions', '<a href="{{{ URL::to(\'admin/object-types/\' . $id . \'/delete\' ) }}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> {{ trans("admin/modal.delete") }}</a>')
                 ->remove_column('id')
-
                 ->make();
 
         }
@@ -223,7 +219,7 @@ class ObjectTypesController extends AdminController {
     public function postCategory($id) {
         if ( $objectType = Object::find($id) ) {
             if ( $categoryId = Input::get('id') ) {
-                $objectType->setValue('_category_id', $categoryId);
+                $objectType->addValue('_category_id', $categoryId);
             }
         }
     }

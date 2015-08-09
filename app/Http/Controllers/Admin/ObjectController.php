@@ -30,8 +30,19 @@ class ObjectController extends AdminController {
 	 */
 	public function index()
 	{
-        // Show the page
-        return view('admin.object.index');
+        $objecttype = null;
+
+        if ( $type = Input::get('type') ) {
+            $objecttype = Object::where('type', 'object_type')
+                ->where('name', '_object_type_' . $type )
+                ->first();
+
+            if ( $objecttype ) {
+                $objecttype->name = str_replace( '_object_type_', '', $objecttype->name );
+            }
+        }
+
+        return view('admin.object.index', compact( 'objecttype' ) );
 	}
 
     public function postIndex(ObjectImportRequest $request) {
@@ -381,10 +392,13 @@ class ObjectController extends AdminController {
      */
     public function postDelete(DeleteRequest $request,$id)
     {
-        $object = object::find($id);
-        $object->delete();
+        if ( $object = object::find($id) ) {
+            $object->delete();
 
-        return redirect('admin/objects')->with('message', 'Type deleted successfully');
+            ObjectMeta::where('object_id', $id)->delete();
+
+            return redirect('admin/objects')->with('message', 'Type deleted successfully');
+        }
     }
 
     /**
@@ -394,10 +408,17 @@ class ObjectController extends AdminController {
      */
     public function data()
     {
+        $type = Input::get('type');
+
         $objects = Object::where('type', '<>', 'object_type')
             ->where('type', '<>', 'image')
-            ->where('type', '<>', 'category')
-            ->select(array('id','title','status', 'created_at' ));
+            ->where('type', '<>', 'category');
+
+        if ( !empty( $type ) ) {
+            $objects = $objects->where('type', $type);
+        }
+
+        $objects = $objects->select(array('id', 'title', 'type', 'status', 'created_at' ));
             //;// object::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
 
         return Datatables::of($objects)

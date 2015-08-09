@@ -23,6 +23,7 @@
         <thead>
         <tr>
             <th>{{{ trans("admin/admin.title") }}}</th>
+            <th>{{{ trans("admin/admin.type") }}}</th>
             <th>{{{ trans("admin/admin.status") }}}</th>
             <th>{{{ trans("admin/admin.created_at") }}}</th>
             <th>{{{ trans("admin/admin.action") }}}</th>
@@ -44,7 +45,7 @@
 
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/objects/data/') }}",
+                "ajax": "{{ URL::to('admin/objects/data' . ( isset($objecttype) ? '?type=' . $objecttype->name : null ) ) }}",
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({
                         iframe: true,
