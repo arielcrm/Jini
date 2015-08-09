@@ -35,10 +35,33 @@ class Thumbnail {
         if(!file_exists($thumbnail_directory)) {
             mkdir($thumbnail_directory);
         }
+
         $thumbnail_gd_image = imagecreatetruecolor($thumbnail_image_width, $thumbnail_image_height);
+
+        switch ($source_image_type) {
+            case IMAGETYPE_PNG :
+                imagealphablending($thumbnail_gd_image, false);
+                imagesavealpha($thumbnail_gd_image, true);
+                $trans_colour = imagecolorallocatealpha($thumbnail_gd_image, 0, 0, 0, 127);
+                imagefill($thumbnail_gd_image, 0, 0, $trans_colour);
+                break;
+        }
+
 		imagecopyresampled($thumbnail_gd_image, $source_gd_image, 0, 0, 0, 0, $thumbnail_image_width, $thumbnail_image_height, $source_image_width, $source_image_height);
-		imagejpeg($thumbnail_gd_image, $thumbnail_image_path, 90);
-		imagedestroy($source_gd_image);
+
+        switch ($source_image_type) {
+            case IMAGETYPE_GIF :
+                imagegif($thumbnail_gd_image, $thumbnail_image_path);
+                break;
+            case IMAGETYPE_JPEG :
+                imagejpeg($thumbnail_gd_image, $thumbnail_image_path, 100);
+                break;
+            case IMAGETYPE_PNG :
+                imagepng($thumbnail_gd_image, $thumbnail_image_path, 9);
+                break;
+        }
+
+        imagedestroy($source_gd_image);
 		imagedestroy($thumbnail_gd_image);
 		return true;
 	}
