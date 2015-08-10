@@ -32,6 +32,18 @@ class CategoryController extends Controller {
                     $category['featuredImageUrl'] = '/uploads/' . $featuredImageUrl;
                 }
             }
+
+            $category['childrenCount'] = Object::where('objects.type', 'category')
+                ->where('parent_id', $category['id'])
+                ->count();
+
+
+            $category['itemsCount'] = ObjectMeta::join('objects', 'object_meta.object_id', '=', 'objects.id')
+                ->where('meta_key', '_category_id')
+                ->where('meta_value', $category['id'])
+                ->where('objects.type', '<>', 'category')
+                ->groupBy('object_id')
+                ->count();
         }
         
         
@@ -64,5 +76,16 @@ class CategoryController extends Controller {
             return $category->content;
 
         }
+    }
+
+    public function getCategoryObjects($id = null) {
+        $objects = Object::join('object_meta', 'objects.id', '=', 'object_meta.object_id')
+            ->where('object_meta.meta_key', '_category_id')
+            ->where('object_meta.meta_value', $id)
+            ->where('objects.type', '<>', 'category')
+            ->select( array( 'objects.id', 'objects.name', 'objects.title' ) )
+            ->get();
+
+        return $objects;
     }
 }

@@ -29,6 +29,15 @@
                 </div>
                 <a href="#" class="back-button">&nbsp;</a>
             </div>
+            <div class="search-results-pane-wrapper pane-wrapper">
+                <div class="search-results-pane pane">
+                    <div class="info-content">
+                        <h2 class="title">About Us</h2>
+                        <div class="content"></div>
+                    </div>
+                </div>
+                <a href="#" class="back-button">&nbsp;</a>
+            </div>
         </div>
 
         <div class="demo-wrapper">
@@ -259,6 +268,9 @@
                             mi[2] = '#' + o.name;
                             mi[3] = o.id;
                             mi[4] = o.contentImageUrl;
+                            mi[5] = o.childrenCount;
+                            mi[6] = o.itemsCount;
+
 
                             mm.push(mi);
                         }
@@ -290,6 +302,9 @@
                         mi[2] = '#' + o.name;
                         mi[3] = o.id;
                         mi[4] = o.contentImageUrl;
+                        mi[5] = o.childrenCount;
+                        mi[6] = o.itemsCount;
+
 
                         mm.push(mi);
                     }

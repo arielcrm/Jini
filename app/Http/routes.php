@@ -19,7 +19,9 @@ Route::get('contact', 'PagesController@contact');
 Route::get('categories/', 'CategoryController@getCategories');
 Route::get('categories/{id}', 'CategoryController@getCategories');
 Route::get('categories/{id}/content', 'CategoryController@getCategoryContent');
+Route::get('categories/{id}/objects', 'CategoryController@getCategoryObjects');
 
+Route::get('objects', 'ObjectController@getSearch');
 
 Route::pattern('id', '[0-9]+');
 Route::get('news/{id}', 'ArticlesController@show');

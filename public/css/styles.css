@@ -867,8 +867,6 @@ blockquote {
 }
 .side-bar-1 .pane-wrapper {
     display: none;
-}
-.side-bar-1 .info-pane-wrapper {
     position: absolute;
     top: 0;
     left: 91px;

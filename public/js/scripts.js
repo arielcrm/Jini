@@ -64,10 +64,7 @@ function drawCutSectors(t, e, i) {
         var z = m[1];
         var tt = m[0];
 
-        console.log(m);
-
-
-        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-featured-image", m[1]), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
+        r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute('data-children-count', m[5]), r.setAttribute('data-items-count', m[6]),  r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-featured-image", m[1]), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
             var itemId = this.getAttribute("data-id");
@@ -122,36 +119,47 @@ function drawCutSectors(t, e, i) {
         r.addEventListener(clickEvent, function(t) {
             if (t.button == 0) {
                 var itemId = this.getAttribute("data-id");
+                var categoriesCount = this.getAttribute("data-children-count");
+                var itemsCount = this.getAttribute("data-items-count");
 
-                $.ajax({
-                    url: '/categories/' + itemId,
-                    dataType: 'json',
-                    success: function(response) {
-                        var mm = [];
+                if (categoriesCount > 0) {
+                    $.ajax({
+                        url: '/categories/' + itemId,
+                        dataType: 'json',
+                        success: function(response) {
+                            var mm = [];
 
-                        console.log(response);
+                            if (response.length > 0) {
+                                for ( i = 0; i < response.length; i++) {
+                                    var o = response[i];
 
-                        for ( i = 0; i < response.length; i++) {
-                            var o = response[i];
+                                    console.log(o);
+                                    mi = [];
+                                    mi[0] = o.title;
+                                    mi[1] = o.featuredImageUrl;
+                                    mi[2] = '#' + o.name;
+                                    mi[3] = o.id;
+                                    mi[4] = o.contentImageUrl;
+                                    mi[5] = o.childrenCount;
+                                    mi[6] = o.itemsCount;
 
-                            mi = [];
-                            mi[0] = o.title;
-                            mi[1] = o.featuredImageUrl;
-                            mi[2] = '#' + o.name;
-                            mi[3] = o.id;
-                            mi[4] = o.contentImageUrl;
+                                    mm.push(mi);
+                                }
 
-                            mm.push(mi);
+                                currentMenu = mm;
+
+                                nbOfSlices = currentMenu.length;
+
+                                init();
+                            } else {
+
+                            }
                         }
-
-                        currentMenu = mm;
-
-                        nbOfSlices = currentMenu.length;
-
-                        init();
-                    }
-                });
-
+                    });
+                } else {
+                    $('#sideBar1 .info-pane-wrapper').hide();
+                    $('#sideBar1 .search-results-pane-wrapper').show().animate({'width': '400'});
+                }
             }
         }, true);
 
