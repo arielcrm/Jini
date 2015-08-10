@@ -16,7 +16,7 @@
 <form class="form-horizontal" id="fupload" enctype="multipart/form-data"
       method="post"
       action="@if(isset($object)){{ URL::to('admin/categories/'.$object->id.'/edit') }}
-	        @else{{ URL::to('admin/objects/create') }}@endif"
+	        @else{{ URL::to('admin/categories/create') }}@endif"
       autocomplete="off">
     <!-- CSRF Token -->
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />

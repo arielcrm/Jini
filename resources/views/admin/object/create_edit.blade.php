@@ -44,7 +44,7 @@
                         <label class="control-label" for="type">{{
                             trans("admin/admin.type") }}</label>
 
-                        @if(!isset($object)) :
+                        @if(!isset($object) && !empty($types) ) :
                         <select
                             style="width: 100%" name="type" id="type"
                             class="form-control" onchange="location.search = 'type=' + this.value;"> <option value="" text=""></option>

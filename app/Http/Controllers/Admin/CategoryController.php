@@ -40,7 +40,7 @@ class CategoryController extends AdminController {
         $categories = Object::where('type', 'category')
             ->get();
 
-        return view('admin.object.create_edit', compact('categories'));
+        return view('admin.category.create_edit', compact('categories'));
     }
 
     /**
