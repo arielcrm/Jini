@@ -257,7 +257,7 @@ function addIcons() {
         //var f = document.createElementNS(svgns, "rect");
         //f.setAttribute("fill", "none"), f.setAttribute("stroke", "#111"), f.setAttribute("stroke-width", "1"), f.setAttribute("width", "100%"), f.setAttribute("height", "100%");
         var p = document.createElementNS(svgns, "text");
-        p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"), p.setAttribute("y", "10%"), p.setAttribute("dy", ".3em"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", "1em"), p.textContent = currentMenu[n][0].replace(' / ', '\n'. replace(' ', '\n'));//n + 1;
+        p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"), p.setAttribute("y", "10%"), p.setAttribute("dy", ".3em"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", "14px"), p.textContent = currentMenu[n][0].replace(' / ', '  '. replace(' ', '\n'));//n + 1;
         var d = document.createComment("Replace the contents of this symbol with the content of your icon");
         c.appendChild(d), c.appendChild(p), symbolsContainer.appendChild(document.createTextNode("    ")), symbolsContainer.appendChild(c), symbolsContainer.appendChild(document.createTextNode("\n\n"))
     }
@@ -3237,7 +3237,7 @@ var svg = document.getElementById("menu"),
         x: 250,
         y: 250
     }, menuRadius = 250,
-    menuSmallRadius = 145,
+    menuSmallRadius = 115,
     iconPos;
 
 

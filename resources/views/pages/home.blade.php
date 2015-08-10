@@ -94,7 +94,7 @@
                         <!-- the menu items -->
                     </g>
                     <g id="trigger" class="trigger menu-trigger" role="button">
-                        <circle cx="250" cy="250" r="140" />
+                        <circle cx="250" cy="250" r="110" />
                         <!-- menu button label or icon goes here -->
                     </g>
                 </svg>
