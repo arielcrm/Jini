@@ -152,7 +152,6 @@ nav a {
     text-transform: uppercase
 }
 svg a:hover {
-    cursor: move
 }
 ul {
     padding: 0;
@@ -907,4 +906,8 @@ blockquote {
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
+}
+
+#itemsContainer {
+    z-index: 1000;
 }
