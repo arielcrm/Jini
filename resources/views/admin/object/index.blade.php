@@ -15,6 +15,21 @@
                        class="btn btn-sm  btn-primary"><span
                                 class="glyphicon glyphicon-plus-sign"></span> {{ trans("admin/modal.new") }}</a>
                 </div>
+                <div class="pull-right">
+                    @if(!empty($types) )
+                    <select
+                        style="width: 100%" name="type" id="type"
+                        class="form-control" onchange="location.search = 'type=' + this.value;"> <option value="" text=""></option>
+                        @foreach($types as $type)
+                        <option value="{{{ $type->name }}}"
+                        @if(!empty($_GET['type']) && $type->name==$_GET['type'])
+                        selected="selected" @endif
+
+                        >{{$type->title}}</option>
+                        @endforeach
+                    </select>
+                    @endif
+                </div>
             </div>
         </h3>
     </div>

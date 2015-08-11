@@ -39,6 +39,18 @@
             <i class="fa fa-language"></i>
             <span class="hidden-sm text"> Objects</span>
         </a>
+        @if( !empty($types) )
+        <ul class="nav collapse">
+            @foreach($types as $type)
+            <li class="{{set_active('admin/newscategory')}}">
+                <a href="{{url('admin/objects?type=' . $type->name)}}">
+                    <i class="glyphicon glyphicon-list"></i>
+                    <span class="hidden-sm text"> {{{ $type->title }}}</span>
+                </a>
+            </li>
+            @endforeach
+        </ul>
+        @endif
     </li>
     <li class="{{set_active('admin/news*')}}">
         <a href="#">

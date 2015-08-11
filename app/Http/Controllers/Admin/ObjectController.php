@@ -42,7 +42,10 @@ class ObjectController extends AdminController {
             }
         }
 
-        return view('admin.object.index', compact( 'objecttype' ) );
+
+        $types = Object::getTypes()->select(array('id', DB::raw("REPLACE(name, '_object_type_', '') as name"), DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'created_at' ))->get();
+
+        return view('admin.object.index', compact( 'objecttype', 'types' ) );
 	}
 
     public function postIndex(ObjectImportRequest $request) {

@@ -83,7 +83,11 @@ class HomeController extends Controller {
         $categories = Object::where('type', 'category')
             ->get();
 
-		return view('pages.home', compact('articles', 'sliders', 'videoAlbums', 'photoAlbums', 'categories'));
+        global $types;
+
+        $types = Object::getTypes()->select(array('id', DB::raw("REPLACE(name, '_object_type_', '') as name"), DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'created_at' ))->get();
+
+		return view('pages.home', compact('articles', 'sliders', 'videoAlbums', 'photoAlbums', 'categories', 'types'));
 
 		//return view('pages.welcome');
 	}
