@@ -217,12 +217,9 @@ class CategoryController extends AdminController {
 
         $categories = Object::leftJoin('users as author', 'author.id', '=', 'objects.author_id')
             ->leftJoin('objects as parent', 'parent.id', '=', 'objects.parent_id')
-            ->select('objects.id')
-            ->addSelect('objects.title')
-            ->addSelect('author.name AS author')
-            ->addSelect('parent.name AS parent')
-            ->addSelect('objects.created_at')
-            ->where('objects.type', 'category');
+            ->where('objects.type', 'category')
+            ->select('objects.id', 'objects.title', 'author.name AS author', 'parent.name AS parent', 'objects.created_at');
+
 
         return Datatables::of($categories)
             ->add_column('actions', '<a href="{{{ URL::to(\'admin/categories/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>

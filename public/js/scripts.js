@@ -91,10 +91,10 @@ function drawCutSectors(t, e, i) {
             }
 
             if (itemContentImageSrc && itemContentImageSrc != 'undefined') {
-                $('#sideBar1 .top-image').attr('src', itemContentImageSrc);
-                $('#sideBar1 .top-image').show();
+                $('#sideBar1 .info-pane .top-image').attr('src', itemContentImageSrc);
+                $('#sideBar1 .info-pane .top-image').show();
             } else {
-                $('#sideBar1 .top-image').hide();
+                $('#sideBar1 .info-pane .top-image').hide();
             }
 
 
@@ -105,9 +105,9 @@ function drawCutSectors(t, e, i) {
                 dataType: 'html',
                 success: function(response) {
                     if (response) {
-                        $('#sideBar1 .content').html(response);
+                        $('#sideBar1 .info-pane .content').html(response);
                     } else {
-                        $('#sideBar1 .content').html('');
+                        $('#sideBar1 .info-pane .content').html('');
                     }
                 },
                 complete: function(response) {
@@ -159,6 +159,27 @@ function drawCutSectors(t, e, i) {
                 } else {
                     $('#sideBar1 .info-pane-wrapper').hide();
                     $('#sideBar1 .search-results-pane-wrapper').show().animate({'width': '400'});
+
+
+                    $.ajax({
+                        url: '/objects/search?categoryid=' + itemId,
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response) {
+                                var html = '<ul>'
+                                for (i = 0; i < response.length; i++) {
+                                    var result = response[i];
+
+                                    console.log(result);
+                                    html += '<li><div class="row"><div class="col-md-4"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-8"><div class="content"><h3>' + result.title  + '</h3><p class="excerpt">' + result.excerpt + '</p></div></div></li>';
+                                }
+                                html += '</ul>';
+
+                                $('#sideBar1 .search-results-pane').html(html);
+                            }
+                        }
+                    });
+
                 }
             }
         }, true);

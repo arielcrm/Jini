@@ -160,7 +160,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::get('objects/{id}/delete', 'ObjectController@getDelete');
     Route::post('objects/{id}/delete', 'ObjectController@postDelete');
     Route::get('objects/data', 'ObjectController@data');
-    Route::post('objects/import', 'ObjectController@postImport');
+
+    Route::get('objects/import', 'ObjectController@getImport');
 
     Route::get('objects/{id}/fields', 'ObjectsController@getFields');
     

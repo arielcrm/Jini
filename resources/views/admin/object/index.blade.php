@@ -46,6 +46,18 @@
         </thead>
         <tbody></tbody>
     </table>
+
+<form class="form-horizontal" enctype="multipart/form-data"
+      method="post"
+      action=""
+">
+<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+<input name="dd" type="file" class="uploader" id="dd" value="Upload" />
+<input type="submit" class="btn btn-sm btn-primary">
+<span class="glyphicon glyphicon-import"></span>
+{{ trans("admin/admin.import") }}
+</input>
+</form>
 @stop
 
 {{-- Scripts --}}

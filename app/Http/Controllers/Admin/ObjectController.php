@@ -90,53 +90,89 @@ class ObjectController extends AdminController {
     }
 
 
-    public function postImport(ObjectImportRequest $request) {
-        print_r($_FILES);
-        abort(500, $request->hasFile('importFile'));
+    public function getImport() {
+        if ( $type = Input::get('type') )  {
+            if ( $format = Input::get('format') )  {
+                switch ($format) {
+                    case 'excel':
+                        Excel::load(public_path() . '\temp\import.xls', function($reader) use ($type) {
+                            if ( $rows = $reader->all() ) {
+                                foreach ( $rows as $row ) {
+                                    $data = $row->toArray();
 
-        if($request->hasFile('importFile')) {
-            $file = $request->file('importFile');
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $mimeType = $file->getMimeType();
+                                    $name = $data['name'];
+                                    if (!$name) {
+                                        $name = str_replace(' ', '-', $data['title']);
+                                    }
 
-            $destinationPath = public_path() . '/temp/';
+                                    $object = new Object();
+                                    $object->author_id = Auth::user()->id;
+                                    $object->type = $type;
+                                    $object->name = $name;
+                                    $object->title = $data['title'];
+                                    $object->content = $data['content'];
+                                    $object->status = 'published';
+                                    $object->guid = Hash::getUniqueId();
+                                    $object->save();
 
-            $request->file('importFile')->move($destinationPath, 'temp.txt');
+                                    $keys = array_keys($data);
+                                    foreach ( $keys as $key ) {
+                                        if ( !in_array($key, array('type', 'title', 'name', 'content', 'excerpt' ) ) ) {
+                                            $val = $data[$key];
 
-            return;
-
-
-            if ( $type = Input::get('type') )  {
-                if ( $format = Input::get('format') )  {
-                    switch ($format) {
-                        case 'excel':
-                            Excel::load(public_path() . '\temp\import.xls', function($reader) use ($type) {
-                                if ( $rows = $reader->all() ) {
-                                    foreach ( $rows as $row ) {
-                                        $data = $row->toArray();
-
-                                        $name = $data['name'];
-                                        if (!$name) {
-                                            $name = str_replace(' ', '-', $data['title']);
+                                            if ( !empty( $val ) ) {
+                                                $object->setValue('_field_' . $key, $val);
+                                            }
                                         }
-
-                                        $object = new Object();
-                                        $object->author_id = Auth::user()->id;
-                                        $object->type = $type;
-                                        $object->name = $name;
-                                        $object->title = $data['title'];
-                                        $object->content = $data['content'];
-                                        $object->status = 'published';
-                                        $object->guid = Hash::getUniqueId();
-                                        $object->save();
                                     }
                                 }
-                            });
-                    }
+                            }
+                        });
                 }
             }
         }
+
+
+//        if($request->hasFile('importFile')) {
+//            $file = $request->file('importFile');
+//            $filename = $file->getClientOriginalName();
+//            $extension = $file->getClientOriginalExtension();
+//            $mimeType = $file->getMimeType();
+//
+//            $destinationPath = public_path() . '/temp/';
+//
+//            $request->file('importFile')->move($destinationPath, 'temp.txt');
+//
+//            if ( $type = Input::get('type') )  {
+//                if ( $format = Input::get('format') )  {
+//                    switch ($format) {
+//                        case 'excel':
+//                            Excel::load(public_path() . '\temp\import.xls', function($reader) use ($type) {
+//                                if ( $rows = $reader->all() ) {
+//                                    foreach ( $rows as $row ) {
+//                                        $data = $row->toArray();
+//
+//                                        $name = $data['name'];
+//                                        if (!$name) {
+//                                            $name = str_replace(' ', '-', $data['title']);
+//                                        }
+//
+//                                        $object = new Object();
+//                                        $object->author_id = Auth::user()->id;
+//                                        $object->type = $type;
+//                                        $object->name = $name;
+//                                        $object->title = $data['title'];
+//                                        $object->content = $data['content'];
+//                                        $object->status = 'published';
+//                                        $object->guid = Hash::getUniqueId();
+//                                        $object->save();
+//                                    }
+//                                }
+//                            });
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**

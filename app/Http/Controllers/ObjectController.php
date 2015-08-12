@@ -18,6 +18,12 @@ class ObjectController extends Controller {
         $objects = null;
 
         if ( $categoryId ) {
+            // Category Image
+            if ($featuredImageId = ObjectMeta::getValue($categoryId, '_featured_image')) {
+                $featuredImageUrl = getImageSrc($featuredImageId, 'thumbnail');
+            }
+
+
             // Get objects where in category
             $objects = Object::Where('type', 'object_type')
                 ->whereExists(function ( $query ) use ( $categoryId ) {
@@ -27,24 +33,24 @@ class ObjectController extends Controller {
                     ->where('meta_key', '_category_id')
                     ->where('meta_value', $categoryId);
                 })
-                ->select('SUBSTRING(name, 1,2) AS s');
+                ->select(DB::raw('substr(name, 14) as field_name'))
+                ->get()
+                ->toArray();
 
-//                ::join('object_meta', 'objects.id', '=', 'object_meta.object_id')
-//                ->where('object_meta.meta_key', '_category_id')
-//                ->where('object_meta.meta_value', $categoryId)
-//                ->whereNotIn('type', ['object_type', 'image', 'category']);
-//
-//            // Get objects where types category
-//            $objects = Object::join('object_meta', 'objects.id', '=', 'object_meta.object_id')
-//                ->where('object_meta.meta_key', '_category_id')
-//                ->where('object_meta.meta_value', $categoryId)
-//                ->where('type', 'object_type');
+            $types = array_map(function($v) {
+                return $v['field_name'];
+            }, $objects);
+
+            if ( !empty( $types ) ) {
+                $objects = Object::whereIn('type', $types);
+            }
+
 
         }
 
         if ( $objects ) {
             $objects = $objects
-            //->select( array( 'objects.id', 'objects.name', 'objects.title' ) )
+            ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
             ->get();
         }
 
