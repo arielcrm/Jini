@@ -87,15 +87,15 @@
                             overflow: visible; /* KEEP THIS so that text will not get cut off it it is wider than the icon width */
                         }
                     </style>
-                    <g id="symbolsContainer">
-                        <!-- replace the contents of these symbols with the contents of your icons -->
+                    <g id="trigger" class="trigger menu-trigger" role="button">
+                        <circle cx="250" cy="250" r="110" />
+                        <!-- menu button label or icon goes here -->
                     </g>
                     <g id="itemsContainer">
                         <!-- the menu items -->
                     </g>
-                    <g id="trigger" class="trigger menu-trigger" role="button">
-                        <circle cx="250" cy="250" r="110" />
-                        <!-- menu button label or icon goes here -->
+                    <g id="symbolsContainer">
+                        <!-- replace the contents of these symbols with the contents of your icons -->
                     </g>
                 </svg>
             </div>
