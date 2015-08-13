@@ -154,7 +154,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
 
     # Objects
     Route::get('objects/', 'ObjectController@index');
-    Route::post('objects/', 'ObjectController@index');
+    Route::post('objects/', 'ObjectController@postIndex');
     Route::get('objects/create', 'ObjectController@getCreate');
     Route::post('objects/create', 'ObjectController@postCreate');
     Route::get('objects/{id}/edit', 'ObjectController@getEdit');
@@ -163,7 +163,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
     Route::post('objects/{id}/delete', 'ObjectController@postDelete');
     Route::get('objects/data', 'ObjectController@data');
 
-    Route::get('objects/import', 'ObjectController@getImport');
+    Route::post('objects/import', 'ObjectController@postImport');
 
     Route::get('objects/{id}/fields', 'ObjectsController@getFields');
     

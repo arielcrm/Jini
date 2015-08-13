@@ -49,9 +49,11 @@ class ObjectController extends AdminController {
 	}
 
     public function postIndex(ObjectImportRequest $request) {
-        echo 'sadfsda';
-        print_r($_FILES);
         if($request->hasFile('dd')) {
+//            echo 'adasdasdasdasd';
+//            echo 'sadfsda';
+//            print_r($_FILES);
+//            abort(500, 'sadfdsfs');
             $file = $request->file('dd');
             $filename = $file->getClientOriginalName();
             $extension = $file->getClientOriginalExtension();
@@ -59,9 +61,10 @@ class ObjectController extends AdminController {
 
             $destinationPath = public_path() . '/temp/';
 
-            $request->file('importFile')->move($destinationPath, 'temp.txt');
+            $request->file('dd')->move($destinationPath, 'import.xls');
 
-            return;
+
+            return redirect('admin/objects')->with('message', 'Type saved successfully');
         }
     }
 
@@ -90,89 +93,57 @@ class ObjectController extends AdminController {
     }
 
 
-    public function getImport() {
+    public function postImport(ObjectImportRequest $request) {
         if ( $type = Input::get('type') )  {
             if ( $format = Input::get('format') )  {
                 switch ($format) {
                     case 'excel':
-                        Excel::load(public_path() . '\temp\import.xls', function($reader) use ($type) {
-                            if ( $rows = $reader->all() ) {
-                                foreach ( $rows as $row ) {
-                                    $data = $row->toArray();
+                        if ($request->hasFile('dd')) {
+                            $file = $request->file('dd');
+                            $filename = $file->getClientOriginalName();
+                            $extension = $file->getClientOriginalExtension();
+                            $mimeType = $file->getMimeType();
 
-                                    $name = $data['name'];
-                                    if (!$name) {
-                                        $name = str_replace(' ', '-', $data['title']);
-                                    }
+                            $destinationPath = public_path() . '/temp/';
 
-                                    $object = new Object();
-                                    $object->author_id = Auth::user()->id;
-                                    $object->type = $type;
-                                    $object->name = $name;
-                                    $object->title = $data['title'];
-                                    $object->content = $data['content'];
-                                    $object->status = 'published';
-                                    $object->guid = Hash::getUniqueId();
-                                    $object->save();
+                            Excel::load(public_path() . '\temp\import.xls', function($reader) use ($type) {
+                                if ( $rows = $reader->all() ) {
+                                    foreach ( $rows as $row ) {
+                                        $data = $row->toArray();
 
-                                    $keys = array_keys($data);
-                                    foreach ( $keys as $key ) {
-                                        if ( !in_array($key, array('type', 'title', 'name', 'content', 'excerpt' ) ) ) {
-                                            $val = $data[$key];
+                                        $name = $data['name'];
+                                        if (!$name) {
+                                            $name = str_replace(' ', '-', $data['title']);
+                                        }
 
-                                            if ( !empty( $val ) ) {
-                                                $object->setValue('_field_' . $key, $val);
+                                        $object = new Object();
+                                        $object->author_id = Auth::user()->id;
+                                        $object->type = $type;
+                                        $object->name = $name;
+                                        $object->title = $data['title'];
+                                        $object->content = $data['content'];
+                                        $object->status = 'published';
+                                        $object->guid = Hash::getUniqueId();
+                                        $object->save();
+
+                                        $keys = array_keys($data);
+                                        foreach ( $keys as $key ) {
+                                            if ( !in_array($key, array('type', 'title', 'name', 'content', 'excerpt' ) ) ) {
+                                                $val = $data[$key];
+
+                                                if ( !empty( $val ) ) {
+                                                    $object->setValue('_field_' . $key, $val);
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                        });
+                            });
+                        }
+                        break;
                 }
             }
         }
-
-
-//        if($request->hasFile('importFile')) {
-//            $file = $request->file('importFile');
-//            $filename = $file->getClientOriginalName();
-//            $extension = $file->getClientOriginalExtension();
-//            $mimeType = $file->getMimeType();
-//
-//            $destinationPath = public_path() . '/temp/';
-//
-//            $request->file('importFile')->move($destinationPath, 'temp.txt');
-//
-//            if ( $type = Input::get('type') )  {
-//                if ( $format = Input::get('format') )  {
-//                    switch ($format) {
-//                        case 'excel':
-//                            Excel::load(public_path() . '\temp\import.xls', function($reader) use ($type) {
-//                                if ( $rows = $reader->all() ) {
-//                                    foreach ( $rows as $row ) {
-//                                        $data = $row->toArray();
-//
-//                                        $name = $data['name'];
-//                                        if (!$name) {
-//                                            $name = str_replace(' ', '-', $data['title']);
-//                                        }
-//
-//                                        $object = new Object();
-//                                        $object->author_id = Auth::user()->id;
-//                                        $object->type = $type;
-//                                        $object->name = $name;
-//                                        $object->title = $data['title'];
-//                                        $object->content = $data['content'];
-//                                        $object->status = 'published';
-//                                        $object->guid = Hash::getUniqueId();
-//                                        $object->save();
-//                                    }
-//                                }
-//                            });
-//                    }
-//                }
-//            }
-//        }
     }
 
     /**

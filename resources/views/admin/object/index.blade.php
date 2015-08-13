@@ -47,16 +47,21 @@
         <tbody></tbody>
     </table>
 
-<form class="form-horizontal" enctype="multipart/form-data"
+<form class="form-horizontal" id="fupload" enctype="multipart/form-data"
       method="post"
-      action=""
-">
-<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-<input name="dd" type="file" class="uploader" id="dd" value="Upload" />
-<input type="submit" class="btn btn-sm btn-primary">
-<span class="glyphicon glyphicon-import"></span>
-{{ trans("admin/admin.import") }}
-</input>
+      action="{{ URL::to('admin/objects/import?type=doctor&format=excel') }}"
+      autocomplete="off">
+    <!-- CSRF Token -->
+    <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+    <input name="dd" type="file" class="uploader" id="dd" value="Upload" />
+    <button type="submit" class="btn btn-sm btn-success">
+        <span class="glyphicon glyphicon-ok-circle"></span>
+        @if	(isset($object))
+        {{ trans("admin/modal.edit") }}
+        @else
+        {{trans("admin/modal.create") }}
+        @endif
+    </button>
 </form>
 @stop
 
