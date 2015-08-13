@@ -108,7 +108,7 @@ class ObjectController extends AdminController {
 
                             $request->file('dd')->move($destinationPath, 'import.xls');
 
-                            Excel::load(public_path() . '\temp\import.xls', function($reader) use ($type) {
+                            Excel::load($destinationPath . '/import.xls', function($reader) use ($type) {
                                 if ( $rows = $reader->all() ) {
                                     foreach ( $rows as $row ) {
                                         $data = $row->toArray();
