@@ -104,7 +104,7 @@ class ObjectController extends AdminController {
                             $extension = $file->getClientOriginalExtension();
                             $mimeType = $file->getMimeType();
 
-                            $destinationPath = public_path() . '/temp/';
+                            $destinationPath = public_path() . '/temp';
 
                             $request->file('dd')->move($destinationPath, 'import.xls');
 
