@@ -56,4 +56,45 @@ class ObjectController extends Controller {
 
         return $objects;
     }
+
+    public function getLocations() {
+        $results = $this->getSearch();
+
+        $data = array();
+        $locations = array(
+            'type' => 1,
+            'userMsg' => false
+        );
+
+        if ( !empty( $results ) ) {
+            foreach ( $results as $result ) {
+                if ( $lat = ObjectMeta::getValue($result['id'], '_field_address-location-g') ) {
+                    if ( $long = ObjectMeta::getValue($result['id'], '_field_address-location-k' ) )  {
+                        $location = array(
+                            'geo_latitude' => $lat,
+                            'geo_longitude' => $long,
+                            'location' => '',
+                            'title' => $result['title']
+                        );
+
+                        $data[] = $location;
+                    }
+                }
+            }
+        }
+
+        $locations['data'] = $data;
+
+        return $locations;
+        //return view('partials.map', compact( 'locations' ));
+    }
+
+
+    public function getMap() {
+        if ( $queryString = $_SERVER['QUERY_STRING'] ) {
+            $criteria = '?' . $queryString;
+        }
+
+        return view('partials.map', compact( 'criteria' ));
+    }
 }

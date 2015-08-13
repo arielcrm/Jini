@@ -121,6 +121,7 @@ function drawCutSectors(t, e, i) {
                 var itemId = this.getAttribute("data-id");
                 var categoriesCount = this.getAttribute("data-children-count");
                 var itemsCount = this.getAttribute("data-items-count");
+                var itemTitle = this.getAttribute("data-title");
 
                 if (categoriesCount > 0) {
                     $.ajax({
@@ -158,6 +159,9 @@ function drawCutSectors(t, e, i) {
                     });
                 } else {
                     $('#sideBar1 .info-pane-wrapper').hide();
+                    $('#sideBar1 .search-results-pane').find('.criteria').html(itemTitle);
+                    $('#sideBar1 .search-results-pane #mapFrame').html('<iframe src="/objects/map?categoryid=' + itemId + '" width="700" height="700" frameBorder="0" scrolling="hidden"></iframe>');
+                    $('#sideBar1 .search-results-pane #mapFrame').attr('src', 'http://www.google.com');
                     $('#sideBar1 .search-results-pane-wrapper').show().animate({'width': '400'});
 
 
@@ -174,11 +178,15 @@ function drawCutSectors(t, e, i) {
                                     html += '<li><div class="row"><div class="col-md-4"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-8"><div class="content"><h3>' + result.title  + '</h3><p class="excerpt">' + result.excerpt + '</p></div></div></li>';
                                 }
                                 html += '</ul>';
-
-                                $('#sideBar1 .search-results-pane').html(html);
+                                $('#sideBar1 .search-results-pane .info-content .content').html(html);
                             }
                         }
                     });
+
+
+
+
+
 
                 }
             }

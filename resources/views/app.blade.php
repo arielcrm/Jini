@@ -29,6 +29,7 @@
 
     <!-- Fonts -->
 <!--    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>-->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw&libraries=places"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -212,7 +213,6 @@
 
 
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 
     <!-- Scripts -->
     <script src="{{ elixir('js/site.js') }}"></script>

@@ -31,14 +31,17 @@
             </div>
             <div class="search-results-pane-wrapper pane-wrapper">
                 <div class="search-results-pane pane">
+                    <h2 class="title">Search by categorie <span class="criteria"></span></h2>
+                    <div id="mapFrame"></div>
+
                     <div class="info-content">
-                        <h2 class="title">About Us</h2>
                         <div class="content"></div>
                     </div>
                 </div>
                 <a href="#" class="back-button">&nbsp;</a>
             </div>
         </div>
+
 
         <div class="demo-wrapper">
             <a href="#" id="homeLink" class="home-button">&nbsp;</a>
@@ -356,8 +359,5 @@
                 $(this).hide();
             });
         });
-
-
     </script>
-
 @stop

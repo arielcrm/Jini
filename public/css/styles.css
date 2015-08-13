@@ -887,6 +887,11 @@ blockquote {
 .side-bar-1 .info-pane .info-content {
     padding: 0 50px;
 }
+.side-bar-1 .search-results-pane h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.3em;
+    font-weight: 700;
+}
 .side-bar-1 .search-results-pane ul {
     margin: 0;
     padding: 0;
@@ -903,6 +908,8 @@ blockquote {
     max-width: 120px;
 }
 .side-bar-1 .search-results-pane ul li h3 {
+    margin: 0;
+    padding :0;
     font-size: 1em;
 }
 .navbar-inverse {

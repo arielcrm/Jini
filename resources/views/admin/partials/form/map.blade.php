@@ -76,8 +76,6 @@
                 return;
             }
 
-            console.log(place);
-
             $('#{{{ $field['id'] }}}-location-g').val(place.geometry.location.G);
             $('#{{{ $field['id'] }}}-location-k').val(place.geometry.location.K);
 
