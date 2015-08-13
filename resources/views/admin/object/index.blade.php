@@ -49,7 +49,7 @@
 
 <form class="form-horizontal" id="fupload" enctype="multipart/form-data"
       method="post"
-      action="{{ URL::to('admin/objects/import?type=doctor&format=excel') }}"
+      action="{{ URL::to('admin/objects/import?type=' . ( !empty( $objecttype ) ? $objecttype->name : '' ) . '&format=excel') }}"
       autocomplete="off">
     <!-- CSRF Token -->
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
