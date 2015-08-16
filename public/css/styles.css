@@ -102,11 +102,17 @@
     font-weight: 900;
     font-style: italic; }
 
+
+@font-face {font-family: 'BodoniBT-Roman';src: url('./fonts/bodoni/2ED5F6_0_0.eot');src: url('./fonts/bodoni/2ED5F6_0_0.eot?#iefix') format('embedded-opentype'),url('./fonts/bodoni/2ED5F6_0_0.woff2') format('woff2'),url('./fonts/bodoni/2ED5F6_0_0.woff') format('woff'),url('./fonts/bodoni/2ED5F6_0_0.ttf') format('truetype');}
+@font-face {font-family: 'BodoniBT-Italic';src: url('./fonts/bodoni/2ED5F6_1_0.eot');src: url('./fonts/bodoni/2ED5F6_1_0.eot?#iefix') format('embedded-opentype'),url('./fonts/bodoni/2ED5F6_1_0.woff2') format('woff2'),url('./fonts/bodoni/2ED5F6_1_0.woff') format('woff'),url('./fonts/bodoni/2ED5F6_1_0.ttf') format('truetype');}
+
+
 body {
     font-family: 'Roboto';
     background: #fff url(../img/bg.jpg) no-repeat;
     background-position: 0 0;
     background-size: cover;
+    font-size: 16px;
 }
 
 img {
@@ -506,11 +512,6 @@ h3 {
     padding: 1em;
     color: #eee
 }
-iframe {
-    display: block;
-    margin: 1em auto;
-    max-width: 1200px
-}
 #design-ux {
     background-color: #333;
     color: #fff
@@ -776,21 +777,25 @@ blockquote {
 
 .side-bar-1 {
     position: fixed;
-    top: 0;
+    top: 100px;
     left: 0;
     bottom: 0;
     z-index: 9000;
-    width: 90px;
+    width: 79px;
     background: #fff;
     height: 100%;
-    padding: 14px 0;
+    padding: 170px 0;
     background: #fff;
 }
-.side-bar-1 .logo-1 {
-    background: url('../img/logo_1.png') no-repeat 5px top;
-    width: 90px;
-    height: 259px;
-    border-bottom: 1px solid #e5e5e5;
+.logo-1 {
+    position: fixed;
+    top: 30px;
+    left: 5px;
+    z-index: 9000;
+
+    background: url('../img/logo_1.png') no-repeat 0 0;
+    width: 77px;
+    height: 55px;
 }
 .side-bar-1 nav ul {
     margin: 0;
@@ -801,7 +806,7 @@ blockquote {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    width: 90px;
+    width: 79px;
     height: 87px;
     border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
@@ -816,7 +821,7 @@ blockquote {
 }
 .side-bar-1 nav ul li a {
     display: block;
-    width: 90px;
+    width: 79px;
     height: 87px;
 }
 
@@ -833,64 +838,141 @@ blockquote {
 }
 .side-bar-1 .back-button {
     display: block;
-    background-color: rgba(255, 255, 255, 0.4);
-    width: 53px;
-    height: 53px;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 15px;
+    left: 25px;
     z-index: 9001;
-}
-.side-bar-1 .back-button:before {
-    position: relative;
-    top: 8px;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    content: "\e257";
-    position: absolute;
-    z-index: 9002;
-    right: 0;
-    font-size: 40px;
-    width: 100%;
-    color: #ccc;
-    text-align: center;
+    background: rgb(255, 255, 255) url('../img/icons/left.png') no-repeat center;
+    width: 33px;
+    height: 33px;
+
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
 }
 .side-bar-1 .pane.preloader {
     background-image: url('../img/preloader.gif');
+    background-size: 50px 50px;
+    background-position: center;
 }
 .side-bar-1 .pane.preloader h2 {
 }
 .side-bar-1 .pane-wrapper {
-    display: none;
     position: absolute;
     top: 0;
-    left: 91px;
+    left: 80px;
     bottom: 0;
-    /*width: 652px;*/
-    width: 0;
+    width: 0px;
+    height: 100%;
+    overflow: hidden;
+
+    transition: width 0.3s;
+    -moz-transition: width 0.3s;
+    -webkit-transition: width 0.3s;
+}
+.side-bar-1 .pane {
     height: 100%;
     background-color: #fff;
     background-repeat: no-repeat;
     background-position: center;
+}
+.side-bar-1 .info-pane-wrapper.collapsed {
+    width: 537px;
 }
 .side-bar-1 .info-pane {
-    width: 400px;
-    height: 100%;
-    background-color: #fff;
-    background-repeat: no-repeat;
-    background-position: center;
+    width: 537px;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 .side-bar-1 .info-pane .info-content {
-    padding: 0 50px;
+    padding: 30px 40px;
 }
+.side-bar-1 .info-pane .top-image-wrapper {
+    min-height: 325px;
+}
+.side-bar-1 .info-pane .info-content h2 {
+    margin: 0 0 30px 0;
+    padding: 0;
+    font-family: 'BodoniBT-Roman';
+    font-weight: bold;
+    font-size: 2.5em;
+}
+.side-bar-1 .info-pane .info-content p {
+    font-size: 1.250em;
+    line-height: 30px;
+}
+.side-bar-1 .search-criteria-pane-wrapper.collapsed {
+    width: 364px;
+}
+.side-bar-1 .search-criteria-pane {
+    padding: 72px 36px;
+    width: 364px;
+}
+.side-bar-1 .search-criteria-pane .view-mode {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.side-bar-1 .search-criteria-pane .view-mode li {
+    display: inline-block;
+    margin: 0 10px 0 0;
+    padding: 0;
+    list-style-type: none;
+}
+.side-bar-1 .search-criteria-pane .view-mode li:last-child {
+    margin: 0;
+}
+.side-bar-1 .search-criteria-pane .view-mode li a {
+    display: block;
+}
+.side-bar-1 .search-criteria-pane .view-mode .list-view-button {
+    width: 33px;
+    height: 26px;
+    display: block;
+    background-image: url('../img/icons/list_sprite.png');
+    background-repeat: no-repeat;
+    background-position: center 0;
+}
+.side-bar-1 .search-criteria-pane .view-mode .list-view-button:hover,
+.side-bar-1 .search-criteria-pane .view-mode .list-view-button:focus,
+.side-bar-1 .search-criteria-pane .view-mode .list-view-button.active {
+    background-position: center -25px;
+}
+.side-bar-1 .search-criteria-pane .view-mode .map-view-button {
+    width: 31px;
+    height: 28px;
+    display: block;
+    background-image: url('../img/icons/pin_sprite.png');
+    background-repeat: no-repeat;
+    background-position: center 0;
+}
+.side-bar-1 .search-criteria-pane .view-mode .map-view-button:hover,
+.side-bar-1 .search-criteria-pane .view-mode .map-view-button:focus,
+.side-bar-1 .search-criteria-pane .view-mode .map-view-button.active {
+    background-position: center -31px;
+}
+
+.side-bar-1 .search-results-pane-wrapper {
+    left: 445px;
+}
+.side-bar-1 .search-results-pane-wrapper.collapsed {
+    width: 433px;
+}
+.side-bar-1 .search-results-pane {
+    padding: 72px 36px;
+    width: 433px;
+}
+
 .side-bar-1 .search-results-pane h2 {
-    margin: 0 0 15px 0;
-    font-size: 1.3em;
-    font-weight: 700;
+    margin: 0 0 10px 0;
+    font-size: 1.563em;
+    font-family: 'BodoniBT-Roman';
+    font-weight: bold;
+}
+.side-bar-1 .search-results-pane h2 .criteria {
+    font-family: Roboto;
 }
 .side-bar-1 .search-results-pane ul {
     margin: 0;
@@ -900,17 +982,61 @@ blockquote {
 .side-bar-1 .search-results-pane ul li {
     display: block;
     margin: 0;
-    padding: 0;
+    padding: 18px 0;
     list-style-type: none;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 .side-bar-1 .search-results-pane ul li img {
     float: left;
     max-width: 120px;
 }
 .side-bar-1 .search-results-pane ul li h3 {
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 1.250em;
+    font-weight: bold;
+}
+.side-bar-1 .search-results-pane ul li p {
+    font-size: 1.125em;
     margin: 0;
-    padding :0;
-    font-size: 1em;
+    padding: 0;
+}
+.side-bar-1 .search-results-pane ul li .excerpt {
+    height: 30px;
+}
+.side-bar-1 .search-results-pane ul li .more-button {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    font-size: 1.125em;
+    font-weight: bold;
+    border-bottom: 1px outset #535353;
+}
+.side-bar-1 .search-results-pane-wrapper-1 {
+    left: 445px;
+}
+.side-bar-1 .search-results-pane-wrapper-1.collapsed {
+    width: 1178px;
+}
+.side-bar-1 .search-results-pane-1 {
+    width: 1178px;
+}
+.side-bar-1 .search-results-pane-1 .back-button {
+    top: 15px;
+    right: 20px;
+    left: auto;
+    bottom: auto;
+    background-image: url('../img/icons/close.png');
+}
+
+
+
+
+.navbar {
+    background-color: transparent !important;
+    top: 30px;
+    padding: 0 185px 0 185px;
 }
 .navbar-inverse {
     background-color: rgba(255, 255, 255, 0.5);
@@ -918,12 +1044,12 @@ blockquote {
 
 
 /* Buttons */
-.home-button {
+.demo-wrapper .back-button {
     display: block;
-    width: 98px;
-    height: 98px;
+    width: 83px;
+    height: 83px;
     background-color: #fff;
-    background-image: url('../img/icons/home.png');
+    background-image: url('../img/icons/back.png');
     background-repeat: no-repeat;
     background-position: center;
 
@@ -934,4 +1060,8 @@ blockquote {
 
 #itemsContainer {
     z-index: 1000;
+}
+
+#footer {
+    background-color: transparent !important;
 }

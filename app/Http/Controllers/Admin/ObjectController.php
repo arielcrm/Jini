@@ -49,8 +49,6 @@ class ObjectController extends AdminController {
 	}
 
     public function postIndex(ObjectImportRequest $request) {
-        echo 'sadfsda';
-        print_r($_FILES);
         if($request->hasFile('dd')) {
             $file = $request->file('dd');
             $filename = $file->getClientOriginalName();
@@ -77,16 +75,101 @@ class ObjectController extends AdminController {
                 $fieldsRows = Object::getFields($type->id)->get();
 
                 $fields = array();
+                $fieldControls = array();
+
+                // Occupation
+                $field = array();
+                $field['id'] = '_field_occupation';
+                $field['name'] = 'occupation';
+                $field['label'] = 'Occupation';
+                $field['type'] = 'text';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $fieldControls[] = view('admin.partials.form.text', compact( 'field' ) );
+
+                // Address
+                $uniqueId = Hash::getUniqueId();
+
+                $field = array();
+                $field['id'] = '_field_address';
+                $field['name'] = 'address';
+                $field['label'] = 'Address';
+                $field['type'] = 'map';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'uniqueId' ) );
+
+                // French
+                $field = array();
+                $field['id'] = '_field_french_speakers';
+                $field['name'] = 'french_speakers';
+                $field['label'] = 'French Speakers';
+                $field['type'] = 'boolean';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $fieldControls[] = view('admin.partials.form.boolean', compact( 'field' ) );
+
+                // Address
+                $field = array();
+                $field['id'] = '_field_phone';
+                $field['name'] = 'phone';
+                $field['label'] = 'Phone';
+                $field['type'] = 'tel';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $fieldControls[] = view('admin.partials.form.tel', compact( 'field' ) );
+
+                // Email
+                $field = array();
+                $field['id'] = '_field_email';
+                $field['name'] = 'email';
+                $field['label'] = 'Email';
+                $field['type'] = 'email';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $fieldControls[] = view('admin.partials.form.email', compact( 'field' ) );
+
+
+
+
                 foreach ($fieldsRows as $fieldRow) {
-                    $fields[] = unserialize($fieldRow['meta_value']);
+                    $field = unserialize($fieldRow['meta_value']);
+                    $fields[] = $field;
+
+                    $uniqueId = Hash::getUniqueId();
+
+                    switch ($field['type']) {
+                        case 'text':
+                            $fieldControls[] = view('admin.partials.form.text', compact( 'field', 'uniqueId' ) );
+                            break;
+                        case 'wysiwyg':
+                            $fieldControls[] = view('admin.partials.form.wysiwyg', compact( 'field', 'uniqueId' ) );
+                            break;
+                        case 'map':
+                            $fieldControls[] = view('admin.partials.form.map', compact( 'field', 'uniqueId' ) );
+                            break;
+                        case 'tel':
+                            $fieldControls[] = view('admin.partials.form.tel', compact( 'field', 'uniqueId' ) );
+                            break;
+                        case 'boolean':
+                            $fieldControls[] = view('admin.partials.form.boolean', compact( 'field', 'uniqueId' ) );
+                            break;
+                    }
+
                 }
             }
         }
 
 
+
         $types = Object::getTypes()->select(array('id', DB::raw("REPLACE(name, '_object_type_', '') as name"), DB::raw("REPLACE(title, 'Object Type: ', '') as title"), 'created_at' ))->get();
 
-        return view('admin.object.create_edit', compact('fields', 'types', 'type'));
+        return view('admin.object.create_edit', compact('fields', 'fieldControls', 'featuredImage', 'contentImage', 'types'));
     }
 
 
@@ -191,11 +274,48 @@ class ObjectController extends AdminController {
         $object -> guid = Hash::getUniqueId();
         $object -> save();
 
+
         foreach ( array_keys($_POST) as $key ) {
             if ( substr($key, 0, 7) == '_field_' ) {
                 $object->setValue($key, $request->input($key));
             }
         }
+
+
+        if($request->hasFile('featuredImage'))
+        {
+            $file = $request->file('featuredImage');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $mimeType = $file->getMimeType();
+
+            $destinationPath = public_path() . '/uploads/';
+            $newfileName = sha1($filename . time());
+            $picture = $newfileName . '.' . $extension;
+
+            $request->file('featuredImage')->move($destinationPath, $picture);
+
+            if ($imageObject = addImage($object, $destinationPath, $picture, $filename, $newfileName, $extension, $mimeType, '_featured_image')) {
+            }
+        }
+
+        if($request->hasFile('contentImage'))
+        {
+            $file = $request->file('contentImage');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $mimeType = $file->getMimeType();
+
+            $destinationPath = public_path() . '/uploads/';
+            $newfileName = sha1($filename . time());
+            $picture = $newfileName . '.' . $extension;
+
+            $request->file('contentImage')->move($destinationPath, $picture);
+
+            if ($imageObject = addImage($object, $destinationPath, $picture, $filename, $newfileName, $extension, $mimeType, '_content_image')) {
+            }
+        }
+
 
         return redirect('admin/object-types')->with('message', 'Type saved successfully');
     }
@@ -242,6 +362,19 @@ class ObjectController extends AdminController {
 
                 $fields = array();
                 $fieldControls = array();
+
+                // Promoted
+                $field = array();
+                $field['id'] = '_field_promoted';
+                $field['name'] = 'promoted';
+                $field['label'] = 'Promoted';
+                $field['type'] = 'boolean';
+                $field['instructions'] = '';
+                $field['required'] = 0;
+
+                $values = $this->getFieldValues($id, $field);
+
+                $fieldControls[] = view('admin.partials.form.boolean', compact( 'field', 'values' ) );
 
                 // Occupation
                 $field = array();
@@ -361,7 +494,17 @@ class ObjectController extends AdminController {
             }
         }
 
-        return view('admin.object.create_edit', compact('object', 'fields', 'values', 'fieldControls'));
+        if (isset($object)) {
+            if ($imageObjectId = $object->getValue('_featured_image')) {
+                $featuredImage = getImageSrc($imageObjectId, 'thumbnail');
+            }
+
+            if ($imageObjectId = $object->getValue('_content_image')) {
+                $contentImage = getImageSrc($imageObjectId, 'thumbnail');
+            }
+        }
+
+        return view('admin.object.create_edit', compact('object', 'fields', 'values', 'fieldControls', 'featuredImage', 'contentImage'));
     }
 
     /**
@@ -376,9 +519,8 @@ class ObjectController extends AdminController {
         //$object->name = $request->name;
         $object->title = $request->title;
         $object->content = $request->content;
+        $object->excerpt = $request->content;
         $object->save();
-
-
 
         foreach ( array_keys($_POST) as $key ) {
             if ( substr($key, 0, 7) == '_field_' ) {
@@ -386,26 +528,42 @@ class ObjectController extends AdminController {
             }
         }
 
+        $object->setValue('promoted', $request->promoted);
 
 
-        //print_r($request);
-//        $fieldLabel = $request->field_label;
-//        $fieldName = $request->field_name;
-//        $fieldId = "_field_$fieldName";
-//        $fieldType = $request->field_type;
-//        $fieldRequired = empty($request->field_required) ? 0 : $request->field_required;
-//        $fieldInstructions = $request->field_instructions;
-//
-//        if ($fieldLabel && $fieldName && $fieldType) {
-//            $fieldInfo['id'] = $fieldId;
-//            $fieldInfo['name'] = $fieldName;
-//            $fieldInfo['label'] = $fieldLabel;
-//            $fieldInfo['type'] = $fieldType;
-//            $fieldInfo['instructions'] = $fieldInstructions;
-//            $fieldInfo['required'] = $fieldRequired;
-//
-//            $object->setValue($fieldId, serialize($fieldInfo));
-//        }
+        if($request->hasFile('featuredImage'))
+        {
+            $file = $request->file('featuredImage');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $mimeType = $file->getMimeType();
+
+            $destinationPath = public_path() . '/uploads/';
+            $newfileName = sha1($filename . time());
+            $picture = $newfileName . '.' . $extension;
+
+            $request->file('featuredImage')->move($destinationPath, $picture);
+
+            if ($imageObject = addImage($object, $destinationPath, $picture, $filename, $newfileName, $extension, $mimeType, '_featured_image')) {
+            }
+        }
+
+        if($request->hasFile('contentImage'))
+        {
+            $file = $request->file('contentImage');
+            $filename = $file->getClientOriginalName();
+            $extension = $file->getClientOriginalExtension();
+            $mimeType = $file->getMimeType();
+
+            $destinationPath = public_path() . '/uploads/';
+            $newfileName = sha1($filename . time());
+            $picture = $newfileName . '.' . $extension;
+
+            $request->file('contentImage')->move($destinationPath, $picture);
+
+            if ($imageObject = addImage($object, $destinationPath, $picture, $filename, $newfileName, $extension, $mimeType, '_content_image')) {
+            }
+        }
 
         return redirect('admin/objects')->with('message', 'Type saved successfully');
     }

@@ -4,8 +4,8 @@
 
     <div id="wrapper">
     <div class="container" id="container">
+        <a href="{!! URL::to('') !!}" class="logo-1">&nbsp;</a>
         <div id="sideBar1" class="side-bar side-bar-1">
-            <div class="logo-1"></div>
             <nav>
                 <ul>
                     <li class="recommended">
@@ -21,30 +21,50 @@
             </nav>
             <div class="info-pane-wrapper pane-wrapper">
                 <div class="info-pane pane">
-                    <img class="top-image" src="" alt="" title="" />
+                    <div class="top-image-wrapper">
+                        <img class="top-image" src="" alt="" title="" />
+                    </div>
                     <div class="info-content">
-                        <h2 class="title">About Us</h2>
+                        <h2 class="title"></h2>
                         <div class="content"></div>
                     </div>
+                    <a href="#" class="back-button">&nbsp;</a>
                 </div>
-                <a href="#" class="back-button">&nbsp;</a>
+            </div>
+            <div class="search-criteria-pane-wrapper pane-wrapper">
+                <div class="search-criteria-pane pane">
+                    <h2 class="title">Filter results in <span class="criteria"></span></h2>
+                    <a href="#" class="back-button">&nbsp;</a>
+                    <ul class="view-mode">
+                        <li>
+                            <a href="#" class="list-view-button active"></a>
+                        </li>
+                        <li>
+                            <a href="#" class="map-view-button"></a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="search-results-pane-wrapper pane-wrapper">
                 <div class="search-results-pane pane">
                     <h2 class="title">Search by categorie <span class="criteria"></span></h2>
-                    <div id="mapFrame"></div>
-
                     <div class="info-content">
                         <div class="content"></div>
                     </div>
+                    <a href="#" class="back-button">&nbsp;</a>
                 </div>
-                <a href="#" class="back-button">&nbsp;</a>
+            </div>
+            <div class="search-results-pane-wrapper-1 pane-wrapper">
+                <div class="search-results-pane-1 pane">
+                    <div id="mapFrame"></div>
+                    <a href="#" class="back-button">&nbsp;</a>
+                </div>
             </div>
         </div>
 
 
         <div class="demo-wrapper">
-            <a href="#" id="homeLink" class="home-button">&nbsp;</a>
+            <a href="#" id="homeLink" class="back-button">&nbsp;</a>
             <div id="demo">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2 -2 504 504" id="menu">
                     <style>
@@ -67,13 +87,13 @@
                             transition: all .1s linear;
                             fill: #fff;
                             stroke: #a79157;
-                            opacity: 0.6;
+                            opacity: 0.8;
                         }
 
 
                         .item:hover .sector, .item:focus .sector {
                             fill: #fff;
-                            opacity: 0.8;
+                            opacity: 0.6;
                         }
 
                         .menu-trigger {
@@ -244,52 +264,52 @@
     <script src="js/scripts.js"></script>
 
     <script>
-        $('.info-pane-wrapper .back-button').on("click", function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+        $(function() {
+            $('.info-pane-wrapper .back-button').on("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
 
 
-            $(this).parent().animate({'width': '0'}, function() {
-                $(this).hide();
-            });
-        });
-
-        $('#homeLink').on('click', function(e) {
-            if (e.button == 0) {
-                $.ajax({
-                    url: '/categories',
-                    dataType: 'json',
-                    success: function(response) {
-                        var mm = [];
-
-                        for ( i = 0; i < response.length; i++) {
-                            var o = response[i];
-
-                            mi = [];
-                            mi[0] = o.title;
-                            mi[1] = o.featuredImageUrl;
-                            mi[2] = '#' + o.name;
-                            mi[3] = o.id;
-                            mi[4] = o.contentImageUrl;
-                            mi[5] = o.childrenCount;
-                            mi[6] = o.itemsCount;
-
-
-                            mm.push(mi);
-                        }
-
-                        currentMenu = mm;
-
-                        nbOfSlices = currentMenu.length;
-
-                        init();
-                    }
+                $(this).parent().animate({'width': '0'}, function() {
+                    $(this).hide();
                 });
+            });
 
-            }
-        });
+            $('#homeLink').on('click', function(e) {
+                if (e.button == 0) {
+                    $.ajax({
+                        url: '/categories',
+                        dataType: 'json',
+                        success: function(response) {
+                            var mm = [];
 
-        setTimeout(function() {
+                            for ( i = 0; i < response.length; i++) {
+                                var o = response[i];
+
+                                mi = [];
+                                mi[0] = o.title;
+                                mi[1] = o.featuredImageUrl;
+                                mi[2] = '#' + o.name;
+                                mi[3] = o.id;
+                                mi[4] = o.contentImageUrl;
+                                mi[5] = o.childrenCount;
+                                mi[6] = o.itemsCount;
+
+
+                                mm.push(mi);
+                            }
+
+                            currentMenu = mm;
+
+                            nbOfSlices = currentMenu.length;
+
+                            init();
+                        }
+                    });
+
+                }
+            });
+
             $.ajax({
                 url: '/categories',
                 dataType: 'json',
@@ -352,12 +372,33 @@
             currentMenu = arrMenu1;
 
             init();
-        }, 500);
 
-        $('#demo svg').on('mouseleave', function(e) {
-            $('#sideBar1 .info-pane-wrapper').show().animate({'width': '1px'}, function() {
-                $(this).hide();
+            $('#demo svg').on('mouseleave', function(e) {
+                //$('#sideBar1 .info-pane-wrapper').removeClass('collapsed');
+            });
+
+            $('#sideBar1 .pane-wrapper .back-button').on('mouseenter', function(e) {
+                $(this).closest('.pane-wrapper').removeClass('collapsed');
+            });
+
+
+
+            $('#sideBar1 .list-view-button').on('mouseenter', function(e) {
+                $('#sideBar1 .search-results-pane-wrapper-1').removeClass('collapsed');
+                $('#sideBar1 .search-results-pane-wrapper').addClass('collapsed');
+
+                $(this).closest('ul').find('a').removeClass("active");
+                $(this).addClass('active');
+            });
+
+            $('#sideBar1 .map-view-button').on('mouseenter', function(e) {
+                $('#sideBar1 .search-results-pane-wrapper').removeClass('collapsed');
+                $('#sideBar1 .search-results-pane-wrapper-1').addClass('collapsed');
+
+                $(this).closest('ul').find('a').removeClass("active");
+                $(this).addClass('active');
             });
         });
+
     </script>
 @stop

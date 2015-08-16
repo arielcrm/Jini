@@ -64,6 +64,8 @@ function drawCutSectors(t, e, i) {
         var z = m[1];
         var tt = m[0];
 
+        console.log (m);
+
         r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute('data-children-count', m[5]), r.setAttribute('data-items-count', m[6]),  r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-featured-image", m[1]), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
@@ -82,7 +84,8 @@ function drawCutSectors(t, e, i) {
             }
 
 
-            $('#sideBar1 .info-pane-wrapper').show().animate({'width': '400'});
+
+            $('#sideBar1 .info-pane-wrapper').addClass('collapsed');
 
             if (itemTitle) {
                 $('#sideBar1 .info-pane .title').html(itemTitle);
@@ -158,11 +161,17 @@ function drawCutSectors(t, e, i) {
                         }
                     });
                 } else {
-                    $('#sideBar1 .info-pane-wrapper').hide();
+                    $('#sideBar1 .info-pane-wrapper').removeClass('collapsed');
+
+
+                    $('#sideBar1 .search-criteria-pane').find('.criteria').html(itemTitle);
+                    $('#sideBar1 .search-criteria-pane-wrapper').addClass('collapsed');
+
+
                     $('#sideBar1 .search-results-pane').find('.criteria').html(itemTitle);
-                    $('#sideBar1 .search-results-pane #mapFrame').html('<iframe src="/objects/map?categoryid=' + itemId + '" width="700" height="700" frameBorder="0" scrolling="hidden"></iframe>');
-                    $('#sideBar1 .search-results-pane #mapFrame').attr('src', 'http://www.google.com');
-                    $('#sideBar1 .search-results-pane-wrapper').show().animate({'width': '400'});
+                    $('#sideBar1 .search-results-pane-wrapper').addClass('collapsed');
+
+                    $('#sideBar1 .search-results-pane-1 #mapFrame').html('<iframe src="/objects/map?categoryid=' + itemId + '" width="1178" height="980" frameBorder="0" scrolling="no"></iframe>');
 
 
                     $.ajax({
@@ -174,8 +183,7 @@ function drawCutSectors(t, e, i) {
                                 for (i = 0; i < response.length; i++) {
                                     var result = response[i];
 
-                                    console.log(result);
-                                    html += '<li><div class="row"><div class="col-md-4"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-8"><div class="content"><h3>' + result.title  + '</h3><p class="excerpt">' + result.excerpt + '</p></div></div></li>';
+                                    html += '<li><div class="row"><div class="col-md-4"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-8"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><a href="#" class="more-button">More Info</a></a></div></div></li>';
                                 }
                                 html += '</ul>';
                                 $('#sideBar1 .search-results-pane .info-content .content').html(html);

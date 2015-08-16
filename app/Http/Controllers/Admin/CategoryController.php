@@ -149,7 +149,6 @@ class CategoryController extends AdminController {
 
             $request->file('featuredImage')->move($destinationPath, $picture);
 
-            echo 'sadfasdfdsa';
             if ($imageObject = addImage($object, $destinationPath, $picture, $filename, $newfileName, $extension, $mimeType, '_featured_image')) {
             }
         }

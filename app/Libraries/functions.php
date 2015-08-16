@@ -11,18 +11,24 @@ use App\ObjectMeta;
 use App\Helpers\Thumbnail;
 
 
-function getImageSrc($imageId, $size) {
+function getImageSrc($imageId, $size = null) {
     if ($image = Object::find($imageId)) {
         if ($imageInfo = ObjectMeta::getValue($image->id, '_image_info')) {
             $imageInfoData = unserialize($imageInfo);
 
-            $imageSizeInfoData = &$imageInfoData['sizes'][$size];
-            if (!empty($imageSizeInfoData)) {
-                $fileName = &$imageSizeInfoData['fileName'];
+            if (!empty($size) && isset($imageInfoData['sizes'][$size])) {
+                $imageSizeInfoData = &$imageInfoData['sizes'][$size];
+                if (!empty($imageSizeInfoData)) {
+                    $fileName = &$imageSizeInfoData['fileName'];
 
-                if (!empty($fileName)) {
-                    return $fileName;
+                    if (!empty($fileName)) {
+                        return $fileName;
+                    }
                 }
+            } else {
+                $filePath = &$imageInfoData['filePath'];
+
+                return $filePath;
             }
         }
     }
@@ -41,7 +47,8 @@ function addImage($object, $destinationPath, $picture, $filename, $newfileName, 
     $imageObjectInfo = array();
     $imageObjectInfo['width'] = $source_image_width;
     $imageObjectInfo['height'] = $source_image_height;
-    $imageObjectInfo['filePath'] = $filename;
+    $imageObjectInfo['fileName'] = $filename;
+    $imageObjectInfo['filePath'] = $newfileName . '.' . $extension;
     $imageObjectInfo['sizes'] = array();
 
 

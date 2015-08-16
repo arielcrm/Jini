@@ -35,7 +35,7 @@
 
 </head>
 <body>
-    <div id="map_canvas_1" style="width: 700px; height: 700px;"></div>
+    <div id="map_canvas_1" style="width: 1178px; height: 980px;"></div>
 
     <script>
         var prplMap = [{
@@ -106,7 +106,7 @@
                 map: map,
                 position: location,
                 animation: google.maps.Animation.DROP,
-                icon: '/img/icons/location-marker.png'
+                icon: '/img/icons/map_pin_promoted_xs.png'
             });
             this.map.setCenter(marker.getPosition());
             if (info == "" || typeof info == 'undefined')
@@ -136,9 +136,9 @@
             }
         };
         var map = new google.maps.Map(map_canvas, map_options);
-        map.setOptions({
-            styles: prplMap
-        });
+//        map.setOptions({
+//            styles: prplMap
+//        });
 
 
         $(function() {

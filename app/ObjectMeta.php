@@ -30,27 +30,31 @@ class ObjectMeta extends Model
     }
 
     public static function setValue($objectId, $metaKey, $metaValue) {
-        if (!$objectMeta = ObjectMeta::getMeta($objectId, $metaKey)) {
-            $objectMeta = new ObjectMeta();
-            $objectMeta->object_id = $objectId;
-        }
-        $objectMeta->meta_key = $metaKey;
-        $objectMeta->meta_value = $metaValue;
+        if (isset($metaValue)) {
+            if (!$objectMeta = ObjectMeta::getMeta($objectId, $metaKey)) {
+                $objectMeta = new ObjectMeta();
+                $objectMeta->object_id = $objectId;
+            }
+            $objectMeta->meta_key = $metaKey;
+            $objectMeta->meta_value = $metaValue;
 
-        return $objectMeta->save();
+            return $objectMeta->save();
+        }
     }
 
     public static function addValue($objectId, $metaKey, $metaValue) {
-        $objectMeta = ObjectMeta::getMeta($objectId, $metaKey);
+        if (isset($metaValue)) {
+            $objectMeta = ObjectMeta::getMeta($objectId, $metaKey);
 
-        if ( !isset( $objectMeta ) || $objectMeta->meta_value != $metaValue ) {
-            $objectMeta = new ObjectMeta();
-            $objectMeta->object_id = $objectId;
+            if ( !isset( $objectMeta ) || $objectMeta->meta_value != $metaValue ) {
+                $objectMeta = new ObjectMeta();
+                $objectMeta->object_id = $objectId;
+            }
+
+            $objectMeta->meta_key = $metaKey;
+            $objectMeta->meta_value = $metaValue;
+
+            return $objectMeta->save();
         }
-
-        $objectMeta->meta_key = $metaKey;
-        $objectMeta->meta_value = $metaValue;
-
-        return $objectMeta->save();
     }
 }

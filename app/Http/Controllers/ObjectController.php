@@ -19,8 +19,8 @@ class ObjectController extends Controller {
 
         if ( $categoryId ) {
             // Category Image
-            if ($featuredImageId = ObjectMeta::getValue($categoryId, '_featured_image')) {
-                $featuredImageUrl = getImageSrc($featuredImageId, 'thumbnail');
+            if ($categoryFeaturedImageId = ObjectMeta::getValue($categoryId, '_featured_image')) {
+                $featuredImageUrl = getImageSrc($categoryFeaturedImageId, 'thumbnail');
             }
 
 
@@ -52,6 +52,12 @@ class ObjectController extends Controller {
             $objects = $objects
             ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
             ->get();
+
+            foreach ($objects as $object) {
+                if ($featuredImageId = ObjectMeta::getValue($object['id'], '_featured_image')) {
+                    $object['featured_image']  = Url('/uploads/' . getImageSrc($featuredImageId, 'thumbnail'));
+                }
+            }
         }
 
         return $objects;
