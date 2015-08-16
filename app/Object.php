@@ -60,7 +60,7 @@ class Object extends Model
     }
 
     public static function getField($id, $name) {
-        return ObjectMeta::where('object_id', $id);
-            //->where('meta_key', '=', '_field_'. $name);
+        return ObjectMeta::where('object_id', $id)
+            ->where('meta_key', '=', '_field_'. $name);
     }
 }

@@ -83,6 +83,8 @@ class ObjectController extends Controller {
                             'title' => $result['title']
                         );
 
+                        $location['promoted']= ObjectMeta::getValue($result['id'], '_field_promoted' );
+
                         $data[] = $location;
                     }
                 }

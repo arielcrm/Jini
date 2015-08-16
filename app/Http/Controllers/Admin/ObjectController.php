@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Object;
+use App\ObjectType;
 use App\ObjectMeta;
 use App\Helpers\Hash;
 use App\Language;
@@ -349,6 +350,10 @@ class ObjectController extends AdminController {
 
                 $values = $this->getFieldValues($id, $field);
 
+                foreach ($values as $key => $value) {
+                    if ($values[$key] == '1') { $values[$key] = 'on'; }
+                }
+
                 $fieldControls[] = view('admin.partials.form.boolean', compact( 'field', 'values' ) );
 
                 // Occupation
@@ -418,9 +423,6 @@ class ObjectController extends AdminController {
 
                 $fieldControls[] = view('admin.partials.form.email', compact( 'field', 'values' ) );
 
-
-
-
                 foreach ($fieldsRows as $fieldRow) {
                     $field = unserialize($fieldRow['meta_value']);
                     $fields[] = $field;
@@ -438,10 +440,14 @@ class ObjectController extends AdminController {
                             $valueMetaKey = substr( $valueMetaKey, 1);
                         }
 
+                        $value = $valueMeta['meta_value'];
+
+                        if ($value == '1') { $value = 'on'; }
+
                         if ($valueMetaKey) {
-                            $values[$valueMetaKey] = $valueMeta['meta_value'];
+                            $values[$valueMetaKey] = $value;
                         } else {
-                            $values[] = $valueMeta['meta_value'];
+                            $values[] = $value;
                         }
                     }
 
@@ -497,14 +503,54 @@ class ObjectController extends AdminController {
         $object->excerpt = $request->content;
         $object->save();
 
-        foreach ( array_keys($_POST) as $key ) {
-            if ( substr($key, 0, 7) == '_field_' ) {
-                $object->setValue($key, $request->input($key));
+//        if ($objecttype = Object::where('type', 'object_type')
+//            ->where('name', '_object_type_' . $object['type'] )
+//            ->first() ) {
+//
+//            if ( $fields = Object::getFields( $objecttype['id'] )->get() ) {
+//                foreach ( $fields as $field ) {
+//                    if ( $fieldInfo = unserialize( $field['meta_value'] ) ) {
+//                        $value = Input::get($fieldInfo['id']);
+//
+//                        echo $value;
+//                    }
+//                }
+//            }
+//        }
+
+        //print_r(array_keys($_POST));
+        //abort(500, 'sadfds');
+
+        $fields = Object::getFields($id)->get();
+
+        foreach ($fields as $field) {
+
+            foreach ( array_keys($_POST) as $key ) {
+                if ( substr($key, 0, 7) == '_field_' ) {
+                    $value = $request->input($key);
+
+                    if ($value == 'on') { $value = 1; }
+
+                    $object->setValue($key, $value);
+                }
             }
         }
 
-        $object->setValue('promoted', $request->promoted);
 
+        $promoted = $request->input('_field_french_speakers');
+        if (!empty($promoted)) {
+            $object->setValue('_field_french_speakers', 1);
+        } else {
+            $object->setValue('_field_french_speakers', 0);
+        }
+
+
+        $promoted = $request->input('_field_promoted');
+        if (!empty($promoted)) {
+            $object->setValue('_field_promoted', 1);
+        } else {
+            $object->setValue('_field_promoted', 0);
+        }
 
         if($request->hasFile('featuredImage'))
         {
