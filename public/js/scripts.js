@@ -74,6 +74,8 @@ function drawCutSectors(t, e, i) {
             var itemContentImageSrc = this.getAttribute("data-content-image");
             var itemTitle = this.getAttribute("data-title");
 
+
+            $(".demo-wrapper").addClass("demo-wrapper-righter-1");
             console.log(itemFeaturedImageSrc);
 
 
@@ -85,7 +87,10 @@ function drawCutSectors(t, e, i) {
 
 
 
+            $('#sideBar1 .pane-wrapper').removeClass('collapsed');
             $('#sideBar1 .info-pane-wrapper').addClass('collapsed');
+
+
 
             if (itemTitle) {
                 $('#sideBar1 .info-pane .title').html(itemTitle);
@@ -103,6 +108,11 @@ function drawCutSectors(t, e, i) {
 
 
             $('#sideBar1 .info-pane').addClass('preloader');
+
+            $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
+            $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
+            $(".demo-wrapper").addClass("demo-wrapper-righter-1");
+
             $.ajax({
                 url: '/categories/' + itemId + '/content',
                 dataType: 'html',
@@ -125,6 +135,10 @@ function drawCutSectors(t, e, i) {
                 var categoriesCount = this.getAttribute("data-children-count");
                 var itemsCount = this.getAttribute("data-items-count");
                 var itemTitle = this.getAttribute("data-title");
+
+                $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
+                $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
+                $(".demo-wrapper").addClass("demo-wrapper-righter-2");
 
                 if (categoriesCount > 0) {
                     $.ajax({

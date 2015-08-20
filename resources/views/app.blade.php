@@ -232,14 +232,13 @@
 
 </head>
 <body>
-@include('partials.nav')
-
-@include('flash::message')
-<div class="container">
-@yield('content')
+    <header>
+        @include('partials.nav')
+    </header>
+    @include('flash::message')
+    @yield('content')
+    @include('partials.footer')
 </div>
-@include('partials.footer')
-
 
 
 </body>
