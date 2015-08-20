@@ -74,59 +74,56 @@ function drawCutSectors(t, e, i) {
             var itemContentImageSrc = this.getAttribute("data-content-image");
             var itemTitle = this.getAttribute("data-title");
 
+            if (!$('.search-results-pane-wrapper').hasClass('collapsed')) {
+                $(".demo-wrapper").addClass("demo-wrapper-righter-1");
 
-            $(".demo-wrapper").addClass("demo-wrapper-righter-1");
-            console.log(itemFeaturedImageSrc);
-
-
-            if (itemFeaturedImageSrc && itemFeaturedImageSrc != 'undefined') {
-                img.setAttributeNS(xlinkns, "xlink:href", itemFeaturedImageSrc);
-            } else {
-                img.setAttributeNS(xlinkns, "xlink:href", 'img/no_selector.png');
-            }
-
-
-
-            $('#sideBar1 .pane-wrapper').removeClass('collapsed');
-            $('#sideBar1 .info-pane-wrapper').addClass('collapsed');
-
-
-
-            if (itemTitle) {
-                $('#sideBar1 .info-pane .title').html(itemTitle);
-            } else {
-                $('#sideBar1 .info-pane .title').html('');
-            }
-
-            if (itemContentImageSrc && itemContentImageSrc != 'undefined') {
-                $('#sideBar1 .info-pane .top-image').attr('src', itemContentImageSrc);
-                $('#sideBar1 .info-pane .top-image').show();
-            } else {
-                $('#sideBar1 .info-pane .top-image').hide();
-            }
-
-
-
-            $('#sideBar1 .info-pane').addClass('preloader');
-
-            $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
-            $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
-            $(".demo-wrapper").addClass("demo-wrapper-righter-1");
-
-            $.ajax({
-                url: '/categories/' + itemId + '/content',
-                dataType: 'html',
-                success: function(response) {
-                    if (response) {
-                        $('#sideBar1 .info-pane .content').html(response);
-                    } else {
-                        $('#sideBar1 .info-pane .content').html('');
-                    }
-                },
-                complete: function(response) {
-                    $('#sideBar1 .info-pane').removeClass('preloader');
+                if (itemFeaturedImageSrc && itemFeaturedImageSrc != 'undefined') {
+                    img.setAttributeNS(xlinkns, "xlink:href", itemFeaturedImageSrc);
+                } else {
+                    img.setAttributeNS(xlinkns, "xlink:href", 'img/no_selector.png');
                 }
-            });
+
+                $('#sideBar1 .pane-wrapper').removeClass('collapsed');
+                $('#sideBar1 .info-pane-wrapper').addClass('collapsed');
+
+
+
+                if (itemTitle) {
+                    $('#sideBar1 .info-pane .title').html(itemTitle);
+                } else {
+                    $('#sideBar1 .info-pane .title').html('');
+                }
+
+                if (itemContentImageSrc && itemContentImageSrc != 'undefined') {
+                    $('#sideBar1 .info-pane .top-image').attr('src', itemContentImageSrc);
+                    $('#sideBar1 .info-pane .top-image').show();
+                } else {
+                    $('#sideBar1 .info-pane .top-image').hide();
+                }
+
+
+
+                $('#sideBar1 .info-pane').addClass('preloader');
+
+                $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
+                $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
+                $(".demo-wrapper").addClass("demo-wrapper-righter-1");
+
+                $.ajax({
+                    url: '/categories/' + itemId + '/content',
+                    dataType: 'html',
+                    success: function(response) {
+                        if (response) {
+                            $('#sideBar1 .info-pane .content').html(response);
+                        } else {
+                            $('#sideBar1 .info-pane .content').html('');
+                        }
+                    },
+                    complete: function(response) {
+                        $('#sideBar1 .info-pane').removeClass('preloader');
+                    }
+                });
+            }
         }, true);
 
         r.addEventListener(clickEvent, function(t) {
@@ -135,10 +132,6 @@ function drawCutSectors(t, e, i) {
                 var categoriesCount = this.getAttribute("data-children-count");
                 var itemsCount = this.getAttribute("data-items-count");
                 var itemTitle = this.getAttribute("data-title");
-
-                $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
-                $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
-                $(".demo-wrapper").addClass("demo-wrapper-righter-2");
 
                 if (categoriesCount > 0) {
                     $.ajax({
@@ -175,6 +168,11 @@ function drawCutSectors(t, e, i) {
                         }
                     });
                 } else {
+                    $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
+                    $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
+                    $(".demo-wrapper").addClass("demo-wrapper-righter-2");
+
+
                     $('#sideBar1 .info-pane-wrapper').removeClass('collapsed');
 
 
