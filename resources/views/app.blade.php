@@ -28,9 +28,9 @@
     @yield('styles')
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="/js/libs/detectizr.js"></script>
 
-    <script src="jsjj/libs/jquery-1.11.3.js"></script>
-    <script src="js/libs/detectizr.js"></script>
+    @yield('scripts')
 
     <script src="/js/typeahead.bundle.js"></script>
 
@@ -226,6 +226,8 @@
 
 
 
+
+
     {{-- TODO: Incorporate into elixir workflow. --}}
     {{--<script src="{{asset('assets/site/js/jquery.justifiedGallery.min.js')}}"></script>--}}
     {{--<script src="{{asset('assets/site/js/lightbox.min.js')}}"></script>--}}
@@ -234,6 +236,7 @@
         $('#flash-overlay-modal').modal();
         $('div.alert').not('.alert-danger').delay(3000).slideUp(300);
     </script>
+
 
 
 </head>
@@ -247,10 +250,6 @@
 </div>
 
 
-    <!-- Scripts -->
-
-    @yield('scripts')
-    <script src="{{ elixir('js/site.js') }}"></script>
 
 </body>
 </html>

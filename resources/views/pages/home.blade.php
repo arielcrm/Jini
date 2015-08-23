@@ -41,8 +41,48 @@
             <div class="actions-pane">
                 <div class="row actions"><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book</button></div><div class="col-md-4"><button class="map-button"></button></div></div>
             </div>
-            <div class="info-content">
-                <div class="content"></div>
+            <div class="content-pane">
+                <div class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <h3>You could spend a lifetime in Jerusalem,but three days is probably a good minimumto get a feel for the city and environs.</h3>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row actions">
+                            <div class="col-md-4">
+                                <button>3 Bedrooms</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button>2.5 Bedrooms</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button>2 Balconies</button>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Ownership: Condo</p>
+                                <p>Common Charges: $3,717 / mo.</p>
+                                <p>Taxes: $3,038 / mo.</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>Minimum Down Payment: 10%</p>
+                                <p>Square Feet: 2410 ft</p>
+                                <p>Price per Square Foot: $3,734</p>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>An Overview</h4>
+                                <p>Unique opportunity to own an E-line at One Beacon Court. Perched on the 40th floor, this 2410 square foot apartment features expansive views of Central Park and the city landscape. The entry foyer leads into a grand gallery opening into the southwest corner living/dining room, which is perfect for entertaining. Adjacent to the dining alcove is the Chef's kitchen featuring top-of-the-line appliances, a breakfast area, and a floor-to-ceiling window looking south. A Master suite is located privately at the end of the gallery and features a five-fixture marble bath, a linen closet, and two walk-in closets. There are two secondary bedrooms each with en-suite bathrooms and closets facing south. A laundry room, coat closet, and 13 ptpowder room are easily accessed off the gallery and entry foyer.13 pt breakfast area, and a floor-to-ceiling window looking south. A Master suite is located privately at the end of the gallery and features a five-fixture marble bath, a linen closet, and two walk-in closets. There are two secondary bedrooms each with en-suite bathrooms and closets facing south. A laundry room, coat closet, and 13 ptpowder room are easily accessed off the gallery and entry foyer.13 pt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <button class="back-button">&nbsp;</button>
         </div>
@@ -250,7 +290,6 @@
 
 </div>
 
-@section('scripts')
 
     <script>
         var enterEvent = "mouseenter";
@@ -282,12 +321,38 @@
                 opacity: 1,
                 position: 'right'
             });
+
+            $('#sideBar1 .info-pane-1 .content-pane').slimScroll({
+                height: 'auto',
+                alwaysVisible: 'true',
+                color: '#d3d3d3',
+                size: '8px',
+                opacity: 1,
+                position: 'right'
+            });
         });
 
     </script>
 
 
     <script>
+        function rebind() {
+            $.ajax({
+                url: '/categories/' + itemId + '/content',
+                dataType: 'html',
+                success: function(response) {
+                    if (response) {
+                        $('#sideBar1 .info-pane .content').html(response);
+                    } else {
+                        $('#sideBar1 .info-pane .content').html('');
+                    }
+                },
+                complete: function(response) {
+                    $('#sideBar1 .info-pane').removeClass('preloader');
+                }
+            });
+        }
+
         $(function() {
             $('.info-pane-wrapper .back-button').on("click", function(e) {
                 e.preventDefault();
@@ -449,6 +514,6 @@
     </script>
 
     <script src="js/scripts.js"></script>
+    <script src="{{ elixir('js/site.js') }}"></script>
 
-@stop
 @stop

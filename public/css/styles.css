@@ -971,9 +971,25 @@ blockquote {
     height: 25px;
 }
 
-
 .side-bar-1 .info-pane-1 .content-pane {
 
+}
+.side-bar-1 .info-pane-1 .content-pane h3 {
+    font-size: 1.250em;
+    text-align: center;
+    font-family: 'BodoniBT-Roman';
+    font-weight: 700;
+}
+.side-bar-1 .info-pane-1 .content-pane h4 {
+    font-size: 0.938em;
+    font-weight: 700;
+}
+.side-bar-1 .info-pane-1 .content-pane .actions button {
+    background-color: #c5ab68;
+    color: #333;
+    font-size: 0.938em;
+    font-weight: 700;
+    padding: 5px 15px;
 }
 
 

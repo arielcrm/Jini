@@ -233,6 +233,20 @@ function drawCutSectors(t, e, i) {
                                 }
                                 html += '</ul>';
                                 $('#sideBar1 .search-results-pane .info-content .content').html(html);
+                                $('#sideBar1 .search-results-pane .info-content .content .more-button').on('click', function() {
+                                    $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
+                                    $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
+                                    $(".demo-wrapper").addClass("demo-wrapper-righter-2");
+
+
+                                    $('#sideBar1 .info-pane-wrapper').removeClass('collapsed');
+
+
+                                    $('#sideBar1 .info-pane-1').find('.title').html('asdas');
+                                    $('#sideBar1 .info-pane-wrapper-1').addClass('collapsed');
+                                });
+
+
 //                                $('#sideBar1 .search-results-pane .info-content .content').slimScroll({
 //                                    height: '250px'
 //                                });
