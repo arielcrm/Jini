@@ -904,6 +904,81 @@ blockquote {
     font-size: 1.250em;
     line-height: 30px;
 }
+.side-bar-1 .info-pane-wrapper-1 {
+    background: #fff;
+}
+.side-bar-1 .info-pane-wrapper-1.collapsed {
+    width: 537px;
+}
+.side-bar-1 .info-pane-1 {
+    width: 537px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.side-bar-1 .info-pane-1 .back-button {
+    top: 15px;
+    right: 20px;
+    left: auto;
+    bottom: auto;
+    background-image: url('../img/icons/close.png');
+}
+.side-bar-1 .info-pane-1 .top-pane {
+    position: relative;
+}
+.side-bar-1 .info-pane-1 .top-pane .overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 30px 15px;
+}
+.side-bar-1 .info-pane-1 .top-pane .bottom {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    z-index: 1000;
+}
+.side-bar-1 .info-pane-1 .top-pane h2 {
+    margin: 0;
+    padding: 0;
+    font-family: 'BodoniBT-Roman';
+    font-weight: bold;
+    font-size: 2.5em;
+    color: #fff;
+}
+.side-bar-1 .info-pane-1 .top-pane p {
+    font-size: 1.250em;
+    line-height: 30px;
+}
+.side-bar-1 .info-pane-1 .top-pane .address {
+    color: #fff;
+    font-size: 0.813em;
+}
+
+.side-bar-1 .info-pane-1 .actions-pane .wishlist-button {
+    background: url('../img/icons/wish.png') no-repeat left center;
+    padding: 0 0 0 52px;
+}
+.side-bar-1 .info-pane-1 .actions-pane .book-button {
+    background: url('../img/icons/credit_card.png') no-repeat left center;
+    padding: 0 0 0 36px;
+    height: 25px;
+}
+.side-bar-1 .info-pane-1 .actions-pane .book-button {
+    background: url('../img/icons/pin.png') no-repeat left center;
+    padding: 0 0 0 36px;
+    height: 25px;
+}
+
+
+.side-bar-1 .info-pane-1 .content-pane {
+
+}
+
+
+
+
 .side-bar-1 .search-criteria-pane-wrapper.collapsed {
     width: 364px;
 }
@@ -965,7 +1040,7 @@ blockquote {
     width: 433px;
 }
 .side-bar-1 .search-results-pane {
-    padding: 72px 36px;
+    padding: 72px 24px 72px 36px;
     width: 433px;
 }
 
@@ -992,8 +1067,7 @@ blockquote {
     border-bottom: 1px solid #ccc;
 }
 .side-bar-1 .search-results-pane ul li img {
-    float: left;
-    max-width: 120px;
+    max-width: 135px;
 }
 .side-bar-1 .search-results-pane ul li h3 {
     margin: 0 0 10px 0;
@@ -1013,9 +1087,42 @@ blockquote {
     display: inline-block;
     margin: 0;
     padding: 0;
+}
+.side-bar-1 .search-results-pane ul li .more-button span {
     font-size: 1.125em;
     font-weight: bold;
+    height: 23px;
     border-bottom: 1px outset #535353;
+}
+.side-bar-1 .search-results-pane ul li .more-button.promoted {
+    background: url('../img/icons/crown.png') no-repeat left center;
+    padding: 0 0 0 35px;
+}
+.side-bar-1 .search-results-pane ul li .actions {
+    padding: 15px 0 0 0;
+}
+.side-bar-1 .search-results-pane ul li .actions button {
+    white-space: nowrap;
+    height: 25px;
+    font-size: 0.875em;
+    color: #ccc;
+    font-weight: 700;
+}
+.side-bar-1 .search-results-pane ul li .actions .map-button {
+    background: url('../img/icons/pin.png') no-repeat left center;
+    padding: 0 0 0 19px;
+}
+.side-bar-1 .search-results-pane ul li .actions .col {
+    padding: 0;
+}
+.side-bar-1 .search-results-pane ul li .actions .wishlist-button {
+    background: url('../img/icons/wish.png') no-repeat left center;
+    padding: 0 0 0 52px;
+}
+.side-bar-1 .search-results-pane ul li .actions .book-button {
+    background: url('../img/icons/credit_card.png') no-repeat left center;
+    padding: 0 0 0 36px;
+    height: 25px;
 }
 .side-bar-1 .search-results-pane-wrapper-1 {
     left: 445px;
@@ -1108,4 +1215,9 @@ button {
     border: 0;
     background: 0;
     outline: 0;
+}
+
+.no-gutter [class*="-6"] {
+    padding-left:0;
+    padding-right:0;
 }

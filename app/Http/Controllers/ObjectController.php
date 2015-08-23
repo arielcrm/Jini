@@ -57,6 +57,8 @@ class ObjectController extends Controller {
                 if ($featuredImageId = ObjectMeta::getValue($object['id'], '_featured_image')) {
                     $object['featured_image']  = Url('/uploads/' . getImageSrc($featuredImageId, 'thumbnail'));
                 }
+
+                $object['promoted']= ObjectMeta::getValue($object['id'], '_field_promoted' );
             }
         }
 

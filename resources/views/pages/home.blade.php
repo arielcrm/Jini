@@ -27,6 +27,26 @@
             <button class="back-button">&nbsp;</button>
         </div>
     </div>
+    <div class="info-pane-wrapper-1 pane-wrapper collapsed">
+        <div class="info-pane-1 pane">
+            <div class="top-pane">
+                <img class="top-image" src="http://localhost:8007/uploads/d34bb34accca72e3c93c747768f85c51cad1390d.jpg" alt="" title="" />
+                <div class="overlay">
+                    <div class="bottom">
+                        <h2 class="title">Sea & Sun Apartment</h2>
+                        <span class="address">Pinkas 23 st. Tel-Aviv 2045869</span>
+                    </div>
+                </div>
+            </div>
+            <div class="actions-pane">
+                <div class="row actions"><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book</button></div><div class="col-md-4"><button class="map-button"></button></div></div>
+            </div>
+            <div class="info-content">
+                <div class="content"></div>
+            </div>
+            <button class="back-button">&nbsp;</button>
+        </div>
+    </div>
     <div class="search-criteria-pane-wrapper pane-wrapper">
         <div class="search-criteria-pane pane">
             <h2 class="title">Filter results in <span class="criteria"></span></h2>
@@ -230,8 +250,7 @@
 
 </div>
 
-    <script src="js/libs/jquery-1.11.3.js"></script>
-    <script src="js/libs/detectizr.js"></script>
+@section('scripts')
 
     <script>
         var enterEvent = "mouseenter";
@@ -253,9 +272,20 @@
         var arrMenu1_2 = [
 
         ];
+
+        jQuery(document).ready(function($){
+            $('#sideBar1 .search-results-pane .info-content').slimScroll({
+                height: 'auto',
+                alwaysVisible: 'true',
+                color: '#d3d3d3',
+                size: '8px',
+                opacity: 1,
+                position: 'right'
+            });
+        });
+
     </script>
 
-    <script src="js/scripts.js"></script>
 
     <script>
         $(function() {
@@ -417,4 +447,8 @@
         });
 
     </script>
+
+    <script src="js/scripts.js"></script>
+
+@stop
 @stop

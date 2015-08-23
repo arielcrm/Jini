@@ -27,9 +27,19 @@
 
     @yield('styles')
 
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
+    <script src="jsjj/libs/jquery-1.11.3.js"></script>
+    <script src="js/libs/detectizr.js"></script>
+
+    <script src="/js/typeahead.bundle.js"></script>
+
+    <script type="text/javascript" src="/js/libs/jquery.slimscroll.min.js"></script>
+
     <!-- Fonts -->
 <!--    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw&libraries=places"></script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -214,8 +224,7 @@
 
     </style>
 
-    <!-- Scripts -->
-    <script src="{{ elixir('js/site.js') }}"></script>
+
 
     {{-- TODO: Incorporate into elixir workflow. --}}
     {{--<script src="{{asset('assets/site/js/jquery.justifiedGallery.min.js')}}"></script>--}}
@@ -225,9 +234,6 @@
         $('#flash-overlay-modal').modal();
         $('div.alert').not('.alert-danger').delay(3000).slideUp(300);
     </script>
-
-    @yield('scripts')
-    <script src="/js/typeahead.bundle.js"></script>
 
 
 </head>
@@ -240,6 +246,11 @@
     @include('partials.footer')
 </div>
 
+
+    <!-- Scripts -->
+
+    @yield('scripts')
+    <script src="{{ elixir('js/site.js') }}"></script>
 
 </body>
 </html>

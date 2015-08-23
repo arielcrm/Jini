@@ -64,8 +64,6 @@ function drawCutSectors(t, e, i) {
         var z = m[1];
         var tt = m[0];
 
-        console.log (m);
-
         r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute('data-children-count', m[5]), r.setAttribute('data-items-count', m[6]),  r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-featured-image", m[1]), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
             var itemIndex = this.getAttribute("data-index");
@@ -144,7 +142,6 @@ function drawCutSectors(t, e, i) {
                                 for ( i = 0; i < response.length; i++) {
                                     var o = response[i];
 
-                                    console.log(o);
                                     mi = [];
                                     mi[0] = o.title;
                                     mi[1] = o.featuredImageUrl;
@@ -194,11 +191,51 @@ function drawCutSectors(t, e, i) {
                                 var html = '<ul>'
                                 for (i = 0; i < response.length; i++) {
                                     var result = response[i];
+                                    var cssClass = "more-button";
 
-                                    html += '<li><div class="row"><div class="col-md-4"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-8"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><a href="#" class="more-button">More Info</a></a></div></div></li>';
+                                    if (result.promoted == 1){
+                                        cssClass += " promoted";
+                                    }
+                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';
+
+                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';                                    html += '<li>';
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><div class="excerpt">' + result.excerpt + '</div><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '</li>';
+
                                 }
                                 html += '</ul>';
                                 $('#sideBar1 .search-results-pane .info-content .content').html(html);
+//                                $('#sideBar1 .search-results-pane .info-content .content').slimScroll({
+//                                    height: '250px'
+//                                });
                             }
                         }
                     });
