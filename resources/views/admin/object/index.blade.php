@@ -70,14 +70,15 @@
     @parent
     <script type="text/javascript">
         var oTable;
+        var q = encodeURIComponent("type={{{ $objecttype->name }}}");
+
         $(document).ready(function () {
             oTable = $('#table').DataTable({
                 "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
                 "sPaginationType": "bootstrap",
-
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ URL::to('admin/objects/data' . ( isset($objecttype) ? '?type=' . $objecttype->name : null ) ) }}",
+                "ajax": "{{ URL::to('admin/objects/data') }}" + (q ? '?' + q : ''),
                 "fnDrawCallback": function (oSettings) {
                     $(".iframe").colorbox({
                         iframe: true,

@@ -496,6 +496,8 @@ class ObjectController extends AdminController {
      */
     public function postEdit(ObjectRequest $request, $id)
     {
+
+
         $object = Object::find($id);
         //$object->name = $request->name;
         $object->title = $request->title;
@@ -643,6 +645,7 @@ class ObjectController extends AdminController {
 
         $objects = $objects->select(array('id', 'title', 'type', 'status', 'created_at' ));
             //;// object::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));
+
 
         return Datatables::of($objects)
             ->add_column('actions', '@if ($id>"4")<a href="{{{ URL::to(\'admin/objects/\' . $id . \'/edit\' ) }}}" class="btn btn-success btn-sm" ><span class="glyphicon glyphicon-pencil"></span>  {{ trans("admin/modal.edit") }}</a>
