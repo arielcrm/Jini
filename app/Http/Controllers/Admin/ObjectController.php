@@ -633,7 +633,7 @@ class ObjectController extends AdminController {
      */
     public function data()
     {
-        $type = Input::get('type');
+        $type = html_entity_decode( Input::get('type') ) ;
 
         $objects = Object::where('type', '<>', 'object_type')
             ->where('type', '<>', 'image')
@@ -642,6 +642,7 @@ class ObjectController extends AdminController {
         if ( !empty( $type ) ) {
             $objects = $objects->where('type', $type);
         }
+
 
         $objects = $objects->select(array('id', 'title', 'type', 'status', 'created_at' ));
             //;// object::select(array('object_types.id','object_types.name','object_types.display_name', 'object_types.created_at'));

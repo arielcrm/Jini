@@ -70,7 +70,12 @@
     @parent
     <script type="text/javascript">
         var oTable;
-        var q = encodeURIComponent("type={{{  ( !empty( $objecttype ) ? $objecttype->name : '' ) }}}");
+        var ot = "{{{ ( !empty( $objecttype ) ? $objecttype->name : '' ) }}}";
+        var q = '';
+
+        if (ot) {
+            q = 'type=' + encodeURIComponent(ot);
+        }
 
         $(document).ready(function () {
             oTable = $('#table').DataTable({
