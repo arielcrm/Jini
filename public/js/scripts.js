@@ -171,7 +171,7 @@ function drawCutSectors(t, e, i) {
 
 
                     $('#sideBar1 .info-pane-wrapper').removeClass('collapsed');
-
+                    $('#sideBar1 .info-pane-wrapper-1').removeClass('collapsed');
 
                     $('#sideBar1 .search-criteria-pane').find('.criteria').html(itemTitle);
                     $('#sideBar1 .search-criteria-pane-wrapper').addClass('collapsed');
@@ -215,6 +215,8 @@ function drawCutSectors(t, e, i) {
                                     } else {
                                         $('#sideBar1 .info-pane-1 .title').html('');
                                     }
+
+                                    itemContentImageSrc = 'http://ec2-52-27-196-120.us-west-2.compute.amazonaws.com/uploads/a64f99271d93b080044be6b72ad860c894f796f6.jpg';
 
                                     if (itemContentImageSrc && itemContentImageSrc != 'undefined') {
                                         $('#sideBar1 .info-pane-1 .top-image').attr('src', itemContentImageSrc);
