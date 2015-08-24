@@ -27,13 +27,13 @@
             <button class="back-button">&nbsp;</button>
         </div>
     </div>
-    <div class="info-pane-wrapper-1 pane-wrapper collapsed">
+    <div class="info-pane-wrapper-1 pane-wrapper">
         <div class="info-pane-1 pane">
             <div class="top-pane">
                 <img class="top-image" src="http://localhost:8007/uploads/d34bb34accca72e3c93c747768f85c51cad1390d.jpg" alt="" title="" />
                 <div class="overlay">
                     <div class="bottom">
-                        <h2 class="title">Sea & Sun Apartment</h2>
+                        <h2 class="title"></h2>
                         <span class="address">Pinkas 23 st. Tel-Aviv 2045869</span>
                     </div>
                 </div>
@@ -323,7 +323,7 @@
             });
 
             $('#sideBar1 .info-pane-1 .content-pane').slimScroll({
-                height: 'auto',
+                height: '500px',
                 alwaysVisible: 'true',
                 color: '#d3d3d3',
                 size: '8px',

@@ -500,7 +500,11 @@ class ObjectController extends AdminController {
         //$object->name = $request->name;
         $object->title = $request->title;
         $object->content = $request->content;
-        $object->excerpt = $request->content;
+
+        $excerpt = strip_tags( $request->content );
+        $excerpt = preg_replace('/\s+/', ' ', $excerpt);
+
+        $object->excerpt = $excerpt;
         $object->save();
 
 //        if ($objecttype = Object::where('type', 'object_type')

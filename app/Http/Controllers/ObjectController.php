@@ -58,7 +58,15 @@ class ObjectController extends Controller {
                     $object['featured_image']  = Url('/uploads/' . getImageSrc($featuredImageId, 'thumbnail'));
                 }
 
+                if ($contentImageId = ObjectMeta::getValue($object['id'], '_content_image')) {
+                    $object['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'thumbnail'));
+                }
+
+                $object['address']= ObjectMeta::getValue($object['id'], '_field_address' );
+
                 $object['promoted']= ObjectMeta::getValue($object['id'], '_field_promoted' );
+
+                $object['excerpt'] = strlen($object['excerpt']) > 50 ? substr($object['excerpt'], 1, 50) . '...' : $object['excerpt'];
             }
         }
 
@@ -99,6 +107,13 @@ class ObjectController extends Controller {
         //return view('partials.map', compact( 'locations' ));
     }
 
+    public function getContent($id) {
+        if ($id) {
+            if ($object = Object::find($id)) {
+                return $object->content;
+            }
+        }
+    }
 
     public function getMap() {
         if ( $queryString = $_SERVER['QUERY_STRING'] ) {
