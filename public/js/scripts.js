@@ -197,8 +197,8 @@ function drawCutSectors(t, e, i) {
                                         cssClass += " promoted";
                                     }
                                     html += '<li data-index="' + i + '" data-id="' + result.id + '" data-title="' + result.title + '" data-address="' + result.address + '" data-content-image="' + result.content_image + '" >';
-                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7"><div class="content"><h3>' + result.title  + '</h3><p class="excerpt">' + result.excerpt + '</p><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
-                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
+                                    html += '<div class="row"><div class="col-md-5"><img src="' +  result.featured_image + '" class="thumb" /></div><div class="col-md-7 no-padding"><div class="content"><h3>' + result.title  + '</h3><p class="excerpt">' + result.excerpt + '</p><button class="' + cssClass + '"><span>More Info</span</button></div></div></div>';
+                                    html += '<div class="row actions"><div class="col-md-4"><button class="map-button">View on map</button></div><div class="col-md-4 no-padding"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book now</button></div></div>'
                                     html += '</li>';
 
                                 }
@@ -209,6 +209,7 @@ function drawCutSectors(t, e, i) {
                                     var itemId =  $(parent).attr("data-id");
                                     var itemTitle = $(parent).attr("data-title");
                                     var itemContentImageSrc = $(parent).attr("data-content-image");
+                                    var itemAddress = $(parent).attr("data-address");
 
                                     if (itemTitle) {
                                         $('#sideBar1 .info-pane-1 .title').html(itemTitle);
@@ -216,13 +217,15 @@ function drawCutSectors(t, e, i) {
                                         $('#sideBar1 .info-pane-1 .title').html('');
                                     }
 
-                                    itemContentImageSrc = 'http://ec2-52-27-196-120.us-west-2.compute.amazonaws.com/uploads/a64f99271d93b080044be6b72ad860c894f796f6.jpg';
-
                                     if (itemContentImageSrc && itemContentImageSrc != 'undefined') {
                                         $('#sideBar1 .info-pane-1 .top-image').attr('src', itemContentImageSrc);
                                         $('#sideBar1 .info-pane-1 .top-image').show();
                                     } else {
                                         $('#sideBar1 .info-pane-1 .top-image').hide();
+                                    }
+
+                                    if (itemAddress) {
+                                        $('#sideBar1 .info-pane-1 .address').html(itemAddress);
                                     }
 
 
