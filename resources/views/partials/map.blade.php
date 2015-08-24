@@ -101,21 +101,18 @@
         }, {}];
 
 
-        function setMarker(location, info, promoted) {
+        function setMarker(location, info, iconUrl) {
             var marker = new google.maps.Marker({
                 map: map,
                 position: location,
                 animation: google.maps.Animation.DROP
             });
 
-            if (promoted == 1) {
-                marker.setIcon('/img/icons/map_pin_promoted_xs.png');
-            } else {
-                marker.setIcon('/img/icons/map_pin_xs.png');
+            if (iconUrl) {
+                marker.setIcon(iconUrl);
             }
 
-
-            this.map.setCenter(marker.getPosition());
+            //this.map.setCenter(marker.getPosition());
             if (info == "" || typeof info == 'undefined')
                 return;
             var infowindow = new google.maps.InfoWindow({
@@ -128,11 +125,11 @@
         }
         var map_canvas = document.getElementById('map_canvas_1');
         var map_options = {
-            center: new google.maps.LatLng(32.0121253, 34.9916148,9.75),
+            center: new google.maps.LatLng(31.9026026, 34.946152, 9.75),
             zoom: 10,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             mapTypeControl: true,
-            scrollwheel: false,
+            scrollwheel: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
             },
@@ -158,8 +155,24 @@
                         console.log(response);
                         var latlngbounds = new google.maps.LatLngBounds();
                         for (var i = 0; i < response.data.length; i++) {
-                            latlngbounds.extend(new google.maps.LatLng(response.data[i].geo_latitude, response.data[i].geo_longitude));
-                            setMarker(new google.maps.LatLng(response.data[i].geo_latitude, response.data[i].geo_longitude), response.data[i].title, response.data[i].promoted);
+                            var data = response.data[i];
+                            
+                            if (data) {
+                                latlngbounds.extend(new google.maps.LatLng(response.data[i].geo_latitude, response.data[i].geo_longitude));
+
+                                if (data.promoted == 1) {
+                                    iconUrl = '/img/icons/map_pin_promoted_xs.png';
+                                } else {
+                                    iconUrl = '/img/icons/map_pin_xs.png';
+                                }
+
+                                var html = '<div class="marker-popup">' +
+                                    '<div class="marker-popup-top">' +
+                                    ( data.content_image ? '<img src="' + data.content_image + '" alt="" title="" />' : '' )
+                                    '</div>';
+
+                                setMarker(new google.maps.LatLng(data.geo_latitude, data.geo_longitude), html, iconUrl);
+                            }
                         }
                         //map.fitBounds(latlngbounds);
                     }

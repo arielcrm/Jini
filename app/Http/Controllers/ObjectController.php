@@ -90,10 +90,17 @@ class ObjectController extends Controller {
                             'geo_latitude' => $lat,
                             'geo_longitude' => $long,
                             'location' => '',
-                            'title' => $result['title']
+                            'title' => $result['title'],
+                            'excerpt' => $result['excerpt']
                         );
 
-                        $location['promoted']= ObjectMeta::getValue($result['id'], '_field_promoted' );
+                        if ($contentImageId = ObjectMeta::getValue($result['id'], '_content_image')) {
+                            $location['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'thumbnail'));
+                        } else {
+                            $location['content_image'] = '';
+                        }
+
+                        $location['promoted'] = ObjectMeta::getValue($result['id'], '_field_promoted' );
 
                         $data[] = $location;
                     }
