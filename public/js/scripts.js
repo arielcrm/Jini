@@ -365,9 +365,16 @@ function getTextAngle(num, count) {
             break;
         case 8:
             a = 70;
+
+
             break;
         case 9:
             a = 75;
+
+            if (num >=3 && num <= 6) {
+                a = -115;
+            }
+
             break;
     }
 
@@ -403,24 +410,7 @@ function addIcons() {
         //var f = document.createElementNS(svgns, "rect");
         //f.setAttribute("fill", "none"), f.setAttribute("stroke", "#111"), f.setAttribute("stroke-width", "1"), f.setAttribute("width", "100%"), f.setAttribute("height", "100%");
 
-        var fontSize = 16;
-        switch(nbOfSlices) {
-            case 4:
-                fontSize = 20;
-                break;
-            case 5:
-                fontSize = 20;
-                break;
-            case 6:
-                fontSize = 20;
-                break;
-            case 7:
-                fontSize = 20;
-                break;
-            case 8:
-                fontSize = 20;
-                break;
-        }
+        var fontSize = 20;
 
         var p = document.createElementNS(svgns, "text");
 
@@ -470,6 +460,13 @@ function init() {
         case 7:
             rotation = -65;
             break;
+        case 8:
+            rotation = -70;
+            break;
+        case 9:
+            rotation = -75;
+            break;
+
     }
 
     if (rotation) {
