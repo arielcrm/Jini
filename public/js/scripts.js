@@ -342,6 +342,8 @@ function getTextAngle(num, count) {
             return 65;
         case 8:
             return 70;
+        case 9:
+            return 75;
     }
 
 
