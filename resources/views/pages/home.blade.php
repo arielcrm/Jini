@@ -408,7 +408,9 @@
                 ["בריאות", "img/menu/1.png", "#HealthCare"]
             ];
 
-            currentMenu = arrMenu1;
+
+
+            currentMenu = [];
 
             init();
 

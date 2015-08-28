@@ -56,7 +56,7 @@ function drawPizzaSectors(t, e) {
 }
 
 function drawCutSectors(t, e, i) {
-
+    if (currentMenu.length > 0) {
     for (var n = 0; nbOfSlices > n; n++) {
         var r = document.createElementNS(svgns, "a");
         var m = currentMenu[n];
@@ -276,6 +276,7 @@ function drawCutSectors(t, e, i) {
         var s = document.createElementNS(svgns, "path");
         s.setAttribute("fill", "none"), s.setAttribute("stroke", "#111"), s.setAttribute("d", "M" + (t.x + i) + "," + t.y + " l" + (e - i) + ",0 A" + e + "," + e + " 0 0,0 " + pizzaCoordinates.x + "," + pizzaCoordinates.y + " l" + -(pizzaCoordinates.x - pieCoordinates.x) + "," + (-pizzaCoordinates.y + pieCoordinates.y) + " A" + i + "," + i + " 0 0,1 " + (t.x + i) + "," + t.y), s.setAttribute("class", "sector"), r.appendChild(s), itemsContainer.appendChild(document.createTextNode("")), itemsContainer.appendChild(r), itemsContainer.appendChild(document.createTextNode("\n"))
     }
+    }
 }
 
 function clearCanvas() {
@@ -337,15 +338,30 @@ function getTextAngle(num, count) {
             break;
         case 4:
             a = 45;
+
+            if (num == 3) {
+                a = -135;
+            }
             break;
         case 5:
             a = 55;
+
+            if (num >=3 && num <= 4) {
+                a = -125;
+            }
             break;
         case 6:
             a = 60;
+            if (num >=3 && num <= 5) {
+                a = -120;
+            }
             break;
         case 7:
             a = 65;
+
+            if (num >=4 && num <= 8) {
+                a = -115;
+            }
             break;
         case 8:
             a = 70;
@@ -354,16 +370,6 @@ function getTextAngle(num, count) {
             a = 75;
             break;
     }
-
-
-
-    var invertCount = Math.floor(nbOfSlices / 2 );
-    if (invertCount > 0) {
-        if ( num >= (nbOfSlices - invertCount - 1)) {
-            a = (a * -2) - 15;
-        }
-    }
-
 
     return a;
 }
@@ -441,6 +447,11 @@ function init() {
         transformOrigin: "50% 50%"
     })
 
+    TweenLite.set(img, {
+        rotation: 0,
+        transformOrigin: "50% 50%"
+    })
+
 
     var rotation = null;
     switch (nbOfSlices) {
@@ -452,6 +463,12 @@ function init() {
             break;
         case 5:
             rotation = -55;
+            break;
+        case 6:
+            rotation = -60;
+            break;
+        case 7:
+            rotation = -65;
             break;
     }
 
@@ -3475,7 +3492,8 @@ typePicker[0].onclick = function() {
 
 
     //init(), makeSpinnable(), ! function(t) {
-    init(), ! function(t) {
+    //init(),
+    ! function(t) {
     var e, i, n = "0.4.2",
         r = "hasOwnProperty",
         s = /[\.\/]/,
