@@ -329,21 +329,34 @@ function disableRadiusControl() {
 }
 
 function getTextAngle(num, count) {
+    var a = 30;
+    
     switch ( count ) {
         case 3:
-            return 30;
+            a = 30;
+            break;
         case 4:
-            return 45;
+            a = 45;
+            break;
         case 5:
-            return 55;
+            a = 55;
+            break;
         case 6:
-            return 60;
+            a = 60;
+            break;
         case 7:
-            return 65;
+            a = 65;
+            break;
         case 8:
-            return 70;
+            a = 70;
+            break;
         case 9:
-            return 75;
+            a = 75;
+            break;
+    }
+
+    if (num > parseInt(count / 2)) {
+        a *= -2;
     }
 
 
