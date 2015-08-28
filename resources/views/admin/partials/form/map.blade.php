@@ -5,11 +5,11 @@
     </label>
     {!!$errors->first('label', '<span class="help-block">:message </span>')!!}
 
-    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-location-g" id="{{{ $field['id'] }}}-location-g" />
-    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-location-k" id="{{{ $field['id'] }}}-location-k" />
-    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-address" id="{{{ $field['id'] }}}-address" />
-    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-city" id="{{{ $field['id'] }}}-city" />
-    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-country" id="{{{ $field['id'] }}}-country" />
+    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-location-g" id="{{{ $field['id'] }}}-location-g" value="{{{ isset( $values['location-g'] ) ? $values['location-g'] : null }}}" />
+    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-location-k" id="{{{ $field['id'] }}}-location-k" value="{{{ isset( $values['location-k'] ) ? $values['location-k'] : null }}}" />
+    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-address" id="{{{ $field['id'] }}}-address" value="{{{ isset( $values['address'] ) ? $values['address'] : null }}}" />
+    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-city" id="{{{ $field['id'] }}}-city" value="{{{ isset( $values['city'] ) ? $values['city'] : null }}}" />
+    <input class="form-control" type="hidden" name="{{{ $field['id'] }}}-country" id="{{{ $field['id'] }}}-country" value="{{{ isset( $values['country'] ) ? $values['country'] : null }}}" />
 
 
     <input id="pac-input_{{{ $uniqueId }}}" class="controls pac-input" type="text"
