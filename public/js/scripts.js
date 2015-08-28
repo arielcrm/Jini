@@ -100,7 +100,7 @@ function drawCutSectors(t, e, i) {
                 }
 
 
-
+                $('#sideBar1 .info-pane .content').empty();
                 $('#sideBar1 .info-pane').addClass('preloader');
 
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
@@ -114,7 +114,7 @@ function drawCutSectors(t, e, i) {
                         if (response) {
                             $('#sideBar1 .info-pane .content').html(response);
                         } else {
-                            $('#sideBar1 .info-pane .content').html('');
+                            $('#sideBar1 .info-pane .content').empty();
                         }
                     },
                     complete: function(response) {
@@ -377,6 +377,11 @@ function init() {
     if (nbOfSlices > 0) {
         clearCanvas(), iconPosControl.setAttribute("max", .85 * menuRadius), iconPosControl.setAttribute("value", .68 * menuRadius), gaps ? (enableGapControl(), gapControl.setAttribute("max", angle), gapControl.setAttribute("min", nbOfSlices - 1)) : gaps || disableGapControl(), getAngle(nbOfSlices), getPizzaCoordinates(angle, menuRadius, menuCenter), "pizza" == menuStyle ? (drawPizzaSectors(menuCenter, menuRadius), disableRadiusControl()) : "pie" == menuStyle && (getCutCoordinates(angle, menuSmallRadius, menuCenter), drawCutSectors(menuCenter, menuRadius, menuSmallRadius), enableRadiusControl()), rotateItems(menuCenter), addIcons(), generateCode(), generateFile()
     }
+
+    TweenLite.set(itemsContainer, {
+        rotation: 45,
+        transformOrigin: "50% 50%"
+    })
 }
 
 function makeSpinnable(t) {

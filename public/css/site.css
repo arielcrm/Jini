@@ -8155,3 +8155,7 @@ body > .container {
   height: 19px;
   text-indent: -9999px; }
 
+
+#footer {
+    display: none !important;
+}

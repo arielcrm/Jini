@@ -213,7 +213,9 @@
 
 
 
-
+        #footer {
+            display: none;
+        }
 
 
 
