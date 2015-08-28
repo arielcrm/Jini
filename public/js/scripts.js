@@ -355,14 +355,17 @@ function getTextAngle(num, count) {
             break;
     }
 
-    if (num > count / 2) {
-        a *= -2;
+
+
+    var invertCount = Math.floor(nbOfSlices / 2 );
+    if (invertCount > 0) {
+        if ( num >= (nbOfSlices - invertCount - 1)) {
+            a = (a * -2) - 15;
+        }
     }
 
 
-    //var a = 100 / count;
     return a;
-
 }
 
 
@@ -433,28 +436,38 @@ function init() {
         clearCanvas(), iconPosControl.setAttribute("max", .85 * menuRadius), iconPosControl.setAttribute("value", .68 * menuRadius), gaps ? (enableGapControl(), gapControl.setAttribute("max", angle), gapControl.setAttribute("min", nbOfSlices - 1)) : gaps || disableGapControl(), getAngle(nbOfSlices), getPizzaCoordinates(angle, menuRadius, menuCenter), "pizza" == menuStyle ? (drawPizzaSectors(menuCenter, menuRadius), disableRadiusControl()) : "pie" == menuStyle && (getCutCoordinates(angle, menuSmallRadius, menuCenter), drawCutSectors(menuCenter, menuRadius, menuSmallRadius), enableRadiusControl()), rotateItems(menuCenter), addIcons(), generateCode(), generateFile()
     }
 
-
-
-
-//    switch (nbOfSlices) {
-//        case 3:
-//            TweenLite.set(svg, {
-//                rotation: 90,
-//                transformOrigin: "50% 50%"
-//            })
-//            break;
-//        case 4:
-//            TweenLite.set(svg, {
-//                rotation: 45,
-//                transformOrigin: "50% 50%"
-//            })
-//            break;
-//    }
-
-    TweenLite.set(image, {
-        rotation: 11,
+    TweenLite.set(svg, {
+        rotation: 0,
         transformOrigin: "50% 50%"
     })
+
+
+    var rotation = null;
+    switch (nbOfSlices) {
+        case 3:
+            rotation = 90;
+            break;
+        case 4:
+            rotation = -45;
+            break;
+        case 5:
+            rotation = -55;
+            break;
+    }
+
+    if (rotation) {
+        TweenLite.set(svg, {
+            rotation: rotation,
+            transformOrigin: "50% 50%"
+        })
+
+
+        TweenLite.set(img, {
+            rotation: rotation * -1,
+            transformOrigin: "50% 50%"
+        })
+    }
+
 }
 
 function makeSpinnable(t) {
