@@ -355,7 +355,7 @@ function getTextAngle(num, count) {
             break;
     }
 
-    if (num > count / 2)) {
+    if (num > count / 2) {
         a *= -2;
     }
 
