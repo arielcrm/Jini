@@ -329,14 +329,27 @@ function disableRadiusControl() {
 }
 
 function getTextAngle(num, count) {
-    var d = parseInt(count / 4);
-
-    if ( num <= d || ( num > (count - d) && num <= count ) ) {
-        return 345;
+    switch ( count ) {
+        case 3:
+            return 30;
+        case 4:
+            return 45;
+        case 5:
+            return 55;
+        case 6:
+            return 60;
+        case 7:
+            return 65;
+        case 8:
+            return 70;
     }
 
-    return 160;
+
+    //var a = 100 / count;
+    return a;
+
 }
+
 
 function addIcons() {
     var t = document.querySelectorAll(".item"),
@@ -360,26 +373,71 @@ function addIcons() {
         var c = document.createElementNS(svgns, "symbol");
         c.setAttribute("class", "icon icon-"), c.setAttribute("id", "icon-" + (n + 1)), c.setAttribute("viewBox", "0 0 " + iconWidth + " " + iconHeight);
 
-        img.setAttribute("width", "200"), img.setAttribute("height", "200"), img.setAttribute("x", "150"),img.setAttribute("y", "150"), img.setAttributeNS(xlinkns, "xlink:href", "img/no_selector.png");
+        img.setAttribute("id", "featuredImage"), img.setAttribute("width", "200"), img.setAttribute("height", "200"), img.setAttribute("x", "150"),img.setAttribute("y", "150"), img.setAttributeNS(xlinkns, "xlink:href", "img/no_selector.png");
         svg.appendChild(img);
 
         //var f = document.createElementNS(svgns, "rect");
         //f.setAttribute("fill", "none"), f.setAttribute("stroke", "#111"), f.setAttribute("stroke-width", "1"), f.setAttribute("width", "100%"), f.setAttribute("height", "100%");
+
+        var fontSize = 16;
+        switch(nbOfSlices) {
+            case 4:
+                fontSize = 20;
+                break;
+            case 5:
+                fontSize = 20;
+                break;
+            case 6:
+                fontSize = 20;
+                break;
+            case 7:
+                fontSize = 20;
+                break;
+            case 8:
+                fontSize = 20;
+                break;
+        }
+
         var p = document.createElementNS(svgns, "text");
-        p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"), p.setAttribute("y", "10%"), p.setAttribute("dy", ".3em"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", "14px"), p.textContent = currentMenu[n][0].replace(' / ', '  '. replace(' ', '\n'));//n + 1;
+
+
+        p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", "10px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = currentMenu[n][0].replace(' / ', '  '. replace(' ', '\r\n'));//n + 1;
+
+        var p1 = document.createElementNS(svgns, "span");
+        p1.textContent = 'adas';
+        p.appendChild(p1);
+
         var d = document.createComment("Replace the contents of this symbol with the content of your icon");
         c.appendChild(d), c.appendChild(p), symbolsContainer.appendChild(document.createTextNode("    ")), symbolsContainer.appendChild(c), symbolsContainer.appendChild(document.createTextNode("\n\n"))
     }
 }
 
 function init() {
-    gap = 100;
+    gap = 200;
     if (nbOfSlices > 0) {
         clearCanvas(), iconPosControl.setAttribute("max", .85 * menuRadius), iconPosControl.setAttribute("value", .68 * menuRadius), gaps ? (enableGapControl(), gapControl.setAttribute("max", angle), gapControl.setAttribute("min", nbOfSlices - 1)) : gaps || disableGapControl(), getAngle(nbOfSlices), getPizzaCoordinates(angle, menuRadius, menuCenter), "pizza" == menuStyle ? (drawPizzaSectors(menuCenter, menuRadius), disableRadiusControl()) : "pie" == menuStyle && (getCutCoordinates(angle, menuSmallRadius, menuCenter), drawCutSectors(menuCenter, menuRadius, menuSmallRadius), enableRadiusControl()), rotateItems(menuCenter), addIcons(), generateCode(), generateFile()
     }
 
-    TweenLite.set(itemsContainer, {
-        rotation: 45,
+
+
+
+//    switch (nbOfSlices) {
+//        case 3:
+//            TweenLite.set(svg, {
+//                rotation: 90,
+//                transformOrigin: "50% 50%"
+//            })
+//            break;
+//        case 4:
+//            TweenLite.set(svg, {
+//                rotation: 45,
+//                transformOrigin: "50% 50%"
+//            })
+//            break;
+//    }
+
+    TweenLite.set(image, {
+        rotation: 11,
         transformOrigin: "50% 50%"
     })
 }

@@ -101,7 +101,7 @@
                     .item .sector {
                         transition: all .1s linear;
                         fill: #fff;
-                        stroke: #a79157;
+                        stroke: transparent;
                         opacity: 0.8;
                     }
 
@@ -113,7 +113,7 @@
 
                     .menu-trigger {
                         fill: #fff;
-                        stroke: #a79157;
+                        stroke: transparent;
                         opacity: 0.8;
                         pointer-events: auto; /* KEEP THIS to make sure it stays clickable even when SVG's pointer events is disabled */
                     }
