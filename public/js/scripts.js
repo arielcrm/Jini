@@ -371,7 +371,7 @@ function getTextAngle(num, count) {
         case 9:
             a = 75;
 
-            if (num >=3 && num <= 6) {
+            if (num >=4 && num <= 7) {
                 a = -115;
             }
 
