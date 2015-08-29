@@ -29,7 +29,7 @@
     </div>
     <div class="info-pane-wrapper-1 pane-wrapper">
         <div class="info-pane-1 pane">
-            <div class="top-pane">
+            <div class="row top-pane">
                 <img class="top-image" src="http://localhost:8007/uploads/d34bb34accca72e3c93c747768f85c51cad1390d.jpg" alt="" title="" />
                 <div class="overlay">
                     <div class="bottom">
@@ -38,10 +38,32 @@
                     </div>
                 </div>
             </div>
-            <div class="actions-pane">
-                <div class="row actions"><div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book</button></div><div class="col-md-4"><button class="map-button"></button></div></div>
+            <div class="row actions actions-pane">
+                <div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book</button></div><div class="col-md-4"><button class="map-button"></button></div>
             </div>
-            <div class="content-pane">
+            <h4>Contact Info</h4>
+            <div class="row contact">
+                <div class="col-5">
+                    <span class="phone"></span><br />
+                    <span class="email"></span>
+                </div>
+                <div class="col-7">
+                    <span class="address"></span><br />
+                    <span class="speakers"></span>
+                </div>
+            </div>
+            <h4>More Info</h4>
+            <div class="row contact">
+                <div class="col-4">
+                    <span class="phone"></span><br />
+                    <span class="email"></span>
+                </div>
+                <div class="col-4">
+                    <span class="address"></span><br />
+                    <span class="speakers"></span>
+                </div>
+            </div>
+            <div class="row content-pane">
                 <div class="content"></div>
             </div>
             <button class="back-button">&nbsp;</button>

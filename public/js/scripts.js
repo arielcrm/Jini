@@ -243,10 +243,15 @@ function drawCutSectors(t, e, i) {
                                         url: '/objects/' + itemId + '/content',
                                         dataType: 'html',
                                         success: function(response) {
+                                            console.log(response);
                                             if (response) {
+                                                $('#sideBar1 .info-pane-1 .contact .phone').html(response.phone);
+                                                $('#sideBar1 .info-pane-1 .contact .email').html(response.email);
+                                                $('#sideBar1 .info-pane-1 .contact .address').html(response);
+                                                $('#sideBar1 .info-pane-1 .contact .speakers').html(response);
                                                 $('#sideBar1 .info-pane-1 .content-pane .content').html(response);
                                             } else {
-                                                $('#sideBar1 .info-pane-1 .content-pane .content').html('');
+                                                $('#sideBar1 .info-pane-1 .content-pane .content').empty();
                                             }
                                         },
                                         complete: function(response) {
@@ -366,6 +371,9 @@ function getTextAngle(num, count) {
         case 8:
             a = 70;
 
+            if (num >=4 && num <= 6) {
+                a = -115;
+            }
 
             break;
         case 9:

@@ -62,7 +62,10 @@ class ObjectController extends Controller {
                     $object['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'thumbnail'));
                 }
 
+                $object['phone'] = ObjectMeta::getValue($object['id'], '_field_phone' );
+                $object['email_address'] = ObjectMeta::getValue($object['id'], '_field_email_address' );
                 $object['address']= ObjectMeta::getValue($object['id'], '_field_address' );
+                $object['french_speakers']= ObjectMeta::getValue($object['id'], '_field_french_speakers' );
 
                 $object['promoted']= ObjectMeta::getValue($object['id'], '_field_promoted' );
 
