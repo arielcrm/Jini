@@ -418,7 +418,7 @@ function addIcons() {
         //var f = document.createElementNS(svgns, "rect");
         //f.setAttribute("fill", "none"), f.setAttribute("stroke", "#111"), f.setAttribute("stroke-width", "1"), f.setAttribute("width", "100%"), f.setAttribute("height", "100%");
 
-        var fontSize = 20;
+        var fontSize = 17;
 
         var p = document.createElementNS(svgns, "text");
 
