@@ -436,13 +436,13 @@ function addIcons() {
 
         var parts = currentMenu[n][0].replace("/", " ").split(" ");
 
-        var dy = -8;
+        var dy = 0;
         for (i = 0; i < parts.length; i++) {
             var part = parts[i];
             var p = document.createElementNS(svgns, "text");
 
             p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", dy + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
-            dy += 8;
+            dy += 10;
 
             c.appendChild(p);
         }
