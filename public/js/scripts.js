@@ -72,7 +72,7 @@ function drawCutSectors(t, e, i) {
             var itemContentImageSrc = this.getAttribute("data-content-image");
             var itemTitle = this.getAttribute("data-title");
 
-            if (!$('.search-results-pane-wrapper').hasClass('collapsed') && !$('.info-pane-wrapper-1').hasClass('collapsed')) {
+            //if (!$('.search-results-pane-wrapper').hasClass('collapsed') && !$('.info-pane-wrapper-1').hasClass('collapsed')) {
                 $(".demo-wrapper").addClass("demo-wrapper-righter-1");
 
                 if (itemFeaturedImageSrc && itemFeaturedImageSrc != 'undefined') {
@@ -121,7 +121,7 @@ function drawCutSectors(t, e, i) {
                         $('#sideBar1 .info-pane').removeClass('preloader');
                     }
                 });
-            }
+            //}
         }, true);
 
         r.addEventListener(clickEvent, function(t) {
@@ -227,9 +227,9 @@ function drawCutSectors(t, e, i) {
                                     }
 
 
-                                    $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
+                                    $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
                                     $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
-                                    $(".demo-wrapper").addClass("demo-wrapper-righter-1");
+                                    $(".demo-wrapper").addClass("demo-wrapper-righter-2");
 
 
                                     $('#sideBar1 .pane-wrapper').removeClass('collapsed');
@@ -258,11 +258,7 @@ function drawCutSectors(t, e, i) {
                                         }
                                     });
                                 });
-
-
-                                $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
-                                $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
-                                $(".demo-wrapper").addClass("demo-wrapper-righter-2");
+                                $('#sideBar1 .search-results-pane-1 #mapFrame').html('<iframe src="/objects/map?categoryid=' + itemId + '" width="1178" height="980" frameBorder="0" scrolling="no"></iframe>');
 
 
                                 $('#sideBar1 .info-pane-wrapper').removeClass('collapsed');
@@ -275,8 +271,9 @@ function drawCutSectors(t, e, i) {
                                 $('#sideBar1 .search-results-pane').find('.criteria').html(itemTitle);
                                 $('#sideBar1 .search-results-pane-wrapper').addClass('collapsed');
 
-                                $('#sideBar1 .search-results-pane-1 #mapFrame').html('<iframe src="/objects/map?categoryid=' + itemId + '" width="1178" height="980" frameBorder="0" scrolling="no"></iframe>');
-
+                                $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
+                                $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
+                                $(".demo-wrapper").addClass("demo-wrapper-righter-3");
 
 //                                $('#sideBar1 .search-results-pane .info-content .content').slimScroll({
 //                                    height: '250px'
@@ -437,15 +434,21 @@ function addIcons() {
 
         var fontSize = 16;
 
-        var p = document.createElementNS(svgns, "text");
-        p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", "10px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = currentMenu[n][0].replace(' / ', '  '. replace(' ', '\r\n'));//n + 1;
+        var parts = currentMenu[n][0].replace("/", " ").split(" ");
 
-        var p1 = document.createElementNS(svgns, "span");
-        p1.textContent = 'adas';
-        p.appendChild(p1);
+        var dy = -8;
+        for (i = 0; i < parts.length; i++) {
+            var part = parts[i];
+            var p = document.createElementNS(svgns, "text");
+
+            p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", dy + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
+            dy += 8;
+
+            c.appendChild(p);
+        }
 
         var d = document.createComment("Replace the contents of this symbol with the content of your icon");
-        c.appendChild(d), c.appendChild(p), symbolsContainer.appendChild(document.createTextNode("    ")), symbolsContainer.appendChild(c), symbolsContainer.appendChild(document.createTextNode("\n\n"))
+        c.appendChild(d), symbolsContainer.appendChild(document.createTextNode("    ")), symbolsContainer.appendChild(c), symbolsContainer.appendChild(document.createTextNode("\n\n"))
     }
 }
 
