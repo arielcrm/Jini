@@ -442,7 +442,7 @@ function addIcons() {
             var p = document.createElementNS(svgns, "text");
 
             p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", dy + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
-            dy += 10;
+            dy += 20;
 
             c.appendChild(p);
         }
