@@ -29,50 +29,64 @@
     </div>
     <div class="info-pane-wrapper-1 pane-wrapper">
         <div class="info-pane-1 pane">
-            <div class="row top-pane">
-                <img class="top-image" src="http://localhost:8007/uploads/d34bb34accca72e3c93c747768f85c51cad1390d.jpg" alt="" title="" />
-                <div class="overlay">
-                    <div class="bottom">
+            <div class="top-pane"></div>
+            <div class="main-pane">
+                <div class="row heading">
+                    <div class="col-md-12">
                         <h2 class="title"></h2>
-                        <span class="address"></span>
+                        <h3 class="occupation"></h3>
+                    </div>
+                </div>
+                <hr />
+                <div class="row actions actions-pane">
+                    <div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book</button></div><div class="col-md-4"><button class="map-button"></button></div>
+                </div>
+                <hr />
+                <div class="row sub-heading">
+                    <div class="col-md-12">
+                        <h3>Contact Info</h3><hr />
+                    </div>
+                </div>
+                <div class="row contact">
+                    <div class="col-md-5">
+                        <span class="phone"></span><br />
+                        <span class="email"></span>
+                    </div>
+                    <div class="col-md-7">
+                        <span class="address"></span><br />
+                        <span class="french_speakers"></span>
+                    </div>
+                </div>
+                <div class="row sub-heading">
+                    <div class="col-md-12">
+                        <h3>More Info</h3><hr />
+                    </div>
+                </div>
+                <div class="row contact">
+                    <div class="col-md-4">
+                        <span class="phone"></span><br />
+                        <span class="email"></span>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="address"></span><br />
+                        <span class="speakers"></span>
+                    </div>
+                </div>
+                <hr />
+                <div class="row content-pane">
+                    <div class="col-md-12">
+                        <div class="content"></div>
                     </div>
                 </div>
             </div>
-            <div class="row actions actions-pane">
-                <div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book</button></div><div class="col-md-4"><button class="map-button"></button></div>
-            </div>
-            <h4>Contact Info</h4>
-            <div class="row contact">
-                <div class="col-5">
-                    <span class="phone"></span><br />
-                    <span class="email"></span>
-                </div>
-                <div class="col-7">
-                    <span class="address"></span><br />
-                    <span class="speakers"></span>
-                </div>
-            </div>
-            <h4>More Info</h4>
-            <div class="row contact">
-                <div class="col-4">
-                    <span class="phone"></span><br />
-                    <span class="email"></span>
-                </div>
-                <div class="col-4">
-                    <span class="address"></span><br />
-                    <span class="speakers"></span>
-                </div>
-            </div>
-            <div class="row content-pane">
-                <div class="content"></div>
-            </div>
-            <button class="back-button">&nbsp;</button>
+            <button class="back-button">Back to list view</button>
+            <button class="close-button">&nbsp;</button>
         </div>
     </div>
     <div class="search-criteria-pane-wrapper pane-wrapper">
         <div class="search-criteria-pane pane">
             <h2 class="title">Filter results in <span class="criteria"></span></h2>
-            <button class="back-button">&nbsp;</button>
+            <button class="close-button">&nbsp;</button>
             <ul class="view-mode">
                 <li>
                     <button class="map-view-button"></button>
@@ -89,13 +103,13 @@
             <div class="info-content">
                 <div class="content"></div>
             </div>
-            <button class="back-button">&nbsp;</button>
+            <button class="close-button">&nbsp;</button>
         </div>
     </div>
     <div class="search-results-pane-wrapper-1 pane-wrapper">
         <div class="search-results-pane-1 pane">
             <div id="mapFrame"></div>
-            <button class="back-button">&nbsp;</button>
+            <button class="close-button">&nbsp;</button>
         </div>
     </div>
 </div>
@@ -304,13 +318,13 @@
                 position: 'right'
             });
 
-            $('#sideBar1 .info-pane-1 .content-pane').slimScroll({
-                height: '500px',
+            $('#sideBar1 .info-pane-1 .main-pane').slimScroll({
+                height: '700px',
                 alwaysVisible: 'true',
                 color: '#d3d3d3',
                 size: '8px',
                 opacity: 1,
-                position: 'right'
+                position: 'left'
             });
         });
 
@@ -440,18 +454,18 @@
                 //$('#sideBar1 .info-pane-wrapper').removeClass('collapsed');
             });
 
-            $('#sideBar1 .pane-wrapper .back-button').on('click', function(e) {
+            $('#sideBar1 .pane-wrapper .close-button').on('click', function(e) {
                 $('.demo-wrapper').removeClass('demo-wrapper-righter');
                 $(this).closest('.pane-wrapper').removeClass('collapsed');
             });
 
-            $('#sideBar1 .search-results-pane .back-button').on('click', function(e) {
+            $('#sideBar1 .search-results-pane .close-button').on('click', function(e) {
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
             });
 
-            $('#sideBar1 .search-results-pane-1 .back-button').on('click', function(e) {
+            $('#sideBar1 .search-results-pane-1 .close-button').on('click', function(e) {
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
