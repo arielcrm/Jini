@@ -434,8 +434,13 @@ function addIcons() {
 
         var fontSize = 16;
 
-        var parts = currentMenu[n][0].replace("/", " ").split(" ");
+        var menuText = currentMenu[n][0].replace("/", " ");
 
+        while (menuText.indexOf('  ') != -1) {
+            menuText = menuText.replace("  ", " ");
+        }
+
+        var parts = menuText.split(" ");
         var dy = 0;
         for (i = 0; i < parts.length; i++) {
             var part = parts[i];
