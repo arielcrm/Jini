@@ -64,11 +64,13 @@ function drawCutSectors(t, e, i) {
         var z = m[1];
         var tt = m[0];
 
+        var imgTempforeignObject = document.createElement("foreignObject");
         var imgTemp = document.createElement("img");
 
         if (typeof m[1] !== "undefined") {
             imgTemp.setAttribute("src", m[1]);
-            itemsContainer.appendChild(imgTemp);
+            imgTempforeignObject.appendChild(imgTemp);
+            itemsContainer.appendChild(imgTempforeignObject);
         }
 
 

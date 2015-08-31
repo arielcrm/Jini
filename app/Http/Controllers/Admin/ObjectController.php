@@ -483,6 +483,8 @@ class ObjectController extends AdminController {
             if ($imageObjectId = $object->getValue('_content_image')) {
                 $contentImage = getImageSrc($imageObjectId, 'thumbnail');
             }
+
+            //d
         }
 
         return view('admin.object.create_edit', compact('object', 'fields', 'values', 'fieldControls', 'featuredImage', 'contentImage'));
