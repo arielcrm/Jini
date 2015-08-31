@@ -28,8 +28,17 @@ class CategoryController extends Controller {
             }
 
             if ($featuredImageId = ObjectMeta::getValue($category->id, '_featured_image')) {
-                if ($featuredImageUrl = getImageSrc($featuredImageId, 'medium')) {
+                if ($featuredImageUrl = getImageSrc($featuredImageId, 'small')) {
                     $category['featuredImageUrl'] = '/uploads/' . $featuredImageUrl;
+
+
+//                    $path = __DIR__ . '/../../../public/uploads/' . $featuredImageUrl;
+//                    echo $path . '<br />' . file_exists($path) . '<br />';
+//                    if (file_exists($path)) {
+//                        $type = pathinfo($path, PATHINFO_EXTENSION);
+//                        $data = file_get_contents($path);
+//                        $category['featuredImageUrl'] = base64_encode($data);
+//                    }
                 }
             }
 
