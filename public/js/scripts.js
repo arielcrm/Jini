@@ -352,6 +352,9 @@ function getTextAngle(num, count) {
     var a = 30;
     
     switch ( count ) {
+        case 2:
+            a = 0;
+            break;
         case 3:
             a = 30;
             break;
@@ -422,7 +425,7 @@ function addIcons() {
             h = document.createElementNS(svgns, "circle");
         h.setAttribute("cx", l.x), h.setAttribute("cy", l.y), h.setAttribute("r", "5");
         var u = document.createElementNS(svgns, "use");
-        u.setAttributeNS(xlinkns, "xlink:href", "#icon-" + (n + 1)), u.setAttribute("width", iconWidth), u.setAttribute("height", iconHeight), u.setAttribute("x", l.x - u.getAttribute("width") / 2), u.setAttribute("y", l.y - u.getAttribute("height") / 2), u.setAttribute("transform", "rotate(" + getTextAngle(n + 1, t.length) + " " + l.x + " " + l.y + ")"), r.appendChild(u);
+        u.setAttributeNS(xlinkns, "xlink:href", "#icon-" + (n + 1)), u.setAttribute("width", iconWidth), u.setAttribute("height", iconHeight), u.setAttribute("x", l.x - u.getAttribute("width") / 2), u.setAttribute("y", l.y - u.getAttribute("height") / 2), r.appendChild(u);
         var c = document.createElementNS(svgns, "symbol");
         c.setAttribute("class", "icon icon-"), c.setAttribute("id", "icon-" + (n + 1)), c.setAttribute("viewBox", "0 0 " + iconWidth + " " + iconHeight);
 
@@ -447,7 +450,8 @@ function addIcons() {
             var p = document.createElementNS(svgns, "text");
 
             p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", dy + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
-            dy += 20;
+            p.setAttribute("transform", "rotate(" + getTextAngle(n + 1, t.length) + " " + l.x + " " + l.y + ")"),
+                dy += 20;
 
             c.appendChild(p);
         }
