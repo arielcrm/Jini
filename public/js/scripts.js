@@ -419,7 +419,7 @@ function getTextAngle(num, count) {
             }
             break;
         case 8:
-            a = 70;
+            a = 67;
 
             if (num >=4 && num <= 6) {
                 a = -115;
@@ -427,7 +427,7 @@ function getTextAngle(num, count) {
 
             break;
         case 9:
-            a = 75;
+            a = 70;
 
             if (num >=4 && num <= 7) {
                 a = -115;
@@ -435,10 +435,10 @@ function getTextAngle(num, count) {
 
             break;
         case 10:
-            a = 95;
+            a = 72;
 
             if (num >=4 && num <= 7) {
-                a = -115;
+                a = -109;
             }
 
             break;
@@ -477,6 +477,18 @@ function addIcons() {
         //f.setAttribute("fill", "none"), f.setAttribute("stroke", "#111"), f.setAttribute("stroke-width", "1"), f.setAttribute("width", "100%"), f.setAttribute("height", "100%");
 
         var fontSize = 16;
+
+        switch (t.length) {
+            case 8:
+                fontSize = 16;
+                break;
+            case 9:
+                fontSize = 14;
+                break;
+            case 10:
+                fontSize = 14;
+                break;
+        }
 
         var menuText = currentMenu[n][0].replace("/", " ");
 
@@ -539,13 +551,13 @@ function init() {
             rotation = -65;
             break;
         case 8:
-            rotation = -70;
+            rotation = -67;
             break;
         case 9:
-            rotation = -75;
+            rotation = -70;
             break;
         case 10:
-            rotation = -80;
+            rotation = -71;
             break;
     }
 
