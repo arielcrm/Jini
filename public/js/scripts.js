@@ -158,8 +158,10 @@ function drawCutSectors(t, e, i) {
                 var itemsCount = this.getAttribute("data-items-count");
                 var itemTitle = this.getAttribute("data-title");
 
+                if (categoryRequest) { categoryRequest.abort(); }
+
                 if (categoriesCount > 0) {
-                    $.ajax({
+                    categoryRequest = $.ajax({
                         url: '/categories/' + itemId,
                         dataType: 'json',
                         success: function(response) {
@@ -192,7 +194,7 @@ function drawCutSectors(t, e, i) {
                         }
                     });
                 } else {
-                    $.ajax({
+                    categoryRequest = $.ajax({
                         url: '/objects/search?categoryid=' + itemId,
                         dataType: 'json',
                         success: function(response) {
@@ -270,7 +272,8 @@ function drawCutSectors(t, e, i) {
                                     $('#sideBar1 .info-pane-1 .contact .address').html(response.address_street + ' ' + response.city);
                                     $('#sideBar1 .info-pane-1 .contact .speakers').html(response);
 
-                                    $.ajax({
+                                    if (categoryRequest) { categoryRequest.abort(); }
+                                    categoryRequest = $.ajax({
                                         url: '/objects/' + itemId + '/content',
                                         dataType: 'html',
                                         success: function(response) {
