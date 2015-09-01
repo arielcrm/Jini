@@ -55,11 +55,11 @@
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
     <input name="dd" type="file" class="uploader" id="dd" value="Upload" />
     <button type="submit" class="btn btn-sm btn-success">
-        <span class="glyphicon glyphicon-ok-circle"></span>
+        <span class="glyphicon glyphicon-import"></span>
         @if	(isset($object))
         {{ trans("admin/modal.edit") }}
         @else
-        {{trans("admin/modal.create") }}
+        {{ trans("admin/admin.import") }}
         @endif
     </button>
 </form>
