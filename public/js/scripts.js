@@ -518,7 +518,7 @@ function init() {
         case 9:
             rotation = -75;
             break;
-        case 9:
+        case 10:
             rotation = -80;
             break;
     }
