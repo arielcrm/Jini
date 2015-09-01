@@ -64,7 +64,7 @@ function drawCutSectors(t, e, i) {
         var z = m[1];
         var tt = m[0];
 
-        conolse.log(m);
+        console.log(m);
 
 
         if (typeof m[1] !== "undefined") {
