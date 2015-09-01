@@ -411,6 +411,14 @@ function getTextAngle(num, count) {
             }
 
             break;
+        case 10:
+            a = 80;
+
+            if (num >=4 && num <= 7) {
+                a = -115;
+            }
+
+            break;
     }
 
     return a;
@@ -510,7 +518,9 @@ function init() {
         case 9:
             rotation = -75;
             break;
-
+        case 9:
+            rotation = -80;
+            break;
     }
 
     if (rotation) {
