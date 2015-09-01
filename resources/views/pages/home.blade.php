@@ -121,7 +121,7 @@
 </div>
 <div class="container">
     <div class="demo-wrapper">
-        <a href="#" id="homeLink" class="back-button">&nbsp;</a>
+        <button id="backButton" class="back-button"></button>
         <div id="demo">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-2 -2 504 504" id="menu">
                 <style>
@@ -365,7 +365,7 @@
         }
 
         $(function() {
-            $('#homeLink').on('click', function(e) {
+            $('#backButton').on('click', function(e) {
                 if (e.button == 0) {
                     $.ajax({
                         url: '/categories',

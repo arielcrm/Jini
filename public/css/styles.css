@@ -908,7 +908,7 @@ blockquote {
     width: 537px;
     height: 325px;
     background-repeat: no-repeat;
-    background-position: 50%;
+    background-position: top center;
     background-size: contain;
 }
 .side-bar-1 .info-pane.no-content-image .top-pane {
