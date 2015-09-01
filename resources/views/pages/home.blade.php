@@ -17,12 +17,14 @@
     </nav>
     <div class="info-pane-wrapper pane-wrapper">
         <div class="info-pane pane">
-            <div class="top-image-wrapper">
-                <img class="top-image" src="" alt="" title="" />
-            </div>
-            <div class="info-content">
-                <h2 class="title"></h2>
-                <div class="content"></div>
+            <div class="top-pane"></div>
+            <div class="main-pane">
+                <div class="row heading">
+                    <div class="col-md-12">
+                        <h2 class="title"></h2>
+                    </div>
+                    <div class="content"></div>
+                </div>
             </div>
             <button class="back-button">&nbsp;</button>
         </div>
@@ -316,6 +318,15 @@
                 size: '8px',
                 opacity: 1,
                 position: 'right'
+            });
+
+            $('#sideBar1 .info-pane .main-pane').slimScroll({
+                height: '700px',
+                alwaysVisible: 'true',
+                color: '#d3d3d3',
+                size: '8px',
+                opacity: 1,
+                position: 'left'
             });
 
             $('#sideBar1 .info-pane-1 .main-pane').slimScroll({
