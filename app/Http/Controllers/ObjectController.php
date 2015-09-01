@@ -55,11 +55,11 @@ class ObjectController extends Controller {
 
             foreach ($objects as $object) {
                 if ($featuredImageId = ObjectMeta::getValue($object['id'], '_featured_image')) {
-                    $object['featured_image']  = Url('/uploads/' . getImageSrc($featuredImageId, 'thumbnail'));
+                    $object['featured_image']  = Url('/uploads/' . getImageSrc($featuredImageId, 'small'));
                 }
 
                 if ($contentImageId = ObjectMeta::getValue($object['id'], '_content_image')) {
-                    $object['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'thumbnail'));
+                    $object['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'small'));
                 }
 
                 $object['excerpt'] = strlen($object['excerpt']) > 50 ? substr($object['excerpt'], 1, 50) . '...' : $object['excerpt'];
