@@ -56,6 +56,7 @@ function drawPizzaSectors(t, e) {
 }
 
 var categoryRequest = null;
+var objectRequest = null;
 
 function drawCutSectors(t, e, i) {
     if (currentMenu.length > 0) {
@@ -194,7 +195,8 @@ function drawCutSectors(t, e, i) {
                         }
                     });
                 } else {
-                    categoryRequest = $.ajax({
+                    if (objectRequest) { objectRequest.abort(); }
+                    objectRequest = $.ajax({
                         url: '/objects/search?categoryid=' + itemId,
                         dataType: 'json',
                         success: function(response) {
@@ -272,8 +274,8 @@ function drawCutSectors(t, e, i) {
                                     $('#sideBar1 .info-pane-1 .contact .address').html(response.address_street + ' ' + response.city);
                                     $('#sideBar1 .info-pane-1 .contact .speakers').html(response);
 
-                                    if (categoryRequest) { categoryRequest.abort(); }
-                                    categoryRequest = $.ajax({
+                                    if (objectRequest) { objectRequest.abort(); }
+                                    objectRequest = $.ajax({
                                         url: '/objects/' + itemId + '/content',
                                         dataType: 'html',
                                         success: function(response) {
