@@ -22,7 +22,7 @@ class CategoryController extends Controller {
 
         foreach ($categories as $category) {
             if ($contentImageId = ObjectMeta::getValue($category->id, '_content_image')) {
-                if ($contentImageUrl = getImageSrc($contentImageId, 'medium') ) {
+                if ($contentImageUrl = getImageSrc($contentImageId, 'small') ) {
                     $category['contentImageUrl'] = '/uploads/' . $contentImageUrl;
                 }
             }
