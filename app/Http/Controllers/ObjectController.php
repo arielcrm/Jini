@@ -105,7 +105,7 @@ class ObjectController extends Controller {
                         );
 
                         if ($contentImageId = ObjectMeta::getValue($result['id'], '_content_image')) {
-                            $location['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'thumbnail'));
+                            $location['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'medium'));
                         } else {
                             $location['content_image'] = '';
                         }

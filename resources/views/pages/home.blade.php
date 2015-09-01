@@ -379,6 +379,11 @@
                             nbOfSlices = currentMenu.length;
 
                             init();
+
+                            $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
+                            $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
+                            $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
+                            $('#sideBar1 .pane-wrapper').removeClass('collapsed');
                         }
                     });
 
