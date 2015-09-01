@@ -249,9 +249,5 @@
     @include('flash::message')
     @yield('content')
     @include('partials.footer')
-</div>
-
-
-
 </body>
 </html>

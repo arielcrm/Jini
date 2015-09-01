@@ -19,6 +19,29 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw"></script>
 
+
+    <link href="{{ elixir('css/site.css') }}" rel="stylesheet">
+
+    {{-- TODO: Incorporate into elixer workflow. --}}
+    {{--<link rel="stylesheet"--}}
+    {{--href="{{asset('assets/site/css/half-slider.css')}}">--}}
+    {{--<link rel="stylesheet"--}}
+    {{--href="{{asset('assets/site/css/justifiedGallery.min.css')}}"/>--}}
+    {{--<link rel="stylesheet"--}}
+    {{--href="{{asset('assets/site/css/lightbox.min.css')}}"/>--}}
+
+    @yield('styles')
+
+    <script src="/js/libs/detectizr.js"></script>
+
+    @yield('scripts')
+
+    <script src="/js/typeahead.bundle.js"></script>
+
+    <script type="text/javascript" src="/js/libs/jquery.slimscroll.min.js"></script>
+
+
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -31,6 +54,78 @@
             margin: 0;
             padding: 0;
         }
+
+        button {
+            display: block;
+            border: 0;
+            background: 0;
+            outline: 0;
+        }
+
+        /* Map Pupup */
+        .marker-popup {
+            width: 512px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .marker-popup:not(.no-content-image) .top-pane {
+            position: relative;
+            width: 512px;
+            height: 264px;
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-size: cover;
+        }
+        .marker-popup.no-content-image .top-pane {
+            display: none;
+        }
+        .marker-popup:not(.no-content-image) .slimScrollDiv {
+        }
+        .marker-popup .main-pane {
+            padding: 15px 30px;
+        }
+        .marker-popup .main-pane .actions-pane {
+            margin: 20px 0 0 0;
+        }
+
+        .marker-popup h2 {
+            margin: 0 0 5px 0;
+            padding: 0;
+            font-family: 'BodoniBT-Roman';
+            font-weight: bold;
+            font-size: 2.5em;
+        }
+        .marker-popup p {
+            font-size: 1.250em;
+            line-height: 30px;
+        }
+
+        .marker-popup .address {
+            background: url('../img/icons/pin_black.png') no-repeat left center;
+            padding: 0 0 0 26px;
+            height: 25px;
+            white-space: nowrap;
+            display: block;
+        }
+
+        .marker-popup .actions .book-button {
+            background: url('../img/icons/credit_card_black.png') no-repeat left center;
+            padding: 0 0 0 45px;
+            height: 25px;
+            font-size: 1.125em;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .gm-style-iw {
+            width: 512px !important;
+            top: 0 !important;
+            left: 0 !important;
+            background-color: #fff;
+            box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+            border: 1px solid rgba(72, 181, 233, 0.6);
+            border-radius: 2px 2px 0 0;
+        }
+
     </style>
 
 </head>
@@ -117,10 +212,30 @@
                 return;
             var infowindow = new google.maps.InfoWindow({
                 content: info,
-                maxWidth: 200
+                maxWidth: 512,
+                height: 264
             });
             google.maps.event.addListener(marker, 'click', function() {
                 infowindow.open(this.map, marker);
+            });
+
+            google.maps.event.addListener(infowindow, 'domready', function() {
+
+                // Reference to the DIV which receives the contents of the infowindow using jQuery
+                var iwOuter = $('.gm-style-iw');
+
+                /* The DIV we want to change is above the .gm-style-iw DIV.
+                 * So, we use jQuery and create a iwBackground variable,
+                 * and took advantage of the existing reference to .gm-style-iw for the previous DIV with .prev().
+                 */
+                var iwBackground = iwOuter.prev();
+
+                // Remove the background shadow DIV
+                iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+                // Remove the white background DIV
+                iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
             });
         }
         var map_canvas = document.getElementById('map_canvas_1');
@@ -145,6 +260,8 @@
 //        });
 
 
+
+
         $(function() {
             $.ajax({
                 url: '/objects/locations{{{ $criteria }}}',
@@ -167,9 +284,26 @@
                                 }
 
                                 var html = '<div class="marker-popup">' +
-                                    '<div class="marker-popup-top">' +
-                                    ( data.content_image ? '<img src="' + data.content_image + '" alt="" title="" />' : '' )
-                                    '</div>';
+                                                '<div class="top-pane" style="background-image: url(' + data.content_image + ');"></div>' +
+                                                '   <div class="main-pane">' +
+                                                '       <div class="row heading">' +
+                                                '           <div class="col-md-12">' +
+                                                '               <h2 class="title">' + data.title + '</h2>' +
+                                                '           </div>' +
+                                                '       </div>' +
+                                                '       <div class="row heading">' +
+                                                '           <div class="col-md-12">' +
+                                                '               <div class="content">' + data.excerpt + '</div>' +
+                                                '           </div>' +
+                                                '       </div>' +
+                                                '       <div class="row actions actions-pane">' +
+                                                '           <div class="pull-left"><span class="address">' + data.address_street + ' ' + data.address_city + '</span></div>' +
+                                                '           <div class="pull-right"><button class="book-button">Book</button></div>' +
+                                                '       </div>' +
+                                                '   </div>' +
+                                                '   <button class="close-button"></button>' +
+                                                '</div>' +
+                                            '</div>';
 
                                 setMarker(new google.maps.LatLng(data.geo_latitude, data.geo_longitude), html, iconUrl);
                             }

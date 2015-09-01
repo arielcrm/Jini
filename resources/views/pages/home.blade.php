@@ -48,6 +48,12 @@
                     <div class="col-md-4"><button class="wishlist-button">Add to wishlist</button></div><div class="col-md-4"><button class="book-button">Book</button></div><div class="col-md-4"><button class="map-button"></button></div>
                 </div>
                 <hr />
+                <div class="row content-pane">
+                    <div class="col-md-12">
+                        <div class="content"></div>
+                    </div>
+                </div>
+                <hr />
                 <div class="row sub-heading">
                     <div class="col-md-12">
                         <h3>Contact Info</h3><hr />
@@ -76,12 +82,6 @@
                     <div class="col-md-4">
                         <span class="address"></span><br />
                         <span class="speakers"></span>
-                    </div>
-                </div>
-                <hr />
-                <div class="row content-pane">
-                    <div class="col-md-12">
-                        <div class="content"></div>
                     </div>
                 </div>
             </div>
@@ -325,7 +325,7 @@
             });
 
             $('#sideBar1 .info-pane .main-pane').slimScroll({
-                height: '700px',
+                height: '560px',
                 alwaysVisible: 'true',
                 color: '#d3d3d3',
                 size: '8px',
@@ -334,7 +334,7 @@
             });
 
             $('#sideBar1 .info-pane-1 .main-pane').slimScroll({
-                height: '700px',
+                height: '560px',
                 alwaysVisible: 'true',
                 color: '#d3d3d3',
                 size: '8px',
