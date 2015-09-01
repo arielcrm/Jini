@@ -55,6 +55,8 @@ function drawPizzaSectors(t, e) {
     }
 }
 
+var categoryRequest = null;
+
 function drawCutSectors(t, e, i) {
     if (currentMenu.length > 0) {
     for (var n = 0; nbOfSlices > n; n++) {
@@ -131,7 +133,8 @@ function drawCutSectors(t, e, i) {
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
                 $(".demo-wrapper").addClass("demo-wrapper-righter-1");
 
-                $.ajax({
+                if (categoryRequest) { categoryRequest.abort(); }
+                categoryRequest = $.ajax({
                     url: '/categories/' + itemId + '/content',
                     dataType: 'html',
                     success: function(response) {
