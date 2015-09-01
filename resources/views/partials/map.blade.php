@@ -205,7 +205,7 @@
             if (infowindow) {
                 infowindow.close();
             }
-            var infowindow = new google.maps.InfoWindow({
+            infowindow = new google.maps.InfoWindow({
                 content: info,
                 maxWidth: 512,
                 height: 264
