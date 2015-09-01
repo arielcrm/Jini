@@ -66,24 +66,27 @@ function drawCutSectors(t, e, i) {
 
         console.log(m);
 
+        var imgTempforeignObject = document.createElement("foreignObject");
 
         if (typeof m[1] !== "undefined") {
-            var imgTempforeignObject = document.createElement("foreignObject");
             var imgTemp = document.createElement("img");
 
             imgTemp.setAttribute("src", m[1]);
+
             imgTempforeignObject.appendChild(imgTemp);
-            itemsContainer.appendChild(imgTempforeignObject);
         }
 
         if (typeof m[4] !== "undefined") {
-            var imgTempforeignObject1 = document.createElement("foreignObject");
-            var imgTemp1 = document.createElement("img");
+            var imgTemp = document.createElement("img");
 
-            imgTemp1.setAttribute("src", m[4]);
-            imgTempforeignObject1.appendChild(imgTemp1);
-            itemsContainer.appendChild(imgTempforeignObject1);
+            imgTemp.setAttribute("src", m[4]);
+
+            imgTempforeignObject.appendChild(imgTemp);
         }
+
+
+        itemsContainer.appendChild(imgTempforeignObject);
+
 
 
         r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute('data-children-count', m[5]), r.setAttribute('data-items-count', m[6]),  r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-featured-image", m[1]), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
