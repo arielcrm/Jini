@@ -237,7 +237,7 @@
                     iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
                     // Moves the infowindow 115px to the right.
-                    iwOuter.parent().parent().css({left: '115px'});
+                    iwOuter.parent().parent().css({ top: '15px', left: '195px'});
 
                     // Moves the shadow of the arrow 76px to the left margin.
                     iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
