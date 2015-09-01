@@ -908,7 +908,7 @@ blockquote {
     width: 537px;
     height: 325px;
     background-repeat: no-repeat;
-    background-position: 50%;
+    background-size: auto 100%;
     background-size: cover;
 }
 .side-bar-1 .info-pane.no-content-image .top-pane {
@@ -926,7 +926,6 @@ blockquote {
     font-family: 'BodoniBT-Roman';
     font-weight: bold;
     font-size: 2.5em;
-    color: #fff;
 }
 .side-bar-1 .info-pane p {
     font-size: 1.250em;
