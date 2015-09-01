@@ -80,8 +80,8 @@ function drawCutSectors(t, e, i) {
             var imgTempforeignObject1 = document.createElement("foreignObject");
             var imgTemp1 = document.createElement("img");
 
-            imgTemp.setAttribute("src", m[4]);
-            imgTempforeignObject.appendChild(imgTemp1);
+            imgTemp1.setAttribute("src", m[4]);
+            imgTempforeignObject1.appendChild(imgTemp1);
             itemsContainer.appendChild(imgTempforeignObject1);
         }
 
