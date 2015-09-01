@@ -186,6 +186,8 @@
         }, {}];
 
 
+        var infowindow = null;
+
         function setMarker(location, info, iconUrl) {
             var marker = new google.maps.Marker({
                 map: map,
@@ -200,6 +202,9 @@
             //this.map.setCenter(marker.getPosition());
             if (info == "" || typeof info == 'undefined')
                 return;
+            if (infowindow) {
+                infowindow.close();
+            }
             var infowindow = new google.maps.InfoWindow({
                 content: info,
                 maxWidth: 512,
@@ -227,6 +232,15 @@
                 iwBackground.children(':nth-child(4)').css({'display' : 'none'});
 
             });
+
+//            google.maps.event.addListener(marker, 'mouseover', function() {
+//                infowindow.open(map, this);
+//            });
+//
+//// assuming you also want to hide the infowindow when user mouses-out
+//            google.maps.event.addListener(marker, 'mouseout', function() {
+//                infowindow.close();
+//            });
         }
         var map_canvas = document.getElementById('map_canvas_1');
         var map_options = {
