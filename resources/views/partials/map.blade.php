@@ -287,7 +287,7 @@
                                     iconUrl = '/img/icons/map_pin_xs.png';
                                 }
 
-                                var html = '<div class="marker-popup">' +
+                                var html = '<div class="marker-popup' + (!data.content_image ? ' no-content-image' : '') +'">' +
                                                 '<div class="top-pane" style="background-image: url(' + data.content_image + ');"></div>' +
                                                 '   <div class="main-pane">' +
                                                 '       <div class="row heading">' +
