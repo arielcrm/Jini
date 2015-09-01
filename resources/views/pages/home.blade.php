@@ -23,7 +23,11 @@
                     <div class="col-md-12">
                         <h2 class="title"></h2>
                     </div>
-                    <div class="content"></div>
+                </div>
+                <div class="row heading">
+                    <div class="col-md-12">
+                        <div class="content"></div>
+                    </div>
                 </div>
             </div>
             <button class="back-button">&nbsp;</button>
