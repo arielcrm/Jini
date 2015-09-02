@@ -67,26 +67,26 @@ function drawCutSectors(t, e, i) {
         var z = m[1];
         var tt = m[0];
 
-        //var imgTempforeignObject = document.createElement("foreignObject");
+        var imgTempforeignObject = document.createElement("foreignObject");
 
-//        if (typeof m[1] !== "undefined") {
-//            var imgTemp = document.createElement("img");
-//
-//            imgTemp.setAttribute("src", m[1]);
-//
-//            imgTempforeignObject.appendChild(imgTemp);
-//        }
+        if (typeof m[1] !== "undefined") {
+            var imgTemp = document.createElement("img");
 
-//        if (typeof m[4] !== "undefined") {
-//            var imgTemp = document.createElement("img");
-//
-//            imgTemp.setAttribute("src", m[4]);
-//
-//            imgTempforeignObject.appendChild(imgTemp);
-//        }
+            imgTemp.setAttribute("src", m[1]);
+
+            imgTempforeignObject.appendChild(imgTemp);
+        }
+
+        if (typeof m[4] !== "undefined") {
+            var imgTemp = document.createElement("img");
+
+            imgTemp.setAttribute("src", m[4]);
+
+            imgTempforeignObject.appendChild(imgTemp);
+        }
 
 
-        //itemsContainer.appendChild(imgTempforeignObject);
+        itemsContainer.appendChild(imgTempforeignObject);
 
 
 
