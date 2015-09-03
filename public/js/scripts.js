@@ -101,7 +101,6 @@ function drawCutSectors(t, e, i) {
             var currentItemId = $('#sideBar1 .info-pane').attr('data-id');
 
             if (typeof currentItemId == 'undefined' || currentItemId != itemId)   {
-                alert($('#sideBar1 .info-pane').attr('data-id'));
                 $('#sideBar1 .info-pane').attr('data-id', itemId);
                 //if (!$('.search-results-pane-wrapper').hasClass('collapsed') && !$('.info-pane-wrapper-1').hasClass('collapsed')) {
                     $(".demo-wrapper").addClass("demo-wrapper-righter-1");
