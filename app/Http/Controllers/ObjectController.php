@@ -76,7 +76,7 @@ class ObjectController extends Controller {
 
                 $object['french_speakers']= ObjectMeta::getValue($object['id'], '_field_french_speakers' );
 
-                $object['promoted']= ObjectMeta::getValue($object['id'], '_field_promoted' );
+                //$object['promoted']= ObjectMeta::getValue($object['id'], '_field_promoted' );
             }
         }
 
