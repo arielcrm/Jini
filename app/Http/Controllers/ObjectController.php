@@ -62,19 +62,19 @@ class ObjectController extends Controller {
                     $object['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'medium'));
                 }
 
-                $object['excerpt'] = strlen($object['excerpt']) > 50 ? substr($object['excerpt'], 1, 50) . '...' : $object['excerpt'];
-
-                $object['phone'] = ObjectMeta::getValue($object['id'], '_field_phone' );
-                $object['email'] = ObjectMeta::getValue($object['id'], '_field_email' );
-                $object['occupation']= ObjectMeta::getValue($object['id'], '_field_occupation' );
-                $object['address']= ObjectMeta::getValue($object['id'], '_field_address' );
-                $object['address_location_g']= ObjectMeta::getValue($object['id'], '_field_address-location-g' );
-                $object['address_location_k']= ObjectMeta::getValue($object['id'], '_field_address-location-k' );
-                $object['address_street']= ObjectMeta::getValue($object['id'], '_field_address-address' );
-                $object['address_city']= ObjectMeta::getValue($object['id'], '_field_address-city' );
-                $object['address_country']= ObjectMeta::getValue($object['id'], '_field_address-country' );
-
-                $object['french_speakers']= ObjectMeta::getValue($object['id'], '_field_french_speakers' );
+//                $object['excerpt'] = strlen($object['excerpt']) > 50 ? substr($object['excerpt'], 1, 50) . '...' : $object['excerpt'];
+//
+//                $object['phone'] = ObjectMeta::getValue($object['id'], '_field_phone' );
+//                $object['email'] = ObjectMeta::getValue($object['id'], '_field_email' );
+//                $object['occupation']= ObjectMeta::getValue($object['id'], '_field_occupation' );
+//                $object['address']= ObjectMeta::getValue($object['id'], '_field_address' );
+//                $object['address_location_g']= ObjectMeta::getValue($object['id'], '_field_address-location-g' );
+//                $object['address_location_k']= ObjectMeta::getValue($object['id'], '_field_address-location-k' );
+//                $object['address_street']= ObjectMeta::getValue($object['id'], '_field_address-address' );
+//                $object['address_city']= ObjectMeta::getValue($object['id'], '_field_address-city' );
+//                $object['address_country']= ObjectMeta::getValue($object['id'], '_field_address-country' );
+//
+//                $object['french_speakers']= ObjectMeta::getValue($object['id'], '_field_french_speakers' );
 
                 //$object['promoted']= ObjectMeta::getValue($object['id'], '_field_promoted' );
             }
