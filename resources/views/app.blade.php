@@ -38,7 +38,7 @@
 
     <!-- Fonts -->
 <!--    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>-->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?language=iw&libraries=places"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -249,9 +249,5 @@
     @include('flash::message')
     @yield('content')
     @include('partials.footer')
-</div>
-
-
-
 </body>
 </html>

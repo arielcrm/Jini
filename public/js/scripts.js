@@ -67,8 +67,6 @@ function drawCutSectors(t, e, i) {
         var z = m[1];
         var tt = m[0];
 
-        console.log(m);
-
         var imgTempforeignObject = document.createElement("foreignObject");
 
         if (typeof m[1] !== "undefined") {
@@ -134,10 +132,11 @@ function drawCutSectors(t, e, i) {
                 $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
                 $(".demo-wrapper").addClass("demo-wrapper-righter-1");
 
-                if (categoryRequest) { categoryRequest.abort(); }
+                //if (categoryRequest) { categoryRequest.abort(); }
                 categoryRequest = $.ajax({
                     url: '/categories/' + itemId + '/content',
                     dataType: 'html',
+                    async: true,
                     success: function(response) {
                         if (response) {
                             $('#sideBar1 .info-pane .content').html(response);
@@ -159,7 +158,7 @@ function drawCutSectors(t, e, i) {
                 var itemsCount = this.getAttribute("data-items-count");
                 var itemTitle = this.getAttribute("data-title");
 
-                if (categoryRequest) { categoryRequest.abort(); }
+                //if (categoryRequest) { categoryRequest.abort(); }
 
                 if (categoriesCount > 0) {
                     categoryRequest = $.ajax({
@@ -195,8 +194,9 @@ function drawCutSectors(t, e, i) {
                         }
                     });
                 } else {
-                    if (objectRequest) { objectRequest.abort(); }
+                    //if (objectRequest) { objectRequest.abort(); }
                     objectRequest = $.ajax({
+                        async: true,
                         url: '/objects/search?categoryid=' + itemId,
                         dataType: 'json',
                         success: function(response) {
@@ -274,8 +274,9 @@ function drawCutSectors(t, e, i) {
                                     $('#sideBar1 .info-pane-1 .contact .address').html(response.address_street + ' ' + response.city);
                                     $('#sideBar1 .info-pane-1 .contact .speakers').html(response);
 
-                                    if (objectRequest) { objectRequest.abort(); }
+                                    //if (objectRequest) { objectRequest.abort(); }
                                     objectRequest = $.ajax({
+                                        async: true,
                                         url: '/objects/' + itemId + '/content',
                                         dataType: 'html',
                                         success: function(response) {

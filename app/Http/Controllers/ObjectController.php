@@ -110,6 +110,11 @@ class ObjectController extends Controller {
                             $location['content_image'] = '';
                         }
 
+                        $location['address_street']= ObjectMeta::getValue($result['id'], '_field_address-address' );
+                        $location['address_city']= ObjectMeta::getValue($result['id'], '_field_address-city' );
+                        $location['address_country']= ObjectMeta::getValue($result['id'], '_field_address-country' );
+
+
                         $location['promoted'] = ObjectMeta::getValue($result['id'], '_field_promoted' );
 
                         $data[] = $location;
