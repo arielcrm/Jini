@@ -62,7 +62,7 @@ class ObjectController extends Controller {
                     $object['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'medium'));
                 }
 
-                //$object['excerpt'] = strlen($object['excerpt']) > 50 ? substr($object['excerpt'], 1, 50) . '...' : $object['excerpt'];
+                $object['excerpt'] = htmlentities( strlen($object['excerpt']) > 50 ? substr($object['excerpt'], 1, 50) . '...' : $object['excerpt'] );
 
                 $object['phone'] = ObjectMeta::getValue($object['id'], '_field_phone' );
                 $object['email'] = ObjectMeta::getValue($object['id'], '_field_email' );
