@@ -101,7 +101,7 @@ class ObjectTypesController extends AdminController {
 
         if ($fieldLabel && $fieldName && $fieldType) {
             $fieldInfo['id'] = $fieldId;
-            $fieldInfo['name'] = $fieldName;
+            $fieldInfo['name'] = strtolower($fieldName);
             $fieldInfo['label'] = $fieldLabel;
             $fieldInfo['type'] = $fieldType;
             $fieldInfo['instructions'] = $fieldInstructions;
