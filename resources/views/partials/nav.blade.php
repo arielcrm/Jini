@@ -16,6 +16,101 @@
                 <form class="navbar-form" role="search">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search" name="q">
+
+                            <div id="scrollable-dropdown-menu">
+                                <input id="arr" class="typeahead" type="text" placeholder="Categories">
+                            </div>
+
+                            <script>
+                                function preg_quote( str ) {
+                                    // http://kevin.vanzonneveld.net
+                                    // +   original by: booeyOH
+                                    // +   improved by: Ates Goral (http://magnetiq.com)
+                                    // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+                                    // +   bugfixed by: Onno Marsman
+                                    // *     example 1: preg_quote("$40");
+                                    // *     returns 1: '\$40'
+                                    // *     example 2: preg_quote("*RRRING* Hello?");
+                                    // *     returns 2: '\*RRRING\* Hello\?'
+                                    // *     example 3: preg_quote("\\.+*?[^]$(){}=!<>|:");
+                                    // *     returns 3: '\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:'
+
+                                    return (str+'').replace(/([\\\.\+\*\?\[\^\]\$\(\)\{\}\=\!\<\>\|\:])/g, "\\$1");
+                                }
+
+                                var searchResults = new Bloodhound({
+                                    datumTokenizer: Bloodhound.tokenizers.whitespace,
+                                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                                    remote: {
+                                        url: '/objects/search?query=%QUERY' + '&t=' + Date.now(),
+                                        wildcard: '%QUERY',
+                                        ajax:{
+                                            type: "POST",
+                                            cache: false,
+                                            data:{
+                                                limit:5
+                                            },
+                                            beforeSend:function(jqXHR,settings){
+                                                settings.data+="&q="+$('#arr').typeahead('val');
+                                            },
+                                            complete:function(jqXHR,textStatus){
+                                                meslekler.clearRemoteCache();
+                                            }
+                                        }
+//                                        filter: function (results) {
+//                                            return $.map(results, function (result) {
+//                                                return {
+//                                                    id: result.id,
+//                                                    title: result.title,
+//                                                    type: result.type
+//                                                };
+//                                            });
+//                                        }
+                                    }
+                                });
+
+                                $('#scrollable-dropdown-menu .typeahead').typeahead(null, {
+                                    name: 'searchResults',
+                                    limit: 10,
+                                    source: searchResults,
+                                    displayKey: 'title',
+                                    templates: {
+                                        empty: [
+                                            '<div class="empty-message">',
+                                            'unable to find any Best Picture winners that match the current query',
+                                            '</div>'
+                                        ].join('\n'),
+                                        suggestion: function (data) {
+                                            return '<p>' + data.title.replace( new RegExp( "(" + preg_quote( data._query ) + ")" , 'gi' ), "<b>$1</b>"  ) + '</p>';
+                                        }
+                                    },
+                                    hint: false,
+                                    highlight: true
+                                });
+                                $('.typeahead').bind('typeahead:select', function(ev, suggestion) {
+                                    console.log(suggestion);
+                                    $.ajax({
+                                        url: 'categories',
+                                        method: "POST",
+                                        data: {
+                                            id  : suggestion.id,
+                                            _token : '{{{ csrf_token() }}}'
+                                        },
+                                        cache: false,
+                                        success: function(response) {
+                                            console.log(response);
+                                            if (response) {
+                                            }
+                                        },
+                                        complete: function(response) {
+                                            console.log(response);
+
+                                        }
+                                    });
+                                });
+                            </script>
+
+
                         <div class="input-group-btn">
                             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                         </div>

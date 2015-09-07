@@ -1,4 +1,105 @@
 @extends('app')
+@section('styles')
+<style type="text/css">
+
+        /* site theme */
+        /* ---------- */
+
+        .typeahead,
+        .tt-query,
+        .tt-hint {
+            width: 432px;
+            padding: 8px 12px;
+            font-size: 24px;
+            line-height: 42px;
+
+            border: 1px solid #fff;
+            outline: none;
+            background-color: transparent;
+            color: #fff;
+            padding: 7px 10px;
+        }
+
+        .typeahead {
+            background-color: transparent;
+        }
+
+        .typeahead:focus {
+            border: 1px solid #fff;
+        }
+
+        .tt-query {
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        }
+
+        .tt-hint {
+            color: #999
+        }
+
+        .tt-menu {
+            width: 432px;
+            padding: 8px 0;
+            background-color: #fff;
+        }
+
+        .tt-suggestion {
+            padding: 3px 20px;
+            font-size: 18px;
+            line-height: 24px;
+        }
+
+        .tt-suggestion:hover {
+            cursor: pointer;
+            color: #fff;
+            background-color: #0097cf;
+        }
+
+        .tt-suggestion.tt-cursor {
+            color: #fff;
+            background-color: #0097cf;
+
+        }
+
+        .tt-suggestion p {
+            margin: 0;
+        }
+
+        .gist {
+            font-size: 14px;
+        }
+
+        /* example specific styles */
+        /* ----------------------- */
+
+        #custom-templates .empty-message {
+            padding: 5px 10px;
+            text-align: center;
+        }
+
+        #multiple-datasets .league-name {
+            margin: 0 20px 5px 20px;
+            padding: 3px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #scrollable-dropdown-menu .tt-menu {
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        #rtl-support .tt-menu {
+            text-align: right;
+        }
+
+        #scrollable-dropdown-menu .tt-dropdown-menu {
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+</style>
+@stop
 @section('title') Home :: @parent @stop
 @section('content')
 <div id="sideBar1" class="side-bar side-bar-1">
@@ -156,7 +257,7 @@
                     .menu-trigger {
                         fill: #fff;
                         stroke: transparent;
-                        opacity: 0.8;
+                        opacity: 1;
                         pointer-events: auto; /* KEEP THIS to make sure it stays clickable even when SVG's pointer events is disabled */
                     }
 

@@ -119,7 +119,7 @@ function drawCutSectors(t, e, i) {
                     if (itemTitle) {
                         $('#sideBar1 .info-pane .title').html(itemTitle);
                     } else {
-                        $('#sideBar1 .info-pane .title').html('');
+                        $('#sideBar1 .info-pane .title').empty();
                     }
 
                     if (itemContentImageSrc && itemContentImageSrc != 'undefined') {
@@ -511,7 +511,7 @@ function addIcons() {
             if (part) {
                 part = part.replace("-", " ");
             }
-            p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", dy + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
+            p.setAttribute("fill", "#222"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
             dy += 20;
 
             c.appendChild(p);

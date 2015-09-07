@@ -44,8 +44,18 @@ class ObjectController extends Controller {
             if ( !empty( $types ) ) {
                 $objects = Object::whereIn('type', $types);
             }
+        } else {
+            if ( $search ) {
+                $results = Object::whereNotIn('type', ['object_type', 'image'])
+                    ->where(function( $query ) use ( $search ) {
+                        $query->where('title', 'LIKE', '%' . $search . '%')
+                            ->orWhere('name', 'LIKE', '%' . $search . '%');
+                    })
+                    ->select('id', 'type', 'title')
+                    ->get();
 
-
+                return response( $results );
+            }
         }
 
         if ( $objects ) {

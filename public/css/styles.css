@@ -314,7 +314,6 @@ fieldset div {
     cursor: pointer
 }
 input {
-    max-width: 100px
 }
 input[type=radio] {
     visibility: hidden
