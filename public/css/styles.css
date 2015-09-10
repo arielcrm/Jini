@@ -206,7 +206,6 @@ object {
 header {
     height: 100px;
     font-size: .8em;
-    text-transform: uppercase;
     padding: 31px 7px;
 }
 header ul {
@@ -1261,19 +1260,19 @@ blockquote {
 
 
 ::-webkit-input-placeholder {
-    color: red;
+    color: #fff;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-    color: red;
+    color: #fff;
 }
 
 ::-moz-placeholder {  /* Firefox 19+ */
-    color: red;
+    color: #fff;
 }
 
 :-ms-input-placeholder {
-    color: red;
+    color: #fff;
 }
 button {
     border: 0;

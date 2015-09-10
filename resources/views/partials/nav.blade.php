@@ -15,10 +15,8 @@
             <ul class="nav navbar-nav">
                 <form class="navbar-form" role="search">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q">
-
                             <div id="scrollable-dropdown-menu">
-                                <input id="arr" class="typeahead" type="text" placeholder="Categories">
+                                <input id="arr" class="form-contro typeahead" type="text" />
                             </div>
 
                             <script>

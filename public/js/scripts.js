@@ -186,8 +186,10 @@ function drawCutSectors(t, e, i) {
                     });
                 } else {
                     //if (objectRequest) { objectRequest.abort(); }
-                    loadCategoryObjects(itemId);
 
+
+                    loadCategoryObjects(itemId);
+                    currentCategoryId = itemId;
 
 
 

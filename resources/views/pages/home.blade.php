@@ -8,16 +8,16 @@
         .typeahead,
         .tt-query,
         .tt-hint {
-            width: 432px;
-            padding: 8px 12px;
-            font-size: 24px;
+            width: 434px;
+            padding: 0 12px;
+            font-size: 1.250em;
+            height: 42px;
             line-height: 42px;
-
-            border: 1px solid #fff;
+            font-weight: 700;
+            border: 0;
             outline: none;
             background-color: transparent;
             color: #fff;
-            padding: 7px 10px;
         }
 
         .typeahead {

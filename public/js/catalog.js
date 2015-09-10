@@ -1,5 +1,6 @@
 var categoryRequest;
 var objectRequest;
+var currentCategoryId;
 
 function loadCategory(categoryId) {
     categoryRequest = $.ajax({
