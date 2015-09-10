@@ -177,12 +177,8 @@
                 </div>
                 <div class="row contact">
                     <div class="col-md-4">
-                        <span class="phone"></span><br />
-                        <span class="email"></span>
                     </div>
                     <div class="col-md-4">
-                        <span class="address"></span><br />
-                        <span class="speakers"></span>
                     </div>
                 </div>
             </div>
@@ -448,7 +444,7 @@
 
 
     <script>
-        function rebind() {
+        function __rebind() {
             $.ajax({
                 url: '/categories/' + itemId + '/content',
                 dataType: 'html',
@@ -539,32 +535,6 @@
 
                 }
             });
-
-
-
-            var arrMenu1 = [
-                ["asdsa", "uploads/2cfbe23bf91d2da6d84b4953306c0430e353a1b1.jpg", "#Transportation",
-                    [
-                        ["רכב", "logo.png", "#Transportation",
-                            [
-                                ["קנייה", "logo.png", "#Transportation"],
-                                ["ביטוחים, המרת רישיון נהיגה", "img/menu/3.png", "#Culture"],
-                                ["השכרת רכב", "img/menu/2.png", "#Tourism"],
-                                ["שיעורי נהיגה", "img/menu/1.png", "#HealthCare"],
-                                ["car 2 go, קל אוטו", "img/menu/1.png", "#HealthCare"]
-                            ]
-                        ],
-                        ["רכבות", "img/menu/3.png", "#Culture"],
-                        ["טיסות", "img/menu/2.png", "#Tourism"],
-                        ["מוניות/שירות", "img/menu/1.png", "#HealthCare"],
-                        ["אוטובוסים", "img/menu/1.png", "#HealthCare"]
-                    ]
-                ],
-                ["תרבות / חיי לילה", "img/menu/3.png", "#Culture"],
-                ["תיירות", "img/menu/2.png", "#Tourism"],
-                ["בריאות", "img/menu/1.png", "#HealthCare"]
-            ];
-
 
 
             currentMenu = [];

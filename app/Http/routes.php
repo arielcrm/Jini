@@ -25,6 +25,7 @@ Route::get('objects/search', 'ObjectController@getSearch');
 Route::get('objects/map', 'ObjectController@getMap');
 Route::get('objects/locations', 'ObjectController@getLocations');
 Route::get('objects/{id}/content', 'ObjectController@getContent');
+Route::get('objects/{id}', 'ObjectController@get');
 
 Route::pattern('id', '[0-9]+');
 Route::get('news/{id}', 'ArticlesController@show');

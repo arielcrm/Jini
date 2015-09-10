@@ -87,26 +87,31 @@
                                     hint: false,
                                     highlight: true
                                 });
-                                $('.typeahead').bind('typeahead:select', function(ev, suggestion) {
-                                    console.log(suggestion);
-                                    $.ajax({
-                                        url: 'categories',
-                                        method: "POST",
-                                        data: {
-                                            id  : suggestion.id,
-                                            _token : '{{{ csrf_token() }}}'
-                                        },
-                                        cache: false,
-                                        success: function(response) {
-                                            console.log(response);
-                                            if (response) {
-                                            }
-                                        },
-                                        complete: function(response) {
-                                            console.log(response);
-
-                                        }
-                                    });
+                                $('#scrollable-dropdown-menu .typeahead').on('typeahead:selected', function(ev, suggestion) {
+                                    if (suggestion.type == 'category') {
+                                        loadCategoryObjects(suggestion.id);
+                                    } else {
+                                        loadObject(suggestion.id);
+                                        //$(this).typeahead('val','');
+                                    }
+//                                    $.ajax({
+//                                        url: 'categories',
+//                                        method: "POST",
+//                                        data: {
+//                                            id  : suggestion.id,
+//                                            _token : '{{{ csrf_token() }}}'
+//                                        },
+//                                        cache: false,
+//                                        success: function(response) {
+//                                            console.log(response);
+//                                            if (response) {
+//                                            }
+//                                        },
+//                                        complete: function(response) {
+//                                            console.log(response);
+//
+//                                        }
+//                                    });
                                 });
                             </script>
 

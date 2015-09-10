@@ -36,6 +36,8 @@
 
     <script type="text/javascript" src="/js/libs/jquery.slimscroll.min.js"></script>
 
+    <script src="/js/catalog.js"></script>
+
     <!-- Fonts -->
 <!--    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
