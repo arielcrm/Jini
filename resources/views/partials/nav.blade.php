@@ -85,6 +85,12 @@
                                     hint: false,
                                     highlight: true
                                 });
+                                $('#scrollable-dropdown-menu .typeahead').on('typeahead:open', function(ev) {
+                                    $('#sideBar1 .pane-wrapper').removeClass('collapsed');
+                                    $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
+                                    $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
+                                    $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
+                                });
                                 $('#scrollable-dropdown-menu .typeahead').on('typeahead:selected', function(ev, suggestion) {
                                     if (suggestion.type == 'category') {
                                         loadCategoryObjects(suggestion.id);

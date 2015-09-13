@@ -354,6 +354,9 @@ function addIcons() {
         var fontSize = 16;
 
         switch (t.length) {
+            case 2:
+                fontSize = 18;
+                break;
             case 8:
                 fontSize = 16;
                 break;
@@ -371,7 +374,9 @@ function addIcons() {
             menuText = menuText.replace("  ", " ");
         }
 
-        var parts = menuText.split(" ");
+
+
+                var parts = menuText.split(" ");
         var dy = 0;
         for (i = 0; i < parts.length; i++) {
             var part = parts[i];
@@ -380,8 +385,15 @@ function addIcons() {
             if (part) {
                 part = part.replace("-", " ");
             }
-            p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", dy + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
-            dy += 20;
+            switch (nbOfSlices) {
+                case 2:
+                    p.setAttribute("fill", "#222"),p.setAttribute("dx", "-30"), p.setAttribute("y", "0"), p.setAttribute("dy", (dy - 115) + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
+                    dy += 25;
+                    break;
+                default:
+                    p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", dy + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
+                    dy += 20;
+            }
 
             c.appendChild(p);
         }
