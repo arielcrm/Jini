@@ -71,7 +71,6 @@ class ObjectController extends Controller {
                     ->where('meta_value', $categoryId);
                 })
                 ->select(DB::raw('substr(name, 14) as field_name'))
-                ->take(20)
                 ->get()
                 ->toArray();
 
@@ -99,6 +98,7 @@ class ObjectController extends Controller {
         if ( $objects ) {
             $objects = $objects
             ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
+            ->take(20)
             ->get();
 
             foreach ($objects as $object) {
