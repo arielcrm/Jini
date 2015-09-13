@@ -71,6 +71,7 @@ class ObjectController extends Controller {
                     ->where('meta_value', $categoryId);
                 })
                 ->select(DB::raw('substr(name, 14) as field_name'))
+                ->take(20)
                 ->get()
                 ->toArray();
 
