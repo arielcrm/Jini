@@ -93,7 +93,13 @@
                                 });
                                 $('#scrollable-dropdown-menu .typeahead').on('typeahead:selected', function(ev, suggestion) {
                                     if (suggestion.type == 'category') {
+                                        //alert("sadfsda");
+                                        loadMenu(suggestion.id);
+
+                                        var category = {};
+                                        category["id"] = suggestion.id;
                                         loadCategoryObjects(suggestion.id);
+                                        loadCategory(category);
                                     } else {
                                         loadObject(suggestion.id);
                                         //$(this).typeahead('val','');

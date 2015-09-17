@@ -92,109 +92,35 @@ function drawCutSectors(t, e, i) {
 
         r.setAttribute("class", "item"), r.setAttribute("id", "item-" + (n + 1)), r.setAttribute('data-children-count', m[5]), r.setAttribute('data-items-count', m[6]),  r.setAttribute("data-id", m[3]), r.setAttribute("data-index", n), r.setAttribute("data-title", tt), r.setAttribute("data-featured-image", m[1]), r.setAttribute("data-content-image", m[4]), r.setAttribute("role", "link"), r.setAttribute("tabindex", "0"), r.setAttributeNS(xlinkns, "xlink:href", l), r.setAttributeNS(xlinkns, "xlink:title", "title1");
         r.addEventListener(enterEvent, function(t) {
-            var itemIndex = this.getAttribute("data-index");
-            var itemId = this.getAttribute("data-id");
-            var itemFeaturedImageSrc = this.getAttribute("data-featured-image");
-            var itemContentImageSrc = this.getAttribute("data-content-image");
-            var itemTitle = this.getAttribute("data-title");
+            var category = {};
+
+            category["id"] = this.getAttribute("data-id");
+            category["index"] = this.getAttribute("data-index");
+            category["title"] = this.getAttribute("data-title");
+            category["featured_image"] = this.getAttribute("data-featured-image");
+            category["content_image"] = this.getAttribute("data-content-image");
 
             var currentItemId = $('#sideBar1 .info-pane').attr('data-id');
 
-            if (typeof currentItemId == 'undefined' || currentItemId != itemId)   {
-                $('#sideBar1 .info-pane').attr('data-id', itemId);
-                //if (!$('.search-results-pane-wrapper').hasClass('collapsed') && !$('.info-pane-wrapper-1').hasClass('collapsed')) {
-                    $(".demo-wrapper").addClass("demo-wrapper-righter-1");
-
-                    if (itemFeaturedImageSrc && itemFeaturedImageSrc != 'undefined') {
-                        img.setAttributeNS(xlinkns, "xlink:href", itemFeaturedImageSrc);
-                    } else {
-                        img.setAttributeNS(xlinkns, "xlink:href", 'img/no_selector.png');
-                    }
-
-                    $('#sideBar1 .pane-wrapper').removeClass('collapsed');
-                    $('#sideBar1 .info-pane-wrapper').addClass('collapsed');
-
-
-
-                    if (itemTitle) {
-                        $('#sideBar1 .info-pane .title').html(itemTitle);
-                    } else {
-                        $('#sideBar1 .info-pane .title').empty();
-                    }
-
-                    if (itemContentImageSrc && itemContentImageSrc != 'undefined') {
-                        $('#sideBar1 .info-pane .top-pane').css('background-image', 'url(' + itemContentImageSrc + ')');
-                        $('#sideBar1 .info-pane').removeClass("no-content-image")
-                    } else {
-                        $('#sideBar1 .info-pane').addClass("no-content-image")
-                    }
-
-                    $('#sideBar1 .info-pane .content').empty();
-                    $('#sideBar1 .info-pane').addClass('preloader');
-
-                    $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
-                    $(".demo-wrapper").removeClass("demo-wrapper-righter-3");
-                    $(".demo-wrapper").addClass("demo-wrapper-righter-1");
-
-                    //if (categoryRequest) { categoryRequest.abort(); }
-                    loadCategory(itemId);
-                //}
+            if (typeof currentItemId == 'undefined' || currentItemId != category["id"])   {
+                loadCategory(category);
             }
         }, true);
 
         r.addEventListener(clickEvent, function(t) {
             if (t.button == 0) {
-                var itemId = this.getAttribute("data-id");
-                var categoriesCount = this.getAttribute("data-children-count");
-                var itemsCount = this.getAttribute("data-items-count");
-                var itemTitle = this.getAttribute("data-title");
+                var category = {};
 
-                //if (categoryRequest) { categoryRequest.abort(); }
+                category["id"] = this.getAttribute("data-id");
+                category["children_count"] = this.getAttribute("data-children-count");
+                category["items_count"] = this.getAttribute("data-items-count");
+                category["title"] = this.getAttribute("data-title");
 
-                if (categoriesCount > 0) {
-                    categoryRequest = $.ajax({
-                        url: '/categories/' + itemId,
-                        dataType: 'json',
-                        success: function(response) {
-                            var mm = [];
-
-                            if (response.length > 0) {
-                                for ( i = 0; i < response.length; i++) {
-                                    var o = response[i];
-
-                                    mi = [];
-                                    mi[0] = o.title;
-                                    mi[1] = o.featuredImageUrl;
-                                    mi[2] = '#' + o.name;
-                                    mi[3] = o.id;
-                                    mi[4] = o.contentImageUrl;
-                                    mi[5] = o.childrenCount;
-                                    mi[6] = o.itemsCount;
-
-                                    mm.push(mi);
-                                }
-
-                                currentMenu = mm;
-
-                                nbOfSlices = currentMenu.length;
-
-                                init();
-                            } else {
-
-                            }
-                        }
-                    });
+                if (category["children_count"] > 0) {
+                    loadMenu(category["id"]);
                 } else {
-                    //if (objectRequest) { objectRequest.abort(); }
-
-
-                    loadCategoryObjects(itemId);
-                    currentCategoryId = itemId;
-
-
-
-
-
+                    loadCategoryObjects(category["id"]);
+                    currentCategoryId = category["id"];
                 }
             }
         }, true);
