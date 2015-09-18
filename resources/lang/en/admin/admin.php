@@ -45,4 +45,5 @@ return [
     'status' => 'Status',
     'export' => 'Export',
     'import' => 'Import',
+    'categories' => 'Categories'
 	];

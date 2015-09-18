@@ -97,13 +97,13 @@ function drawCutSectors(t, e, i) {
             category["id"] = this.getAttribute("data-id");
             category["index"] = this.getAttribute("data-index");
             category["title"] = this.getAttribute("data-title");
-            category["featured_image"] = this.getAttribute("data-featured-image");
-            category["content_image"] = this.getAttribute("data-content-image");
+            category["featuredImageUrl"] = this.getAttribute("data-featured-image");
+            category["contentImageUrlloadMenu"] = this.getAttribute("data-content-image");
 
             var currentItemId = $('#sideBar1 .info-pane').attr('data-id');
 
             if (typeof currentItemId == 'undefined' || currentItemId != category["id"])   {
-                loadCategory(category);
+                bindCategory(category);
             }
         }, true);
 
@@ -112,11 +112,11 @@ function drawCutSectors(t, e, i) {
                 var category = {};
 
                 category["id"] = this.getAttribute("data-id");
-                category["children_count"] = this.getAttribute("data-children-count");
-                category["items_count"] = this.getAttribute("data-items-count");
+                category["childrenCount"] = this.getAttribute("data-children-count");
+                category["itemsCount"] = this.getAttribute("data-items-count");
                 category["title"] = this.getAttribute("data-title");
 
-                if (category["children_count"] > 0) {
+                if (category["childrenCount"] > 0) {
                     loadMenu(category["id"]);
                 } else {
                     loadCategoryObjects(category["id"]);
@@ -188,9 +188,17 @@ function getTextAngle(num, count) {
     switch ( count ) {
         case 2:
             a = 0;
+
+            if (num == 2) {
+                a = 180;
+            }
             break;
         case 3:
             a = 30;
+
+            if (num > 1) {
+                a = -140;
+            }
             break;
         case 4:
             a = 45;
@@ -281,7 +289,7 @@ function addIcons() {
 
         switch (t.length) {
             case 2:
-                fontSize = 18;
+                fontSize = 22;
                 break;
             case 8:
                 fontSize = 16;
@@ -304,8 +312,9 @@ function addIcons() {
 
                 var parts = menuText.split(" ");
         var dy = 0;
-        for (i = 0; i < parts.length; i++) {
-            var part = parts[i];
+        var dx = 0;
+        for (j = 0; j < parts.length; j++) {
+            var part = parts[j];
             var p = document.createElementNS(svgns, "text");
 
             if (part) {
@@ -313,8 +322,14 @@ function addIcons() {
             }
             switch (nbOfSlices) {
                 case 2:
-                    p.setAttribute("fill", "#222"),p.setAttribute("dx", "-30"), p.setAttribute("y", "0"), p.setAttribute("dy", (dy - 115) + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
-                    dy += 25;
+                    if (n > 0) {
+                        dx = 100;
+                        dy = 270;
+                    }
+                    if ( j > 0 ) {
+                        dy += 30;
+                    }
+                    p.setAttribute("fill", "#222"),p.setAttribute("dx", (dx -30)), p.setAttribute("y", "0"), p.setAttribute("dy", (dy - 115) + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
                     break;
                 default:
                     p.setAttribute("fill", "#222"), p.setAttribute("x", "50%"),p.setAttribute("dx", "0"), p.setAttribute("y", "50%"), p.setAttribute("dy", dy + "px"), p.setAttribute("text-anchor", "middle"), p.setAttribute("font-size", fontSize + "px"), p.textContent = part;
@@ -349,7 +364,7 @@ function init() {
     var rotation = null;
     switch (nbOfSlices) {
         case 3:
-            rotation = 90;
+            rotation = -30;
             break;
         case 4:
             rotation = -45;

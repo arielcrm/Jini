@@ -99,7 +99,7 @@
                                         var category = {};
                                         category["id"] = suggestion.id;
                                         loadCategoryObjects(suggestion.id);
-                                        loadCategory(category);
+                                        loadCategory(suggestion.id);
                                     } else {
                                         loadObject(suggestion.id);
                                         //$(this).typeahead('val','');

@@ -9,6 +9,52 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller {
 
+    public function getCategory($id) {
+        if ( $category = Object::select( array( 'objects.id', 'objects.name', 'objects.title', 'objects.excerpt' ) )
+            ->where('id', $id)
+            ->first() ) {
+
+            return response()->json( $this->processCategory( $category ) );
+        }
+    }
+
+    private function processCategory(&$category) {
+        if ($contentImageId = ObjectMeta::getValue($category->id, '_content_image')) {
+            if ($contentImageUrl = getImageSrc($contentImageId, 'medium') ) {
+                $category['contentImageUrl'] = '/uploads/' . $contentImageUrl;
+            }
+        }
+
+        if ($featuredImageId = ObjectMeta::getValue($category->id, '_featured_image')) {
+            if ($featuredImageUrl = getImageSrc($featuredImageId, 'small')) {
+                $category['featuredImageUrl'] = '/uploads/' . $featuredImageUrl;
+
+
+//                    $path = __DIR__ . '/../../../public/uploads/' . $featuredImageUrl;
+//                    echo $path . '<br />' . file_exists($path) . '<br />';
+//                    if (file_exists($path)) {
+//                        $type = pathinfo($path, PATHINFO_EXTENSION);
+//                        $data = file_get_contents($path);
+//                        $category['featuredImageUrl'] = base64_encode($data);
+//                    }
+            }
+        }
+
+        $category['childrenCount'] = Object::where('objects.type', 'category')
+            ->where('parent_id', $category['id'])
+            ->count();
+
+
+        $category['itemsCount'] = ObjectMeta::join('objects', 'object_meta.object_id', '=', 'objects.id')
+            ->where('meta_key', '_category_id')
+            ->where('meta_value', $category['id'])
+            ->where('objects.type', '<>', 'category')
+            ->groupBy('object_id')
+            ->count();
+
+        return $category;
+    }
+
     public function getCategories($id = null) {
         //Config::set('laravel-debugbar::config.enabled', false);
 
@@ -21,41 +67,8 @@ class CategoryController extends Controller {
         $response = $categories;
 
         foreach ($categories as $category) {
-            if ($contentImageId = ObjectMeta::getValue($category->id, '_content_image')) {
-                if ($contentImageUrl = getImageSrc($contentImageId, 'medium') ) {
-                    $category['contentImageUrl'] = '/uploads/' . $contentImageUrl;
-                }
-            }
-
-            if ($featuredImageId = ObjectMeta::getValue($category->id, '_featured_image')) {
-                if ($featuredImageUrl = getImageSrc($featuredImageId, 'small')) {
-                    $category['featuredImageUrl'] = '/uploads/' . $featuredImageUrl;
-
-
-//                    $path = __DIR__ . '/../../../public/uploads/' . $featuredImageUrl;
-//                    echo $path . '<br />' . file_exists($path) . '<br />';
-//                    if (file_exists($path)) {
-//                        $type = pathinfo($path, PATHINFO_EXTENSION);
-//                        $data = file_get_contents($path);
-//                        $category['featuredImageUrl'] = base64_encode($data);
-//                    }
-                }
-            }
-
-            $category['childrenCount'] = Object::where('objects.type', 'category')
-                ->where('parent_id', $category['id'])
-                ->count();
-
-
-            $category['itemsCount'] = ObjectMeta::join('objects', 'object_meta.object_id', '=', 'objects.id')
-                ->where('meta_key', '_category_id')
-                ->where('meta_value', $category['id'])
-                ->where('objects.type', '<>', 'category')
-                ->groupBy('object_id')
-                ->count();
+            $this->processCategory($category);
         }
-        
-        
 
 //        $categories = Object::leftJoin('objects as t1', function($join) {
 //            $join->on('objects.id', '=', 't1.parent_id');

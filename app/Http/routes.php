@@ -17,7 +17,8 @@ Route::get('about', 'PagesController@about');
 Route::get('contact', 'PagesController@contact');
 
 Route::get('categories/', 'CategoryController@getCategories');
-Route::get('categories/{id}', 'CategoryController@getCategories');
+Route::get('categories/{id}', 'CategoryController@getCategory');
+Route::get('categories/{id}/categories', 'CategoryController@getCategories');
 Route::get('categories/{id}/content', 'CategoryController@getCategoryContent');
 Route::get('categories/{id}/objects', 'CategoryController@getCategoryObjects');
 
