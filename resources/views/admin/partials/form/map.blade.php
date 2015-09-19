@@ -76,8 +76,10 @@
                 return;
             }
 
-            $('#{{{ $field['id'] }}}-location-g').val(place.geometry.location.G);
-            $('#{{{ $field['id'] }}}-location-k').val(place.geometry.location.K);
+            console.log(place);
+
+            $('#{{{ $field['id'] }}}-location-g').val(place.geometry.location.H);
+            $('#{{{ $field['id'] }}}-location-k').val(place.geometry.location.L);
 
             if ( place.adr_address ) {
                 var addressElement = $('<div/>').append( place.adr_address );
