@@ -413,7 +413,7 @@
 
         jQuery(document).ready(function($){
             $('#sideBar1 .search-results-pane .info-content').slimScroll({
-                height: '250px',
+                height: '150px',
                 alwaysVisible: 'true',
                 color: '#d3d3d3',
                 size: '8px',
