@@ -96,19 +96,29 @@ class ObjectController extends Controller {
             }
         }
 
-        $objects = $objects->whereExists(function ( $query ) use ( $categoryId ) {
-            $query->select(DB::raw(1))
-                ->from('object_meta')
-                ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
-                ->where('meta_key', '_field_promoted')
-                ->where('meta_value', '1');
-        });
 
         if ( $objects ) {
+            $promotedObjects = $objects->whereExists(function ( $query ) use ( $categoryId ) {
+                $query->select(DB::raw(1))
+                    ->from('object_meta')
+                    ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
+                    ->where('meta_key', '_field_promoted')
+                    ->where('meta_value', '1');
+            });
+
+            $objects = $objects->whereExists(function ( $query ) use ( $categoryId ) {
+                $query->select(DB::raw(1))
+                    ->from('object_meta')
+                    ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
+                    ->where('meta_key', '_field_promoted')
+                    ->where('meta_value', '0');
+            })->union($promotedObjects);
+
+
             $objects = $objects
             ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
             ->skip($index)
-            ->take(5)
+            ->take(50)
             ->get();
 
             foreach ($objects as $object) {
