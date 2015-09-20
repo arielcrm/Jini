@@ -413,10 +413,11 @@
 
         jQuery(document).ready(function($){
             $('#sideBar1 .search-results-pane .info-content').slimScroll({
-                height: '150px',
+                height: 'auto',
                 alwaysVisible: 'true',
                 color: '#d3d3d3',
                 size: '8px',
+                scrollBy: '60px',
                 opacity: 1,
                 position: 'right',
                 allowPageScroll: true

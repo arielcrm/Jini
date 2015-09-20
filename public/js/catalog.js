@@ -114,7 +114,7 @@ function bindCategory(category) {
 
 function loadCategoryObjects(categoryId) {
     objectRequest = $.ajax({
-        async: true,
+        async: false,
         url: '/objects/search?categoryid=' + categoryId + '&index=' + currentCategoryIndex,
         dataType: 'json',
         success: function(response) {
@@ -139,6 +139,9 @@ function loadCategoryObjects(categoryId) {
                     }
                     html += '</ul>';
                     $('#sideBar1 .search-results-pane .info-content > .content').append($(html));
+
+
+
                     $('#sideBar1 .search-results-pane .info-content .content .more-button').on('click', function() {
                         var parent = $(this).closest('li');
                         var itemId =  $(parent).attr("data-id");
