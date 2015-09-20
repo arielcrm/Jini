@@ -70,7 +70,7 @@ class ObjectController extends Controller {
                     ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
                     ->where('meta_key', '_category_id')
                     ->where('meta_value', $categoryId)
-                    ->where('meta_key', '_is_promoted')
+                    ->where('meta_key', '_field_promoted')
                     ->where('meta_value', '1');
                 })
                 ->select(DB::raw('substr(name, 14) as field_name'))
