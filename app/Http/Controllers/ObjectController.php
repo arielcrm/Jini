@@ -97,24 +97,24 @@ class ObjectController extends Controller {
         }
 
 
+//        $promotedObjects = $objects->whereExists(function ( $query ) {
+//            $query->select(DB::raw(1))
+//                ->from('object_meta')
+//                ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
+//                ->where('meta_key', '_field_promoted')
+//                ->where('meta_value', '1');
+//        });
+//
+//        $objects = $objects->whereExists(function ( $query ) {
+//            $query->select(DB::raw(1))
+//                ->from('object_meta')
+//                ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
+//                ->where('meta_key', '_field_promoted')
+//                ->where('meta_value', '0');
+//        })->union($promotedObjects);
+
+
         if ( $objects ) {
-            $promotedObjects = $objects->whereExists(function ( $query ) use ( $categoryId ) {
-                $query->select(DB::raw(1))
-                    ->from('object_meta')
-                    ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
-                    ->where('meta_key', '_field_promoted')
-                    ->where('meta_value', '1');
-            });
-
-            $objects = $objects->whereExists(function ( $query ) use ( $categoryId ) {
-                $query->select(DB::raw(1))
-                    ->from('object_meta')
-                    ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
-                    ->where('meta_key', '_field_promoted')
-                    ->where('meta_value', '0');
-            })->union($promotedObjects);
-
-
             $objects = $objects
             ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
             ->skip($index)
