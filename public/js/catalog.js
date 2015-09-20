@@ -184,6 +184,8 @@ function loadCategoryObjects(categoryId) {
                         }
 
 
+                        alert('asdfasd');
+
                         $(".demo-wrapper").removeClass("demo-wrapper-righter-1");
                         $(".demo-wrapper").removeClass("demo-wrapper-righter-2");
                         $(".demo-wrapper").addClass("demo-wrapper-righter-3");
