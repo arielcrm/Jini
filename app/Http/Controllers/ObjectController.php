@@ -70,8 +70,13 @@ class ObjectController extends Controller {
                     ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
                     ->where('meta_key', '_category_id')
                     ->where('meta_value', $categoryId);
-//                    ->where('meta_key', '_field_promoted')
-//                    ->where('meta_value', '1');
+                })
+                ->whereExists(function ( $query ) use ( $categoryId ) {
+                    $query->select(DB::raw(1))
+                        ->from('object_meta')
+                        ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
+                        ->where('meta_key', '_field_promoted')
+                        ->where('meta_value', '1');
                 })
                 ->select(DB::raw('substr(name, 14) as field_name'))
                 ->get()
