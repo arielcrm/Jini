@@ -71,17 +71,9 @@ class ObjectController extends Controller {
                     ->where('meta_key', '_category_id')
                     ->where('meta_value', $categoryId);
                 })
-                ->select(DB::raw('substr(name, 14) as field_name'));
-
-            $objects = $objects->whereExists(function ( $query ) use ( $categoryId ) {
-                $query->select(DB::raw(1))
-                    ->from('object_meta')
-                    ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
-                    ->where('meta_key', '_field_promoted')
-                    ->where('meta_value', '1');
-            })
-            ->get()
-            ->toArray();
+                ->select(DB::raw('substr(name, 14) as field_name'))
+                ->get()
+                ->toArray();
 
             $types = array_map(function($v) {
                 return $v['field_name'];
@@ -103,6 +95,14 @@ class ObjectController extends Controller {
                 return response( $objects );
             }
         }
+
+        $objects = $objects->whereExists(function ( $query ) use ( $categoryId ) {
+            $query->select(DB::raw(1))
+                ->from('object_meta')
+                ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
+                ->where('meta_key', '_field_promoted')
+                ->where('meta_value', '1');
+        });
 
         if ( $objects ) {
             $objects = $objects
