@@ -71,8 +71,7 @@ class ObjectController extends Controller {
                     ->where('meta_key', '_category_id')
                     ->where('meta_value', $categoryId);
                 })
-                ->select(DB::raw('substr(name, 14) as field_name'))
-                ->get();
+                ->select(DB::raw('substr(name, 14) as field_name'));
 
             $objects = $objects->whereExists(function ( $query ) use ( $categoryId ) {
                 $query->select(DB::raw(1))
