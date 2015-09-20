@@ -50,6 +50,7 @@ class ObjectController extends Controller {
     
     public function getSearch() {
         $categoryId = Input::get('categoryid');
+        $index = Input::get('index') ?: 0;
         $search = Input::get('query');
 
         $objects = null;
@@ -98,6 +99,7 @@ class ObjectController extends Controller {
         if ( $objects ) {
             $objects = $objects
             ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
+            ->skip($index)
             ->take(20)
             ->get();
 

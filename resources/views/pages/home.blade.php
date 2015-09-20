@@ -418,7 +418,12 @@
                 color: '#d3d3d3',
                 size: '8px',
                 opacity: 1,
-                position: 'right'
+                position: 'right',
+                allowPageScroll: true
+            }).on('slimscroll', function(e, pos) {
+                if (pos == 'bottom') {
+                    loadCategoryObjects(currentCategoryId);
+                }
             });
 
             $('#sideBar1 .info-pane .main-pane').slimScroll({

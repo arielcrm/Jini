@@ -1,6 +1,7 @@
 var categoryRequest;
 var objectRequest;
 var currentCategoryId;
+var currentCategoryIndex = 0;
 
 function loadMenu(categoryId) {
     categoryRequest = $.ajax({
@@ -59,8 +60,6 @@ function loadCategory(categoryId) {
 }
 
 function bindCategory(category) {
-    console.log(category);
-
     categoryRequest = $.ajax({
         url: '/categories/' + category["id"] + '/content',
         dataType: 'html',
@@ -116,11 +115,11 @@ function bindCategory(category) {
 function loadCategoryObjects(categoryId) {
     objectRequest = $.ajax({
         async: true,
-        url: '/objects/search?categoryid=' + categoryId,
+        url: '/objects/search?categoryid=' + categoryId + '&index=' + currentCategoryIndex,
         dataType: 'json',
         success: function(response) {
             if (response && response.length > 0) {
-                if (response.length == 1) {
+                if (response.length == 1 && currentCategoryIndex == 0) {
                     loadObject(response[0].id);
                 } else {
 
@@ -139,7 +138,7 @@ function loadCategoryObjects(categoryId) {
 
                     }
                     html += '</ul>';
-                    $('#sideBar1 .search-results-pane .info-content .content').html(html);
+                    $('#sideBar1 .search-results-pane .info-content > .content').append($(html));
                     $('#sideBar1 .search-results-pane .info-content .content .more-button').on('click', function() {
                         var parent = $(this).closest('li');
                         var itemId =  $(parent).attr("data-id");
@@ -236,6 +235,7 @@ function loadCategoryObjects(categoryId) {
     //                                    height: '250px'
     //                                });
                 }
+                currentCategoryIndex += response.length;
             }
         }
     });

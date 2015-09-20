@@ -98,7 +98,7 @@ function drawCutSectors(t, e, i) {
             category["index"] = this.getAttribute("data-index");
             category["title"] = this.getAttribute("data-title");
             category["featuredImageUrl"] = this.getAttribute("data-featured-image");
-            category["contentImageUrlloadMenu"] = this.getAttribute("data-content-image");
+            category["contentImageUrl"] = this.getAttribute("data-content-image");
 
             var currentItemId = $('#sideBar1 .info-pane').attr('data-id');
 
@@ -119,8 +119,12 @@ function drawCutSectors(t, e, i) {
                 if (category["childrenCount"] > 0) {
                     loadMenu(category["id"]);
                 } else {
-                    loadCategoryObjects(category["id"]);
                     currentCategoryId = category["id"];
+                    currentCategoryIndex = 0;
+
+                    $('#sideBar1 .search-results-pane .info-content > .content').empty();
+
+                    loadCategoryObjects(category["id"]);
                 }
             }
         }, true);
