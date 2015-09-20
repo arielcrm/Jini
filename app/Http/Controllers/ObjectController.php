@@ -100,7 +100,7 @@ class ObjectController extends Controller {
             $objects = $objects
             ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
             ->skip($index)
-            ->take(20)
+            ->take(100)
             ->get();
 
             foreach ($objects as $object) {
