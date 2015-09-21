@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Input;
 
 
 class ObjectController extends Controller {
-    private function fill($object) {
+    private function processObject($object) {
+        $object = (array) $object;
         if ($featuredImageId = ObjectMeta::getValue($object['id'], '_featured_image')) {
             $object['featured_image']  = Url('/uploads/' . getImageSrc($featuredImageId, 'medium'));
         }
@@ -119,7 +120,7 @@ class ObjectController extends Controller {
             ->get();
 
             foreach ($objects as $object) {
-                //$this->fill($object);
+                $this->processObject($object);
             }
         }
 
