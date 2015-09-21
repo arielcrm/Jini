@@ -119,6 +119,7 @@ function drawCutSectors(t, e, i) {
                 if (category["childrenCount"] > 0) {
                     loadMenu(category["id"]);
                 } else {
+                    previousCategoryId = currentCategoryId;
                     currentCategoryId = category["id"];
                     currentCategoryIndex = 0;
 

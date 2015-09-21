@@ -1,16 +1,22 @@
 var categoryRequest;
 var objectRequest;
+var previousCategoryId;
 var currentCategoryId;
 var currentCategoryIndex = 0;
 
 function loadMenu(categoryId) {
+    var u = '/categories/';
+
+    if (typeof categoryId !== 'undefined') {
+        u += categoryId + '/categories';
+    }
+
     categoryRequest = $.ajax({
-        url: '/categories/' + categoryId + '/categories',
+        url: u,
         dataType: 'json',
         success: function(response) {
             var mm = [];
-            console.log("SAdfsd");
-            console.log(response);
+
             if (response.length > 0) {
                 for ( i = 0; i < response.length; i++) {
                     var o = response[i];
@@ -39,11 +45,19 @@ function loadMenu(categoryId) {
     });
 }
 
+function getValue(val) {
+    if (typeof val != 'undefined') {
+        return val;
+    }
+
+    return '';
+}
+
 function loadCategory(categoryId) {
-    var category = {};
+    previousCategoryId = currentCategoryId;
 
     categoryRequest = $.ajax({
-        url: '/categories/' + categoryId,
+        url: '/categories/' + getValue(categoryId),
         dataType: 'json',
         async: false,
         success: function(response) {
