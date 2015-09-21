@@ -79,7 +79,12 @@ class ObjectController extends Controller {
                 return $v['field_name'];
             }, $objects);
 
-            $promotedObjects = DB::table('objects')
+
+            $objects = DB::table('objects')
+                ->whereIn('type', $types)
+                ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) );
+
+            $objects = DB::table('objects')
                 ->whereIn('type', $types)
                 ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
                 ->whereExists(function ( $query ) {
@@ -88,12 +93,8 @@ class ObjectController extends Controller {
                         ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
                         ->where('meta_key', '_field_promoted')
                         ->where('meta_value', '1');
-                });
-
-            $objects = DB::table('objects')
-                ->whereIn('type', $types)
-                ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
-                ->unionAll($promotedObjects);
+                })->
+                union($objects);
 
         } else {
             if ( $search ) {
