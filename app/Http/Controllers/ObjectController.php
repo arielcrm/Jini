@@ -43,7 +43,7 @@ class ObjectController extends Controller {
         if ( $object = Object::select( array( 'objects.id', 'objects.name', 'objects.title', 'objects.excerpt' ) )
             ->where('id', $id)
             ->first() ) {
-            $this->fill($object);
+            $this->processObject($object);
 
             return $object;
         }
