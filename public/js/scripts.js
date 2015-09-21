@@ -116,11 +116,12 @@ function drawCutSectors(t, e, i) {
                 category["itemsCount"] = this.getAttribute("data-items-count");
                 category["title"] = this.getAttribute("data-title");
 
+                previousCategoryId = currentCategoryId;
+                currentCategoryId = category["id"];
+
                 if (category["childrenCount"] > 0) {
                     loadMenu(category["id"]);
                 } else {
-                    previousCategoryId = currentCategoryId;
-                    currentCategoryId = category["id"];
                     currentCategoryIndex = 0;
 
                     $('#sideBar1 .search-results-pane .info-content > .content').empty();
