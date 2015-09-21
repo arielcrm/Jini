@@ -98,8 +98,8 @@
 
                                         var category = {};
                                         category["id"] = suggestion.id;
-                                        loadCategoryObjects(suggestion.id);
                                         loadCategory(suggestion.id);
+                                        loadCategoryObjects(suggestion.id);
                                     } else {
                                         loadObject(suggestion.id);
                                         //$(this).typeahead('val','');

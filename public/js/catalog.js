@@ -45,7 +45,7 @@ function loadCategory(categoryId) {
     categoryRequest = $.ajax({
         url: '/categories/' + categoryId,
         dataType: 'json',
-        async: true,
+        async: false,
         success: function(response) {
             if (response) {
                 bindCategory(response);
