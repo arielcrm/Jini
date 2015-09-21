@@ -10,33 +10,33 @@ use Illuminate\Support\Facades\Input;
 
 
 class ObjectController extends Controller {
-    private function processObject($object) {
-        $object = (array) $object;
-        if ($featuredImageId = ObjectMeta::getValue($object['id'], '_featured_image')) {
-            $object['featured_image']  = Url('/uploads/' . getImageSrc($featuredImageId, 'medium'));
+    private function processObject(&$object) {
+        if ($featuredImageId = ObjectMeta::getValue($object->id, '_featured_image')) {
+            $object->featured_image  = Url('/uploads/' . getImageSrc($featuredImageId, 'medium'));
         }
 
-        if ($contentImageId = ObjectMeta::getValue($object['id'], '_content_image')) {
-            $object['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'medium'));
+
+        if ($contentImageId = ObjectMeta::getValue($object->id, '_content_image')) {
+            $object->content_image  = Url('/uploads/' . getImageSrc($contentImageId, 'medium'));
         }
 
-        $object['excerpt'] = htmlentities( strlen($object['excerpt']) > 50 ? substr($object['excerpt'], 1, 50) . '...' : $object['excerpt'] );
+        $object->excerpt = htmlentities( strlen($object->excerpt) > 50 ? substr($object->excerpt, 1, 50) . '...' : $object->excerpt );
 
-        $object['phone'] = ObjectMeta::getValue($object['id'], '_field_phone' );
-        $object['email'] = ObjectMeta::getValue($object['id'], '_field_email' );
-        $object['occupation']= ObjectMeta::getValue($object['id'], '_field_occupation' );
-        $object['address']= ObjectMeta::getValue($object['id'], '_field_address' );
-        $object['address_location_g']= ObjectMeta::getValue($object['id'], '_field_address-location-g' );
-        $object['address_location_k']= ObjectMeta::getValue($object['id'], '_field_address-location-k' );
-        $object['address_street']= ObjectMeta::getValue($object['id'], '_field_address-address' );
-        $object['address_city']= ObjectMeta::getValue($object['id'], '_field_address-city' );
-        $object['address_country']= ObjectMeta::getValue($object['id'], '_field_address-country' );
+        $object->phone = ObjectMeta::getValue($object->id, '_field_phone' );
+        $object->email = ObjectMeta::getValue($object->id, '_field_email' );
+        $object->occupation= ObjectMeta::getValue($object->id, '_field_occupation' );
+        $object->address= ObjectMeta::getValue($object->id, '_field_address' );
+        $object->address_location_g= ObjectMeta::getValue($object->id, '_field_address-location-g' );
+        $object->address_location_k= ObjectMeta::getValue($object->id, '_field_address-location-k' );
+        $object->address_street= ObjectMeta::getValue($object->id, '_field_address-address' );
+        $object->address_city= ObjectMeta::getValue($object->id, '_field_address-city' );
+        $object->address_country= ObjectMeta::getValue($object->id, '_field_address-country' );
 
-        if ( $french_speakers = ObjectMeta::getValue($object['id'], '_field_french_speakers' ) ) {
-            $object['french_speakers']= 'Franchophone';
+        if ( $french_speakers = ObjectMeta::getValue($object->id, '_field_french_speakers' ) ) {
+            $object->french_speakers= 'Franchophone';
         }
 
-        $object['promoted']= ObjectMeta::getValue($object['id'], '_field_promoted' );
+        $object->promoted= ObjectMeta::getValue($object->id, '_field_promoted' );
     }
     
     public function get($id) {
