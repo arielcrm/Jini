@@ -80,7 +80,7 @@ class ObjectController extends Controller {
             }, $objects);
 
             if ( !empty( $types ) ) {
-                $objects = Object::whereIn('type', $types);
+                $objects = DB::table('objects')->whereIn('type', $types);
             }
         } else {
             if ( $search ) {
@@ -97,26 +97,23 @@ class ObjectController extends Controller {
         }
 
 
-//        $promotedObjects = $objects->whereExists(function ( $query ) {
-//            $query->select(DB::raw(1))
-//                ->from('object_meta')
-//                ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
-//                ->where('meta_key', '_field_promoted')
-//                ->where('meta_value', '1');
-//        });
-//
-//        $objects = $objects->whereExists(function ( $query ) {
-//            $query->select(DB::raw(1))
-//                ->from('object_meta')
-//                ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
-//                ->where('meta_key', '_field_promoted')
-//                ->where('meta_value', '0');
-//        })->union($promotedObjects);
-
-
         if ( $objects ) {
+            $promotedObjects = $objects
+                ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
+            ->whereExists(function ( $query ) {
+                $query->select(DB::raw(1))
+                    ->from('object_meta')
+                    ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
+                    ->where('meta_key', '_field_promoted')
+                    ->where('meta_value', '1');
+            });
+
+           $objects = DB::table('objects')
+               ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
+                ->unionAll($promotedObjects);
+
+
             $objects = $objects
-            ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
             ->skip($index)
             ->take(50)
             ->get();
