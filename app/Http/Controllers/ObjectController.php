@@ -142,8 +142,8 @@ class ObjectController extends Controller {
                             'geo_latitude' => $lat,
                             'geo_longitude' => $long,
                             'location' => '',
-                            'title' => $result['title'],
-                            'excerpt' => $result['excerpt']
+                            'title' => $result->title,
+                            'excerpt' => $result->excerpt
                         );
 
                         if ($contentImageId = ObjectMeta::getValue($result->id, '_content_image')) {
