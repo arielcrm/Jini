@@ -473,6 +473,7 @@
                 e.stopPropagation();
 
                 if (e.button == 0) {
+                    alert(previousCategoryId)
                     loadMenu(previousCategoryId);
                     //alert(previousCategoryId);
                     //loadCategory(previousCategoryId);
