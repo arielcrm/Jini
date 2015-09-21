@@ -62,7 +62,6 @@ class ObjectController extends Controller {
                 $featuredImageUrl = getImageSrc($categoryFeaturedImageId, 'thumbnail');
             }
 
-
             // Get objects where in category
             $objects = Object::Where('type', 'object_type')
                 ->whereExists(function ( $query ) use ( $categoryId ) {
@@ -80,9 +79,22 @@ class ObjectController extends Controller {
                 return $v['field_name'];
             }, $objects);
 
-            if ( !empty( $types ) ) {
-                $objects = DB::table('objects')->whereIn('type', $types);
-            }
+            $promotedObjects = DB::table('objects')
+                ->whereIn('type', $types)
+                ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
+                ->whereExists(function ( $query ) {
+                    $query->select(DB::raw(1))
+                        ->from('object_meta')
+                        ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
+                        ->where('meta_key', '_field_promoted')
+                        ->where('meta_value', '1');
+                });
+
+            $objects = DB::table('objects')
+                ->whereIn('type', $types)
+                ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
+                ->unionAll($promotedObjects);
+
         } else {
             if ( $search ) {
                 $objects = Object::whereNotIn('type', ['object_type', 'image'])
@@ -99,21 +111,6 @@ class ObjectController extends Controller {
 
 
         if ( $objects ) {
-            $promotedObjects = $objects
-                ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
-            ->whereExists(function ( $query ) {
-                $query->select(DB::raw(1))
-                    ->from('object_meta')
-                    ->whereRaw(DB::getTablePrefix() . 'object_meta.object_id = ' . DB::getTablePrefix() . 'objects.id')
-                    ->where('meta_key', '_field_promoted')
-                    ->where('meta_value', '1');
-            });
-
-           $objects = DB::table('objects')
-               ->select( array( 'objects.id', DB::raw( '"/uploads/'. $featuredImageUrl . '"' . ' as featured_image'), 'objects.name', 'objects.title', 'objects.excerpt' ) )
-                ->unionAll($promotedObjects);
-
-
             $objects = $objects
             ->skip($index)
             ->take(50)
