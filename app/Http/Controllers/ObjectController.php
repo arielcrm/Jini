@@ -136,8 +136,8 @@ class ObjectController extends Controller {
 
         if ( !empty( $results ) ) {
             foreach ( $results as $result ) {
-                if ( $lat = ObjectMeta::getValue($result['id'], '_field_address-location-g') ) {
-                    if ( $long = ObjectMeta::getValue($result['id'], '_field_address-location-k' ) )  {
+                if ( $lat = ObjectMeta::getValue($result->id, '_field_address-location-g') ) {
+                    if ( $long = ObjectMeta::getValue($result->id, '_field_address-location-k' ) )  {
                         $location = array(
                             'geo_latitude' => $lat,
                             'geo_longitude' => $long,
@@ -146,18 +146,18 @@ class ObjectController extends Controller {
                             'excerpt' => $result['excerpt']
                         );
 
-                        if ($contentImageId = ObjectMeta::getValue($result['id'], '_content_image')) {
+                        if ($contentImageId = ObjectMeta::getValue($result->id, '_content_image')) {
                             $location['content_image']  = Url('/uploads/' . getImageSrc($contentImageId, 'medium'));
                         } else {
                             $location['content_image'] = '';
                         }
 
-                        $location['address_street']= ObjectMeta::getValue($result['id'], '_field_address-address' );
-                        $location['address_city']= ObjectMeta::getValue($result['id'], '_field_address-city' );
-                        $location['address_country']= ObjectMeta::getValue($result['id'], '_field_address-country' );
+                        $location['address_street']= ObjectMeta::getValue($result->id, '_field_address-address' );
+                        $location['address_city']= ObjectMeta::getValue($result->id, '_field_address-city' );
+                        $location['address_country']= ObjectMeta::getValue($result->id, '_field_address-country' );
 
 
-                        $location['promoted'] = ObjectMeta::getValue($result['id'], '_field_promoted' );
+                        $location['promoted'] = ObjectMeta::getValue($result->id, '_field_promoted' );
 
                         $data[] = $location;
                     }
