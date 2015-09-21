@@ -119,7 +119,7 @@ class ObjectController extends Controller {
             ->get();
 
             foreach ($objects as $object) {
-                $this->fill($object);
+                //$this->fill($object);
             }
         }
 
